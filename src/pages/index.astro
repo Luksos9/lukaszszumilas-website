@@ -14,7 +14,7 @@ import { services } from '../data/services';
 import { problems } from '../data/problems';
 import { caseStudies } from '../data/caseStudies';
 
-const HAS_CUTOUT = false;
+const HAS_CUTOUT = true;
 
 const allocation = [
   { pct: 40, label: 'AI + ServiceNow' },
@@ -83,7 +83,7 @@ const jsonLd = [
       <div class="hero-photo" data-reveal style="--reveal-delay:240ms">
         <img class="hero-vector" src="/hero-vector.svg" alt="" aria-hidden="true" />
         {HAS_CUTOUT ? (
-          <img class="hero-cutout" src="/lukasz-cutout.png" alt="Lukasz Szumilas" width="900" height="1349" fetchpriority="high" />
+          <img class="hero-cutout" src="/lukasz-cutout.webp" alt="Lukasz Szumilas" width="900" height="1349" fetchpriority="high" />
         ) : (
           <div class="hero-frame">
             <img src="/lukasz.webp" alt="Lukasz Szumilas" width="900" height="1349" fetchpriority="high" />
