@@ -3,13 +3,12 @@ export interface Sector {
 }
 
 /**
- * Sectors Lukasz has delivered ServiceNow work in. Deliberately sector-level,
- * NOT named clients or partners. Per his content boundaries, specific client
- * and consulting-partner names stay off public, cross-referenceable surfaces.
+ * Industries worked in. Shown as "industry experience", never as a "trusted by"
+ * client wall. Sector-level only, no named clients.
  */
 export const clients: Sector[] = [
   { name: 'Banking' },
   { name: 'Insurance' },
   { name: 'Manufacturing' },
-  { name: 'Financial services' },
+  { name: 'Consulting' },
 ];

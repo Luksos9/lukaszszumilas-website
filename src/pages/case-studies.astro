@@ -8,11 +8,11 @@ import { caseStudies } from '../data/caseStudies';
 
 <BaseLayout
   title="Case Studies"
-  description="Anonymized examples of ServiceNow and AI work across banking, insurance, and manufacturing."
+  description="Anonymized ServiceNow and AI engagements across banking, insurance, and manufacturing, in situation / action / outcome form."
 >
   <PageHeader eyebrow="Case studies" title="Real impact in the enterprise">
-    Anonymized examples of the work I do across banking, insurance, and manufacturing. I'll walk
-    you through the specifics, including the numbers, on a call.
+    Anonymized examples of the work I do, in situation, action, and outcome. The specifics, and any
+    numbers, I'll walk you through on a call.
   </PageHeader>
 
   <Section>
@@ -21,13 +21,17 @@ import { caseStudies } from '../data/caseStudies';
         <article class="cs-card">
           <span class="cs-sector">{c.sector}</span>
           <h2 class="cs-title display">{c.title}</h2>
-          <p class="muted">{c.summary}</p>
+          <dl class="sao">
+            <div><dt>Situation</dt><dd>{c.situation}</dd></div>
+            <div><dt>Action</dt><dd>{c.action}</dd></div>
+            <div><dt>Outcome</dt><dd>{c.outcome}</dd></div>
+          </dl>
         </article>
       ))}
     </div>
     <p class="muted cs-note">
-      Client names and exact figures are kept private. If one of these sounds like your situation,
-      <a href="/contact/">book a call</a> and I'll show you the detail.
+      Client names and exact figures are kept private. <a href="/contact/">Book a call</a> and I'll
+      walk you through the detail.
     </p>
   </Section>
 
@@ -35,8 +39,8 @@ import { caseStudies } from '../data/caseStudies';
     <div class="cta-band">
       <h2 class="cta-h2 display">Have a similar problem?</h2>
       <p class="cta-lead">
-        Tell me what's slowing your team down. We'll find where AI and a better process actually
-        help.
+        Tell me what's slowing your team down. We'll find where a better process and the right AI
+        actually help.
       </p>
       <div class="cluster">
         <CtaButton href="/contact/" size="lg">Book a consultation</CtaButton>
@@ -69,7 +73,26 @@ import { caseStudies } from '../data/caseStudies';
   }
   .cs-title {
     font-size: var(--step-2);
-    margin: 0.4rem 0 0.6rem;
+    margin: 0.4rem 0 1rem;
+  }
+  .sao {
+    display: grid;
+    gap: 0.85rem;
+    margin: 0;
+  }
+  .sao dt {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.72rem;
+    color: var(--text-subtle);
+    font-weight: 700;
+    margin-bottom: 0.15rem;
+  }
+  .sao dd {
+    margin: 0;
+    color: var(--text-muted);
+    line-height: 1.55;
   }
   .cs-note {
     margin-top: 1.75rem;

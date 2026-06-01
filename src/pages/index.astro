@@ -3,69 +3,88 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Section from '../components/Section.astro';
 import CtaButton from '../components/CtaButton.astro';
-import StatBadge from '../components/StatBadge.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import PostCard from '../components/PostCard.astro';
 import ClientStrip from '../components/ClientStrip.astro';
 import Framework from '../components/Framework.astro';
+import AiValueStream from '../components/AiValueStream.astro';
 import Icon from '../components/Icon.astro';
 import { site } from '../data/site';
 import { services } from '../data/services';
 import { areas } from '../data/areas';
 import { problems } from '../data/problems';
 import { caseStudies } from '../data/caseStudies';
-import { valueProps } from '../data/valueProps';
+import { engagements } from '../data/engagements';
+import { snDomains } from '../data/snDomains';
+import { whoIWorkWith } from '../data/whoIWorkWith';
 
-// Flip to true and drop a transparent PNG at /public/lukasz-cutout.png for the
-// exact cut-out hero. Until then the framed photo is used.
+// Set true and drop /public/lukasz-cutout.png for the exact cut-out hero.
 const HAS_CUTOUT = false;
+
+const credibility = [
+  'ServiceNow Instructor',
+  'Practical AI & Automation',
+  'Enterprise Process Improvement',
+  '10,000+ students taught',
+];
 
 const posts = (await getCollection('blog'))
   .filter((p) => !p.data.draft)
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 3);
 
-const personJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'Person',
-  name: site.name,
-  url: site.url,
-  jobTitle: 'ServiceNow & AI Specialist',
-  description: site.description,
-  sameAs: [site.socials.linkedin, site.socials.udemy, site.socials.github],
-  knowsAbout: ['ServiceNow', 'Governed AI', 'Model Context Protocol', 'ITSM', 'CMDB', 'CSDM', 'AI Agents'],
-};
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: site.name,
+    url: site.url,
+    jobTitle: 'Operational Efficiency Advisor',
+    description: site.description,
+    sameAs: [site.socials.linkedin, site.socials.udemy, site.socials.github],
+    knowsAbout: ['ServiceNow', 'Workflow automation', 'Process improvement', 'AI Agents', 'Now Assist', 'ITSM'],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ProfessionalService',
+    name: 'Lukasz Szumilas — ServiceNow, AI & operational improvement',
+    url: site.url,
+    description: site.description,
+    areaServed: 'Europe',
+    serviceType: ['ServiceNow consulting', 'AI implementation', 'Process automation', 'Operational improvement'],
+    provider: { '@type': 'Person', name: site.name },
+  },
+];
 ---
 
-<BaseLayout jsonLd={personJsonLd}>
+<BaseLayout jsonLd={jsonLd}>
   <!-- 1. HERO -->
   <section class="hero">
-    <span class="hero-dots" aria-hidden="true"></span>
     <div class="container hero-grid">
       <div class="hero-text">
-        <p class="eyebrow" data-reveal>ServiceNow &amp; AI Specialist</p>
+        <p class="eyebrow" data-reveal>Operational Efficiency Advisor</p>
         <h1 class="hero-title display">
-          <span data-reveal style="--reveal-delay:80ms">I Help Companies</span>
-          <span data-reveal style="--reveal-delay:200ms">Improve Operations</span>
-          <span data-reveal style="--reveal-delay:320ms">with <span class="accent">AI &amp; ServiceNow</span></span>
+          <span data-reveal style="--reveal-delay:80ms">Reduce Manual Work.</span>
+          <span data-reveal style="--reveal-delay:200ms">Improve Productivity.</span>
+          <span data-reveal style="--reveal-delay:320ms">Scale <span class="accent">Operations.</span></span>
         </h1>
         <p class="hero-lead lead" data-reveal style="--reveal-delay:440ms">
-          I design practical solutions that improve processes, automate work, and apply AI where
-          it delivers measurable business impact.
+          I help organizations identify bottlenecks, redesign workflows, automate repetitive work,
+          and apply AI where it creates measurable business value.
         </p>
         <div class="hero-cta cluster" data-reveal style="--reveal-delay:560ms">
           <CtaButton href="/contact/" size="lg">Book a consultation</CtaButton>
           <CtaButton href="/services/" variant="secondary" size="lg">Explore my approach</CtaButton>
         </div>
-        <div class="hero-stats" data-reveal style="--reveal-delay:680ms">
-          <StatBadge value="17+" label="ServiceNow certifications" />
-          <StatBadge value="10,000+" label="students trained" />
-          <StatBadge value="Enterprise" label="banking, insurance, manufacturing" />
-        </div>
+        <ul class="cred" role="list" data-reveal style="--reveal-delay:680ms">
+          {credibility.map((c) => (
+            <li class="cred-item">{c}</li>
+          ))}
+        </ul>
       </div>
 
       <div class="hero-photo" data-reveal style="--reveal-delay:240ms">
-        <img class="hero-flow" src="/hero-flow.svg" alt="" aria-hidden="true" />
+        <img class="hero-vector" src="/hero-vector.svg" alt="" aria-hidden="true" />
         {HAS_CUTOUT ? (
           <img class="hero-cutout" src="/lukasz-cutout.png" alt="Lukasz Szumilas" width="900" height="1349" fetchpriority="high" />
         ) : (
@@ -73,30 +92,32 @@ const personJsonLd = {
             <img src="/lukasz.webp" alt="Lukasz Szumilas" width="900" height="1349" fetchpriority="high" />
           </div>
         )}
-        <span class="hero-note">
-          Practical solutions. Real impact.
-          <svg class="hero-arrow" viewBox="0 0 80 50" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-            <path d="M4 6c20 28 44 36 70 30" />
-            <path d="M62 30l12 6-4-13" />
-          </svg>
-        </span>
       </div>
     </div>
   </section>
 
-  <!-- value-props bar -->
+  <!-- 2. VALUE-PROPS BAR -->
   <div class="valuebar">
     <div class="container valuebar-grid">
-      {valueProps.map((v) => (
-        <div class="vp">
-          <span class="vp-icon"><Icon name={v.icon} size={20} /></span>
-          <span class="vp-title">{v.title}</span>
-        </div>
-      ))}
+      <div class="vp"><span class="vp-icon"><Icon name="trophy" size={20} /></span><span class="vp-title">Measurable results</span></div>
+      <div class="vp"><span class="vp-icon"><Icon name="coins" size={20} /></span><span class="vp-title">Lower operational costs</span></div>
+      <div class="vp"><span class="vp-icon"><Icon name="clock" size={20} /></span><span class="vp-title">Higher efficiency and capacity</span></div>
+      <div class="vp"><span class="vp-icon"><Icon name="smile" size={20} /></span><span class="vp-title">Happier employees and customers</span></div>
+      <div class="vp"><span class="vp-icon"><Icon name="chart" size={20} /></span><span class="vp-title">Data-driven improvement</span></div>
     </div>
   </div>
 
-  <!-- 2. CONTRARIAN -->
+  <!-- 3. WHO I WORK WITH -->
+  <Section>
+    <div class="who" data-reveal>
+      <span class="who-label">Who I work with</span>
+      <ul class="who-list" role="list">
+        {whoIWorkWith.map((r) => <li>{r}</li>)}
+      </ul>
+    </div>
+  </Section>
+
+  <!-- 4. CONTRARIAN -->
   <Section tone="surface">
     <div class="contrarian">
       <div>
@@ -111,46 +132,43 @@ const personJsonLd = {
       </div>
       <div class="contrarian-body" data-reveal style="--reveal-delay:200ms">
         <p>
-          Plenty of teams start with AI because it's the thing to do this year. The bigger wins
-          almost always come from fixing the workflow first, then adding AI where it moves a
-          number you actually care about.
+          Most AI projects underwhelm because they start with the model. The results come from
+          fixing the work first, in this order:
         </p>
+        <ol class="why-order">
+          <li>Fix the process.</li>
+          <li>Automate the repetitive parts.</li>
+          <li>Improve how people find knowledge.</li>
+          <li>Then apply AI where it creates real value.</li>
+        </ol>
         <p>That's the order I work in with every client.</p>
-        <blockquote class="contrarian-quote">
-          Real change happens when the technology, the process, and the people pull in the same
-          direction.
-        </blockquote>
       </div>
     </div>
   </Section>
 
-  <!-- 3. FRAMEWORK -->
+  <!-- 5. FRAMEWORK -->
   <Section>
     <div class="section-head" data-reveal>
       <div>
-        <p class="eyebrow">My AI &amp; ServiceNow framework</p>
+        <p class="eyebrow">My operational improvement framework</p>
         <h2 class="section-h2 display">A practical path from inefficiency to impact</h2>
       </div>
     </div>
     <Framework />
   </Section>
 
-  <!-- 4. AREAS -->
+  <!-- 6. WHERE AI CREATES VALUE -->
   <Section tone="surface">
-    <p class="eyebrow" data-reveal>Areas I work in</p>
-    <h2 class="section-h2 display" data-reveal>Where I spend my time</h2>
-    <div class="grid-4">
-      {areas.map((a, i) => (
-        <article class="card" data-reveal style={`--reveal-delay:${i * 90}ms`}>
-          <span class="card-icon"><Icon name={a.icon} /></span>
-          <h3 class="card-title">{a.title}</h3>
-          <p class="muted">{a.body}</p>
-        </article>
-      ))}
+    <div class="section-head" data-reveal>
+      <div>
+        <p class="eyebrow">Where AI creates value</p>
+        <h2 class="section-h2 display">AI helps at specific points, not everywhere</h2>
+      </div>
     </div>
+    <AiValueStream />
   </Section>
 
-  <!-- 5. PROBLEMS -->
+  <!-- 7. PROBLEMS -->
   <Section>
     <p class="eyebrow" data-reveal>Problems I solve</p>
     <h2 class="section-h2 display" data-reveal>You're probably dealing with at least one of these</h2>
@@ -165,26 +183,58 @@ const personJsonLd = {
     </div>
   </Section>
 
-  <!-- 6. SERVICES -->
+  <!-- 8. CAPABILITIES -->
   <Section tone="surface">
-    <div class="section-head" data-reveal>
-      <div>
-        <p class="eyebrow">How I help</p>
-        <h2 class="section-h2 display">Services that drive real business impact</h2>
-      </div>
-      <a href="/services/" class="see-all">All services →</a>
-    </div>
-    <div class="grid-services">
-      {services.map((s, i) => (
-        <div data-reveal style={`--reveal-delay:${i * 70}ms`}>
-          <ServiceCard title={s.title} tagline={s.tagline} anchor={s.anchor} icon={s.icon} />
-        </div>
+    <p class="eyebrow" data-reveal>What I do</p>
+    <h2 class="section-h2 display" data-reveal>Capabilities, framed by outcome</h2>
+    <div class="grid-4">
+      {areas.map((a, i) => (
+        <article class="card" data-reveal style={`--reveal-delay:${i * 90}ms`}>
+          <span class="card-icon"><Icon name={a.icon} /></span>
+          <h3 class="card-title">{a.title}</h3>
+          <p class="muted">{a.body}</p>
+        </article>
       ))}
     </div>
   </Section>
 
-  <!-- 7. CASE STUDIES -->
+  <!-- 9. TYPICAL ENGAGEMENTS -->
   <Section>
+    <p class="eyebrow" data-reveal>Typical engagements</p>
+    <h2 class="section-h2 display" data-reveal>How we'd work together</h2>
+    <div class="grid-4">
+      {engagements.map((e, i) => {
+        const Tag = e.href ? 'a' : 'div';
+        return (
+          <Tag href={e.href} class="eng" data-reveal style={`--reveal-delay:${i * 80}ms`}>
+            {e.duration && <span class="eng-duration">{e.duration}</span>}
+            <h3 class="card-title">{e.title}</h3>
+            <p class="muted">{e.body}</p>
+            {e.href && <span class="eng-cta">Learn more →</span>}
+          </Tag>
+        );
+      })}
+    </div>
+  </Section>
+
+  <!-- 10. SERVICENOW EXPERTISE -->
+  <Section tone="surface">
+    <p class="eyebrow" data-reveal>ServiceNow expertise</p>
+    <h2 class="section-h2 display" data-reveal>Where I work on the platform</h2>
+    <ul class="chips" role="list" data-reveal>
+      {snDomains.map((d) => <li class="chip">{d}</li>)}
+    </ul>
+  </Section>
+
+  <!-- 11. INDUSTRY EXPERIENCE -->
+  <Section>
+    <p class="eyebrow" data-reveal>Industry experience</p>
+    <h2 class="section-h2 display" data-reveal>Enterprise environments</h2>
+    <ClientStrip />
+  </Section>
+
+  <!-- 12. CASE STUDIES -->
+  <Section tone="surface">
     <div class="section-head" data-reveal>
       <div>
         <p class="eyebrow">Selected work</p>
@@ -197,7 +247,7 @@ const personJsonLd = {
         <a href="/case-studies/" class="case" data-reveal style={`--reveal-delay:${i * 90}ms`}>
           <span class="case-sector">{c.sector}</span>
           <h3 class="case-title">{c.title}</h3>
-          <p class="case-summary">{c.summary}</p>
+          <p class="case-summary">{c.outcome}</p>
           <span class="case-cta">Read case study →</span>
         </a>
       ))}
@@ -205,23 +255,7 @@ const personJsonLd = {
     <p class="muted case-note">Anonymized. Specifics shared under NDA on a call.</p>
   </Section>
 
-  <!-- 8. WHY TRUST ME (static) -->
-  <Section tone="surface">
-    <p class="eyebrow">Why organizations trust me</p>
-    <h2 class="section-h2 display">Proof, not promises</h2>
-    <div class="trust-stats">
-      <StatBadge value="17+" label="ServiceNow certifications" />
-      <StatBadge value="10,000+" label="students taught worldwide" />
-      <StatBadge value="4+ yrs" label="enterprise project experience" />
-    </div>
-    <ul class="trust-points" role="list">
-      <li><strong>Enterprise experience.</strong> Banking, insurance, and manufacturing.</li>
-      <li><strong>Educator.</strong> 10,000+ students through Lucky X courses.</li>
-      <li><strong>Speaker and content creator.</strong> Sharing practical ServiceNow and AI knowledge.</li>
-    </ul>
-  </Section>
-
-  <!-- 9. INSIGHTS -->
+  <!-- 13. INSIGHTS -->
   <Section>
     <div class="section-head" data-reveal>
       <div>
@@ -243,15 +277,14 @@ const personJsonLd = {
     )}
   </Section>
 
-  <!-- 10. FINAL CTA -->
+  <!-- 14. FINAL CTA -->
   <section class="final-cta">
-    <span class="final-dots" aria-hidden="true"></span>
     <div class="container final-cta-inner" data-reveal>
       <div>
         <h2 class="final-cta-title display">Let's discuss your next ServiceNow or AI initiative</h2>
         <p class="final-cta-sub">
-          Book a free consultation call and we'll find where AI and a better process actually move
-          the needle for you.
+          Book a free consultation call and we'll find where a better process and the right AI
+          actually move the needle for you.
         </p>
       </div>
       <CtaButton href="/contact/" size="lg">Book a consultation</CtaButton>
@@ -266,24 +299,11 @@ const personJsonLd = {
     overflow: hidden;
     padding-block: clamp(2.5rem, 1.5rem + 4vw, 5rem) clamp(1.5rem, 1rem + 2vw, 3rem);
   }
-  .hero-dots {
-    position: absolute;
-    inset: auto -60px -60px auto;
-    width: 320px;
-    height: 320px;
-    background-image: radial-gradient(var(--accent) 1.2px, transparent 1.2px);
-    background-size: 16px 16px;
-    opacity: 0.18;
-    -webkit-mask-image: radial-gradient(closest-side, #000, transparent);
-    mask-image: radial-gradient(closest-side, #000, transparent);
-    pointer-events: none;
-  }
   .hero-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
     align-items: center;
-    position: relative;
   }
   .hero-title {
     font-size: var(--step-5);
@@ -298,14 +318,31 @@ const personJsonLd = {
     color: var(--accent);
   }
   .hero-lead {
-    max-width: 50ch;
+    max-width: 52ch;
     margin-bottom: 1.9rem;
   }
-  .hero-stats {
+  .cred {
     display: flex;
     flex-wrap: wrap;
-    gap: clamp(1rem, 0.5rem + 2vw, 2rem);
-    align-items: center;
+    gap: 0.5rem 1.25rem;
+    margin-top: 1.9rem;
+  }
+  .cred-item {
+    position: relative;
+    padding-left: 1rem;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--text-muted);
+  }
+  .cred-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
   }
   .hero-photo {
     position: relative;
@@ -313,12 +350,13 @@ const personJsonLd = {
     width: 100%;
     max-width: 26rem;
   }
-  .hero-flow {
+  .hero-vector {
     position: absolute;
-    inset: -8% -14% -2% -14%;
-    width: 128%;
+    inset: -6% -16% -2% -16%;
+    width: 132%;
     height: auto;
     z-index: 0;
+    opacity: 0.7;
     pointer-events: none;
   }
   .hero-frame {
@@ -345,26 +383,6 @@ const personJsonLd = {
     position: relative;
     z-index: 1;
     filter: drop-shadow(0 18px 40px rgba(0, 0, 0, 0.5));
-  }
-  .hero-note {
-    position: absolute;
-    top: 0.5rem;
-    left: -0.5rem;
-    z-index: 2;
-    font-family: var(--font-display);
-    font-style: italic;
-    font-size: var(--step-0);
-    color: var(--text-muted);
-    display: none;
-  }
-  .hero-arrow {
-    position: absolute;
-    top: 1.6rem;
-    left: 0.5rem;
-    width: 70px;
-    height: 44px;
-    color: var(--accent);
-    transform: scaleX(-1);
   }
   /* VALUE BAR */
   .valuebar {
@@ -397,6 +415,35 @@ const personJsonLd = {
     color: var(--text-muted);
     line-height: 1.3;
   }
+  /* WHO */
+  .who {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.25rem;
+  }
+  .who-label {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.72rem;
+    color: var(--text-subtle);
+    font-weight: 700;
+  }
+  .who-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.75rem;
+  }
+  .who-list li {
+    font-weight: 600;
+    color: var(--text);
+  }
+  .who-list li:not(:last-child)::after {
+    content: '·';
+    margin-left: 0.75rem;
+    color: var(--text-subtle);
+  }
   /* CONTRARIAN */
   .contrarian {
     display: grid;
@@ -421,18 +468,16 @@ const personJsonLd = {
     color: var(--text-muted);
     line-height: 1.7;
   }
-  .contrarian-body p + p {
-    margin-top: 1rem;
+  .why-order {
+    margin: 1rem 0;
+    padding-left: 1.3rem;
+    display: grid;
+    gap: 0.4rem;
+    color: var(--text);
   }
-  .contrarian-quote {
-    margin-top: 1.5rem;
-    padding: 1rem 1.25rem;
-    border-left: 3px solid var(--accent);
-    background: var(--card);
-    border-radius: var(--radius);
-    font-family: var(--font-display);
-    font-size: var(--step-1);
-    line-height: 1.4;
+  .why-order li::marker {
+    color: var(--accent);
+    font-family: var(--font-mono);
   }
   /* SHARED */
   .section-h2 {
@@ -459,13 +504,13 @@ const personJsonLd = {
     color: var(--accent-hover);
   }
   .grid-3,
-  .grid-4,
-  .grid-services {
+  .grid-4 {
     display: grid;
     gap: clamp(1rem, 0.5rem + 1.5vw, 1.5rem);
     grid-template-columns: 1fr;
   }
-  .card {
+  .card,
+  .eng {
     padding: 1.5rem;
     background: var(--card);
     border: 1px solid var(--border);
@@ -473,7 +518,8 @@ const personJsonLd = {
     height: 100%;
     transition: transform var(--dur) var(--ease), border-color var(--dur), box-shadow var(--dur);
   }
-  .card:hover {
+  .card:hover,
+  a.eng:hover {
     transform: translateY(-3px);
     border-color: var(--accent);
     box-shadow: var(--shadow);
@@ -493,6 +539,45 @@ const personJsonLd = {
     font-weight: 600;
     font-size: var(--step-1);
     margin-bottom: 0.4rem;
+  }
+  .eng {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .eng-duration {
+    align-self: flex-start;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    font-weight: 700;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-pill);
+  }
+  .eng .muted {
+    flex: 1 0 auto;
+  }
+  .eng-cta {
+    font-weight: 600;
+    color: var(--accent);
+    font-size: var(--step--1);
+  }
+  /* CHIPS */
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 0.7rem;
+  }
+  .chip {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: var(--step--1);
+    color: var(--text);
+    border: 1px solid var(--border-strong);
+    background: var(--card);
+    padding: 0.5rem 0.95rem;
+    border-radius: var(--radius-pill);
   }
   /* CASE STUDIES */
   .case {
@@ -538,46 +623,15 @@ const personJsonLd = {
     margin-top: 1.25rem;
     font-size: var(--step--1);
   }
-  /* TRUST */
-  .trust-stats {
-    display: flex;
-    flex-wrap: wrap;
-    gap: clamp(1.25rem, 0.5rem + 3vw, 3rem);
-    margin-bottom: 1.75rem;
-  }
-  .trust-points {
-    display: grid;
-    gap: 0.6rem;
-    max-width: 60ch;
-  }
-  .trust-points li {
-    color: var(--text-muted);
-  }
-  /* FINAL CTA */
+  /* FINAL CTA (clean, no glow) */
   .final-cta {
-    position: relative;
-    overflow: hidden;
-    background:
-      radial-gradient(120% 140% at 80% 50%, rgba(232, 115, 58, 0.22), transparent 60%),
-      var(--lx-dark);
+    background: var(--lx-dark);
     color: var(--lx-cream);
     padding-block: clamp(2.5rem, 1.5rem + 4vw, 4.5rem);
     margin-top: var(--section-y);
     border-top: 1px solid var(--border);
   }
-  .final-dots {
-    position: absolute;
-    inset: -40px auto -40px -40px;
-    width: 280px;
-    background-image: radial-gradient(var(--accent) 1.2px, transparent 1.2px);
-    background-size: 16px 16px;
-    opacity: 0.16;
-    -webkit-mask-image: radial-gradient(closest-side, #000, transparent);
-    mask-image: radial-gradient(closest-side, #000, transparent);
-    pointer-events: none;
-  }
   .final-cta-inner {
-    position: relative;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -602,9 +656,6 @@ const personJsonLd = {
     }
   }
   @media (min-width: 760px) {
-    .hero-note {
-      display: block;
-    }
     .contrarian {
       grid-template-columns: 1fr 1fr;
       gap: 3rem;
@@ -619,9 +670,6 @@ const personJsonLd = {
     }
     .grid-4 {
       grid-template-columns: repeat(4, 1fr);
-    }
-    .grid-services {
-      grid-template-columns: repeat(3, 1fr);
     }
     .valuebar-grid {
       grid-template-columns: repeat(5, 1fr);

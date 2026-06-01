@@ -1,0 +1,81 @@
+---
+import { valueStream } from '../data/aiValueStream';
+---
+
+<div class="vs">
+  <ol class="vs-track" role="list">
+    {valueStream.map((s, i) => (
+      <Fragment>
+        <li class="vs-stage" data-reveal style={`--reveal-delay:${i * 110}ms`}>
+          <span class="vs-name">{s.stage}</span>
+          <span class="vs-ai">{s.ai}</span>
+        </li>
+        {i < valueStream.length - 1 && (
+          <li class="vs-arrow" aria-hidden="true" data-reveal style={`--reveal-delay:${i * 110 + 55}ms`}>→</li>
+        )}
+      </Fragment>
+    ))}
+  </ol>
+  <p class="vs-caption">The operational value stream, and where AI earns its place.</p>
+</div>
+
+<style>
+  .vs-track {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .vs-stage {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 1.1rem 1rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    text-align: center;
+  }
+  .vs-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--step-1);
+  }
+  .vs-ai {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--accent);
+    letter-spacing: 0.01em;
+  }
+  .vs-arrow {
+    display: grid;
+    place-items: center;
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 1.3rem;
+    transform: rotate(90deg);
+  }
+  .vs-caption {
+    text-align: center;
+    margin-top: 1.2rem;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--text-subtle);
+  }
+  @media (min-width: 900px) {
+    .vs-track {
+      flex-direction: row;
+      align-items: stretch;
+    }
+    .vs-stage {
+      flex: 1 1 0;
+    }
+    .vs-arrow {
+      transform: none;
+      flex: 0 0 auto;
+      align-self: center;
+    }
+  }
+</style>

@@ -1,31 +1,36 @@
 export interface CaseStudy {
   sector: string;
   title: string;
-  summary: string;
+  situation: string;
+  action: string;
+  outcome: string;
 }
 
 /**
- * Anonymized, representative engagements. Deliberately qualitative.
- * TODO(Lukasz): add real, verifiable metrics where you have them and are
- * cleared to share. Do not publish invented numbers.
+ * Anonymized, representative engagements in Situation / Action / Outcome form.
+ * Qualitative on purpose. TODO(Lukasz): add real, cleared figures where you have
+ * them. Never publish invented numbers.
  */
 export const caseStudies: CaseStudy[] = [
   {
-    sector: 'Financial services',
+    sector: 'Banking',
     title: 'AI-assisted ticket classification',
-    summary:
-      'Replaced manual triage with AI-assisted classification, so incidents land in the right queue faster and fulfillers spend less time sorting and more time resolving.',
+    situation: 'Ticket volumes were rising and manual triage was eating fulfiller time.',
+    action: 'Redesigned the intake, added automation, and introduced AI-assisted routing and classification.',
+    outcome: 'Less manual effort, more consistent routing, and faster handling.',
   },
   {
     sector: 'Insurance',
     title: 'Streamlined request management',
-    summary:
-      'Standardized and automated a request process that had drifted over the years, cutting handoffs and making SLA targets realistic to hit again.',
+    situation: 'A request process had drifted over the years and handoffs had become slow.',
+    action: 'Standardized the workflow and automated the repetitive steps.',
+    outcome: 'Fewer handoffs, and SLA targets that are realistic to hit again.',
   },
   {
     sector: 'Manufacturing',
     title: 'Automated employee onboarding',
-    summary:
-      'Automated a manual onboarding workflow so new starters get the access and equipment they need without anyone chasing approvals by email.',
+    situation: 'Onboarding new starters meant chasing access and equipment by email.',
+    action: 'Automated the onboarding workflow end to end on ServiceNow.',
+    outcome: 'New starters get the access and equipment they need without manual chasing.',
   },
 ];

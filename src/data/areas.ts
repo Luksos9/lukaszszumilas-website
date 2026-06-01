@@ -4,26 +4,29 @@ export interface Area {
   body: string;
 }
 
-/** The four areas of work, framed by business outcome rather than tech. */
+/**
+ * Capabilities, framed for the people who buy (managers), with the underlying
+ * tech named inside so practitioners recognize it too.
+ */
 export const areas: Area[] = [
   {
-    icon: 'agent',
-    title: 'AI Agents',
-    body: 'Intelligent agents that take on repetitive work and support employees and customers.',
+    icon: 'gear',
+    title: 'Operational Automation',
+    body: 'Automate repetitive work and handoffs across ServiceNow, from ITSM to custom workflows.',
+  },
+  {
+    icon: 'sparkle',
+    title: 'AI-Powered Workflows',
+    body: 'Now Assist, AI Agents, and MCP integrations applied where they cut real effort.',
   },
   {
     icon: 'flow',
-    title: 'MCP Integrations',
-    body: 'Connect AI to enterprise systems securely, through the Model Context Protocol.',
-  },
-  {
-    icon: 'gear',
-    title: 'ServiceNow Automation',
-    body: 'End-to-end platform automation that improves speed and accuracy for the people doing the work.',
+    title: 'ServiceNow Transformation',
+    body: 'Modernize the platform: cleaner processes, better adoption, less technical debt.',
   },
   {
     icon: 'sitemap',
-    title: 'Workflow Optimization',
-    body: 'Better processes and cleaner data across your operations.',
+    title: 'Process Optimization',
+    body: 'Redesign how work flows so the platform serves the process, not the other way around.',
   },
 ];

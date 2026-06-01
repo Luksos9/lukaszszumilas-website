@@ -7,11 +7,11 @@
 export const site = {
   name: 'Lukasz Szumilas',
   shortName: 'Lukasz Szumilas',
-  role: 'ServiceNow & AI Specialist',
+  role: 'Operational Efficiency Advisor',
   url: 'https://lukaszszumilas.com',
-  defaultTitle: 'Lukasz Szumilas · ServiceNow & AI Consulting',
+  defaultTitle: 'Lukasz Szumilas · ServiceNow, AI & Operational Improvement',
   description:
-    'I help companies improve operations with AI and ServiceNow, from platform implementations to AI solutions that cut manual work. Backed by 17 ServiceNow certifications and enterprise delivery experience.',
+    'I help organizations reduce manual work and improve operations using ServiceNow, AI, and process design: identifying bottlenecks, automating repetitive work, and applying AI where it creates measurable business value.',
   // TODO(confirm): preferred public contact email.
   email: 'contact@lukaszszumilas.com',
   newsletterName: 'ServiceNow Accelerator',
