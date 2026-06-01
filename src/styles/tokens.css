@@ -70,16 +70,21 @@
 
 /* ---- Optional dark theme (set data-theme="dark" on <html>) ---- */
 :root[data-theme='dark'] {
-  --bg: var(--lx-dark);
-  --surface: #1c1c1c;
-  --card: var(--lx-dark-card);
-  --text: var(--lx-cream);
-  --text-muted: #b9b3a8;
-  --text-subtle: #8f897e;
+  --bg: #0f0f0f;
+  --surface: #161616;
+  --card: #1a1a1a;
+  --text: #f4f1ea;
+  --text-muted: #b3ada3;
+  --text-subtle: #897f74;
   --accent-contrast: #ffffff;
-  --accent-soft: rgba(232, 115, 58, 0.16);
-  --border: rgba(250, 248, 244, 0.12);
-  --border-strong: rgba(250, 248, 244, 0.22);
-  --on-dark: var(--lx-cream);
+  --accent-soft: rgba(232, 115, 58, 0.14);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --ring: rgba(232, 115, 58, 0.5);
+  --on-dark: #f4f1ea;
+  /* Shadows need more weight on a near-black background. */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 18px 48px rgba(0, 0, 0, 0.6);
   color-scheme: dark;
 }

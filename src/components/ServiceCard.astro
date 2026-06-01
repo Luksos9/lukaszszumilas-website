@@ -1,13 +1,19 @@
 ---
+import Icon from './Icon.astro';
+
 interface Props {
   title: string;
   tagline: string;
   anchor: string;
+  icon?: string;
 }
-const { title, tagline, anchor } = Astro.props;
+const { title, tagline, anchor, icon } = Astro.props;
 ---
 
 <a href={`/services/#${anchor}`} class="service-card">
+  {icon && (
+    <span class="service-icon"><Icon name={icon} size={22} /></span>
+  )}
   <h3 class="service-card-title">{title}</h3>
   <p class="service-card-tag">{tagline}</p>
   <span class="service-card-cta">Learn more <span aria-hidden="true">→</span></span>
@@ -19,7 +25,7 @@ const { title, tagline, anchor } = Astro.props;
     flex-direction: column;
     gap: 0.5rem;
     height: 100%;
-    padding: clamp(1.4rem, 1rem + 1.2vw, 2rem);
+    padding: clamp(1.4rem, 1rem + 1.2vw, 1.9rem);
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
@@ -30,6 +36,16 @@ const { title, tagline, anchor } = Astro.props;
     transform: translateY(-4px);
     box-shadow: var(--shadow);
     border-color: var(--accent);
+  }
+  .service-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 2.7rem;
+    height: 2.7rem;
+    border-radius: var(--radius);
+    background: var(--accent-soft);
+    color: var(--accent);
+    margin-bottom: 0.3rem;
   }
   .service-card-title {
     font-family: var(--font-display);

@@ -1,4 +1,5 @@
 ---
+import Icon from './Icon.astro';
 import { framework } from '../data/framework';
 ---
 
@@ -7,7 +8,10 @@ import { framework } from '../data/framework';
     {framework.map((s, i) => (
       <Fragment>
         <li class="fw-step" data-reveal style={`--reveal-delay:${i * 130}ms`}>
-          <span class="fw-num">{s.n}</span>
+          <div class="fw-badge">
+            <Icon name={s.icon} size={24} />
+            <span class="fw-num">{s.n}</span>
+          </div>
           <h3 class="fw-title">{s.title}</h3>
           <p class="fw-body">{s.body}</p>
         </li>
@@ -17,6 +21,7 @@ import { framework } from '../data/framework';
       </Fragment>
     ))}
   </ol>
+  <div class="fw-loop" aria-hidden="true"></div>
   <p class="fw-caption">Continuous improvement at every step.</p>
 </div>
 
@@ -28,27 +33,39 @@ import { framework } from '../data/framework';
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
-    align-items: stretch;
   }
   .fw-step {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    padding: 1.3rem 1rem;
+    padding: 1.5rem 1rem;
     text-align: center;
-    box-shadow: var(--shadow-sm);
   }
-  .fw-num {
+  .fw-badge {
+    position: relative;
     display: inline-grid;
     place-items: center;
-    width: 2rem;
-    height: 2rem;
+    width: 3.1rem;
+    height: 3.1rem;
+    border-radius: var(--radius-pill);
+    border: 1.5px solid var(--accent);
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+  .fw-num {
+    position: absolute;
+    top: -0.45rem;
+    right: -0.45rem;
+    display: grid;
+    place-items: center;
+    width: 1.4rem;
+    height: 1.4rem;
     border-radius: var(--radius-pill);
     background: var(--accent);
     color: var(--accent-contrast);
     font-family: var(--font-mono);
     font-weight: 700;
-    margin-bottom: 0.6rem;
+    font-size: 0.72rem;
   }
   .fw-title {
     font-size: var(--step-0);
@@ -69,9 +86,12 @@ import { framework } from '../data/framework';
     font-size: 1.3rem;
     transform: rotate(90deg);
   }
+  .fw-loop {
+    display: none;
+  }
   .fw-caption {
     text-align: center;
-    margin-top: 1.4rem;
+    margin-top: 1.2rem;
     font-family: var(--font-mono);
     font-size: var(--step--1);
     color: var(--text-subtle);
@@ -88,6 +108,12 @@ import { framework } from '../data/framework';
       transform: none;
       flex: 0 0 auto;
       align-self: center;
+    }
+    .fw-loop {
+      display: block;
+      border-top: 1.5px dashed var(--accent);
+      opacity: 0.4;
+      margin: 1.3rem 2.5rem 0;
     }
   }
 </style>

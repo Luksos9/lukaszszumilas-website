@@ -8,11 +8,17 @@ import ServiceCard from '../components/ServiceCard.astro';
 import PostCard from '../components/PostCard.astro';
 import ClientStrip from '../components/ClientStrip.astro';
 import Framework from '../components/Framework.astro';
+import Icon from '../components/Icon.astro';
 import { site } from '../data/site';
 import { services } from '../data/services';
 import { areas } from '../data/areas';
 import { problems } from '../data/problems';
 import { caseStudies } from '../data/caseStudies';
+import { valueProps } from '../data/valueProps';
+
+// Flip to true and drop a transparent PNG at /public/lukasz-cutout.png for the
+// exact cut-out hero. Until then the framed photo is used.
+const HAS_CUTOUT = false;
 
 const posts = (await getCollection('blog'))
   .filter((p) => !p.data.draft)
@@ -34,6 +40,7 @@ const personJsonLd = {
 <BaseLayout jsonLd={personJsonLd}>
   <!-- 1. HERO -->
   <section class="hero">
+    <span class="hero-dots" aria-hidden="true"></span>
     <div class="container hero-grid">
       <div class="hero-text">
         <p class="eyebrow" data-reveal>ServiceNow &amp; AI Specialist</p>
@@ -43,37 +50,53 @@ const personJsonLd = {
           <span data-reveal style="--reveal-delay:320ms">with <span class="accent">AI &amp; ServiceNow</span></span>
         </h1>
         <p class="hero-lead lead" data-reveal style="--reveal-delay:440ms">
-          From ServiceNow implementations and workflow automation to AI solutions that save time,
-          reduce manual work, and improve productivity.
+          I design practical solutions that improve processes, automate work, and apply AI where
+          it delivers measurable business impact.
         </p>
         <div class="hero-cta cluster" data-reveal style="--reveal-delay:560ms">
           <CtaButton href="/contact/" size="lg">Book a consultation</CtaButton>
-          <CtaButton href="/blog/" variant="secondary" size="lg">Read my insights</CtaButton>
+          <CtaButton href="/services/" variant="secondary" size="lg">Explore my approach</CtaButton>
+        </div>
+        <div class="hero-stats" data-reveal style="--reveal-delay:680ms">
+          <StatBadge value="17+" label="ServiceNow certifications" />
+          <StatBadge value="10,000+" label="students trained" />
+          <StatBadge value="Enterprise" label="banking, insurance, manufacturing" />
         </div>
       </div>
-      <div class="hero-photo" data-reveal style="--reveal-delay:240ms">
-        <img src="/lukasz.webp" alt="Lukasz Szumilas" width="900" height="1349" fetchpriority="high" />
-        <span class="hero-note">Practical solutions. Real impact.</span>
-      </div>
-    </div>
 
-    <div class="container trusted">
-      <span class="trusted-label">Trusted by teams in</span>
-      <ClientStrip />
+      <div class="hero-photo" data-reveal style="--reveal-delay:240ms">
+        <img class="hero-flow" src="/hero-flow.svg" alt="" aria-hidden="true" />
+        {HAS_CUTOUT ? (
+          <img class="hero-cutout" src="/lukasz-cutout.png" alt="Lukasz Szumilas" width="900" height="1349" fetchpriority="high" />
+        ) : (
+          <div class="hero-frame">
+            <img src="/lukasz.webp" alt="Lukasz Szumilas" width="900" height="1349" fetchpriority="high" />
+          </div>
+        )}
+        <span class="hero-note">
+          Practical solutions. Real impact.
+          <svg class="hero-arrow" viewBox="0 0 80 50" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 6c20 28 44 36 70 30" />
+            <path d="M62 30l12 6-4-13" />
+          </svg>
+        </span>
+      </div>
     </div>
   </section>
 
-  <!-- proof bar -->
-  <div class="proofbar">
-    <div class="container proofbar-grid">
-      <StatBadge value="17+" label="ServiceNow certifications" />
-      <StatBadge value="10,000+" label="students taught" />
-      <StatBadge value="4+ yrs" label="enterprise delivery" />
-      <StatBadge value="Enterprise" label="banking, insurance, manufacturing" />
+  <!-- value-props bar -->
+  <div class="valuebar">
+    <div class="container valuebar-grid">
+      {valueProps.map((v) => (
+        <div class="vp">
+          <span class="vp-icon"><Icon name={v.icon} size={20} /></span>
+          <span class="vp-title">{v.title}</span>
+        </div>
+      ))}
     </div>
   </div>
 
-  <!-- 2. CONTRARIAN AI STATEMENT -->
+  <!-- 2. CONTRARIAN -->
   <Section tone="surface">
     <div class="contrarian">
       <div>
@@ -112,13 +135,14 @@ const personJsonLd = {
     <Framework />
   </Section>
 
-  <!-- 4. AREAS I WORK IN -->
+  <!-- 4. AREAS -->
   <Section tone="surface">
     <p class="eyebrow" data-reveal>Areas I work in</p>
     <h2 class="section-h2 display" data-reveal>Where I spend my time</h2>
     <div class="grid-4">
       {areas.map((a, i) => (
         <article class="card" data-reveal style={`--reveal-delay:${i * 90}ms`}>
+          <span class="card-icon"><Icon name={a.icon} /></span>
           <h3 class="card-title">{a.title}</h3>
           <p class="muted">{a.body}</p>
         </article>
@@ -126,14 +150,15 @@ const personJsonLd = {
     </div>
   </Section>
 
-  <!-- 5. PROBLEMS I SOLVE -->
+  <!-- 5. PROBLEMS -->
   <Section>
     <p class="eyebrow" data-reveal>Problems I solve</p>
     <h2 class="section-h2 display" data-reveal>You're probably dealing with at least one of these</h2>
     <div class="grid-3">
       {problems.map((p, i) => (
-        <article class="problem" data-reveal style={`--reveal-delay:${i * 90}ms`}>
-          <h3 class="problem-title">{p.title}</h3>
+        <article class="card" data-reveal style={`--reveal-delay:${i * 80}ms`}>
+          <span class="card-icon"><Icon name={p.icon} /></span>
+          <h3 class="card-title">{p.title}</h3>
           <p class="muted">{p.body}</p>
         </article>
       ))}
@@ -152,7 +177,7 @@ const personJsonLd = {
     <div class="grid-services">
       {services.map((s, i) => (
         <div data-reveal style={`--reveal-delay:${i * 70}ms`}>
-          <ServiceCard title={s.title} tagline={s.tagline} anchor={s.anchor} />
+          <ServiceCard title={s.title} tagline={s.tagline} anchor={s.anchor} icon={s.icon} />
         </div>
       ))}
     </div>
@@ -172,7 +197,7 @@ const personJsonLd = {
         <a href="/case-studies/" class="case" data-reveal style={`--reveal-delay:${i * 90}ms`}>
           <span class="case-sector">{c.sector}</span>
           <h3 class="case-title">{c.title}</h3>
-          <p class="muted">{c.summary}</p>
+          <p class="case-summary">{c.summary}</p>
           <span class="case-cta">Read case study →</span>
         </a>
       ))}
@@ -180,7 +205,7 @@ const personJsonLd = {
     <p class="muted case-note">Anonymized. Specifics shared under NDA on a call.</p>
   </Section>
 
-  <!-- 8. WHY TRUST ME (static, no reveal) -->
+  <!-- 8. WHY TRUST ME (static) -->
   <Section tone="surface">
     <p class="eyebrow">Why organizations trust me</p>
     <h2 class="section-h2 display">Proof, not promises</h2>
@@ -220,6 +245,7 @@ const personJsonLd = {
 
   <!-- 10. FINAL CTA -->
   <section class="final-cta">
+    <span class="final-dots" aria-hidden="true"></span>
     <div class="container final-cta-inner" data-reveal>
       <div>
         <h2 class="final-cta-title display">Let's discuss your next ServiceNow or AI initiative</h2>
@@ -236,13 +262,28 @@ const personJsonLd = {
 <style>
   /* HERO */
   .hero {
+    position: relative;
+    overflow: hidden;
     padding-block: clamp(2.5rem, 1.5rem + 4vw, 5rem) clamp(1.5rem, 1rem + 2vw, 3rem);
+  }
+  .hero-dots {
+    position: absolute;
+    inset: auto -60px -60px auto;
+    width: 320px;
+    height: 320px;
+    background-image: radial-gradient(var(--accent) 1.2px, transparent 1.2px);
+    background-size: 16px 16px;
+    opacity: 0.18;
+    -webkit-mask-image: radial-gradient(closest-side, #000, transparent);
+    mask-image: radial-gradient(closest-side, #000, transparent);
+    pointer-events: none;
   }
   .hero-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
     align-items: center;
+    position: relative;
   }
   .hero-title {
     font-size: var(--step-5);
@@ -257,59 +298,104 @@ const personJsonLd = {
     color: var(--accent);
   }
   .hero-lead {
-    max-width: 52ch;
+    max-width: 50ch;
     margin-bottom: 1.9rem;
+  }
+  .hero-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(1rem, 0.5rem + 2vw, 2rem);
+    align-items: center;
   }
   .hero-photo {
     position: relative;
     justify-self: center;
-  }
-  .hero-photo img {
     width: 100%;
-    max-width: 24rem;
+    max-width: 26rem;
+  }
+  .hero-flow {
+    position: absolute;
+    inset: -8% -14% -2% -14%;
+    width: 128%;
+    height: auto;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .hero-frame {
+    position: relative;
+    z-index: 1;
     border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--border-strong);
     box-shadow: var(--shadow-lg);
-    object-fit: cover;
+  }
+  .hero-frame img,
+  .hero-cutout {
+    width: 100%;
+    display: block;
+  }
+  .hero-frame::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 34%;
+    background: linear-gradient(transparent, color-mix(in srgb, var(--bg) 88%, transparent));
+  }
+  .hero-cutout {
+    position: relative;
+    z-index: 1;
+    filter: drop-shadow(0 18px 40px rgba(0, 0, 0, 0.5));
   }
   .hero-note {
     position: absolute;
-    top: 1rem;
+    top: 0.5rem;
     left: -0.5rem;
+    z-index: 2;
     font-family: var(--font-display);
     font-style: italic;
     font-size: var(--step-0);
     color: var(--text-muted);
-    background: var(--bg);
-    padding: 0.2rem 0.6rem;
-    border-radius: var(--radius-sm);
-    box-shadow: var(--shadow-sm);
     display: none;
   }
-  .trusted {
-    display: flex;
-    align-items: center;
-    gap: 1rem 1.5rem;
-    flex-wrap: wrap;
-    margin-top: 2.5rem;
+  .hero-arrow {
+    position: absolute;
+    top: 1.6rem;
+    left: 0.5rem;
+    width: 70px;
+    height: 44px;
+    color: var(--accent);
+    transform: scaleX(-1);
   }
-  .trusted-label {
-    font-family: var(--font-mono);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    font-size: 0.72rem;
-    color: var(--text-subtle);
-    font-weight: 700;
-  }
-  /* PROOF BAR */
-  .proofbar {
+  /* VALUE BAR */
+  .valuebar {
     border-block: 1px solid var(--border);
     background: var(--surface);
   }
-  .proofbar-grid {
+  .valuebar-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-    padding-block: 1.75rem;
+    grid-template-columns: 1fr;
+    gap: 1rem 1.5rem;
+    padding-block: 1.5rem;
+  }
+  .vp {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+  .vp-icon {
+    display: inline-grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: var(--radius-sm);
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+  .vp-title {
+    font-size: var(--step--1);
+    color: var(--text-muted);
+    line-height: 1.3;
   }
   /* CONTRARIAN */
   .contrarian {
@@ -379,16 +465,30 @@ const personJsonLd = {
     gap: clamp(1rem, 0.5rem + 1.5vw, 1.5rem);
     grid-template-columns: 1fr;
   }
-  .card,
-  .problem {
+  .card {
     padding: 1.5rem;
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     height: 100%;
+    transition: transform var(--dur) var(--ease), border-color var(--dur), box-shadow var(--dur);
   }
-  .card-title,
-  .problem-title {
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent);
+    box-shadow: var(--shadow);
+  }
+  .card-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 2.7rem;
+    height: 2.7rem;
+    border-radius: var(--radius);
+    background: var(--accent-soft);
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+  .card-title {
     font-family: var(--font-display);
     font-weight: 600;
     font-size: var(--step-1);
@@ -401,17 +501,18 @@ const personJsonLd = {
     gap: 0.5rem;
     height: 100%;
     padding: 1.5rem;
-    background: var(--lx-dark);
-    color: var(--on-dark);
+    background: var(--card);
+    border: 1px solid var(--border-strong);
     border-radius: var(--radius-lg);
-    transition: transform var(--dur) var(--ease), box-shadow var(--dur);
+    transition: transform var(--dur) var(--ease), box-shadow var(--dur), border-color var(--dur);
   }
   .case:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-lg);
+    border-color: var(--accent);
   }
-  .case .muted {
-    color: #b9b3a8;
+  .case-summary {
+    color: var(--text-muted);
     font-size: var(--step--1);
     flex: 1 0 auto;
   }
@@ -454,12 +555,29 @@ const personJsonLd = {
   }
   /* FINAL CTA */
   .final-cta {
-    background: var(--accent);
-    color: var(--accent-contrast);
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(120% 140% at 80% 50%, rgba(232, 115, 58, 0.22), transparent 60%),
+      var(--lx-dark);
+    color: var(--lx-cream);
     padding-block: clamp(2.5rem, 1.5rem + 4vw, 4.5rem);
     margin-top: var(--section-y);
+    border-top: 1px solid var(--border);
+  }
+  .final-dots {
+    position: absolute;
+    inset: -40px auto -40px -40px;
+    width: 280px;
+    background-image: radial-gradient(var(--accent) 1.2px, transparent 1.2px);
+    background-size: 16px 16px;
+    opacity: 0.16;
+    -webkit-mask-image: radial-gradient(closest-side, #000, transparent);
+    mask-image: radial-gradient(closest-side, #000, transparent);
+    pointer-events: none;
   }
   .final-cta-inner {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -472,29 +590,20 @@ const personJsonLd = {
   .final-cta-sub {
     margin-top: 0.6rem;
     max-width: 50ch;
-    opacity: 0.92;
-  }
-  .final-cta :global(.btn--primary) {
-    background: var(--lx-dark);
-    color: #fff;
-  }
-  .final-cta :global(.btn--primary:hover) {
-    background: #000;
+    color: #cfc9be;
   }
   @media (min-width: 560px) {
-    .grid-3 {
+    .grid-3,
+    .grid-4 {
       grid-template-columns: repeat(2, 1fr);
     }
-    .grid-4 {
+    .valuebar-grid {
       grid-template-columns: repeat(2, 1fr);
     }
   }
   @media (min-width: 760px) {
     .hero-note {
       display: block;
-    }
-    .proofbar-grid {
-      grid-template-columns: repeat(4, 1fr);
     }
     .contrarian {
       grid-template-columns: 1fr 1fr;
@@ -513,6 +622,9 @@ const personJsonLd = {
     }
     .grid-services {
       grid-template-columns: repeat(3, 1fr);
+    }
+    .valuebar-grid {
+      grid-template-columns: repeat(5, 1fr);
     }
     .final-cta-inner {
       flex-direction: row;

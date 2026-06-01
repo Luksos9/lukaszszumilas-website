@@ -1,6 +1,7 @@
 export interface Service {
   /** Anchor id used for /services/#<anchor> deep links from the homepage. */
   anchor: string;
+  icon: string;
   title: string;
   /** One-line summary for the homepage services grid. */
   tagline: string;
@@ -17,6 +18,7 @@ export interface Service {
 export const services: Service[] = [
   {
     anchor: 'assessment',
+    icon: 'search',
     title: 'AI Opportunity Assessment',
     tagline: 'Find the repetitive work worth automating, and the order to do it in.',
     problem:
@@ -31,6 +33,7 @@ export const services: Service[] = [
   },
   {
     anchor: 'implementations',
+    icon: 'sparkle',
     title: 'AI & ServiceNow Implementations',
     tagline: 'Practical AI on the platform, built to pass a security review.',
     examples: [
@@ -44,6 +47,7 @@ export const services: Service[] = [
   },
   {
     anchor: 'development',
+    icon: 'code',
     title: 'ServiceNow Development',
     tagline: 'Extend and improve the platform without piling on technical debt.',
     examples: ['Catalog items', 'Integrations (REST, JavaScript)', 'Service Portal', 'Custom apps', 'Flows'],
@@ -51,6 +55,7 @@ export const services: Service[] = [
   },
   {
     anchor: 'reviews',
+    icon: 'shield',
     title: 'Architecture & Code Reviews',
     tagline: 'A focused second opinion before you commit to a direction.',
     deliverables: [
@@ -63,6 +68,7 @@ export const services: Service[] = [
   },
   {
     anchor: 'training',
+    icon: 'cap',
     title: 'Training & Workshops',
     tagline: 'Bring your team up to speed on ServiceNow, automation, and AI adoption.',
     deliverables: [
