@@ -1,0 +1,75 @@
+---
+// Signature visual: AI is a multiplier, not a fix. Same AI, two processes, two outcomes.
+const rows = [
+  { process: 'A broken process', op: 'multiplied by', result: 'Faster chaos', tone: 'bad' },
+  { process: 'A good process', op: 'multiplied by', result: 'Business impact', tone: 'good' },
+];
+---
+
+<div class="eq" data-reveal>
+  {rows.map((r, i) => (
+    <div class:list={['eq-row', `eq-row--${r.tone}`]} data-reveal style={`--reveal-delay:${i * 140}ms`}>
+      <span class="eq-term">{r.process}</span>
+      <span class="eq-op" aria-hidden="true">×</span>
+      <span class="eq-ai">AI</span>
+      <span class="eq-op" aria-hidden="true">=</span>
+      <span class="eq-result">{r.result}</span>
+    </div>
+  ))}
+</div>
+
+<style>
+  .eq {
+    display: grid;
+    gap: 0.9rem;
+    max-width: 48rem;
+    margin: 2rem auto 0;
+  }
+  .eq-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem 0.9rem;
+    padding: clamp(1rem, 2vw, 1.4rem) clamp(1.1rem, 2.5vw, 1.6rem);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background: var(--card);
+    text-align: center;
+  }
+  .eq-row--good {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .eq-term {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--step-1);
+    color: var(--text);
+  }
+  .eq-ai {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: var(--step-0);
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    padding: 0.15rem 0.55rem;
+    border-radius: var(--radius-pill);
+    background: var(--accent-soft);
+  }
+  .eq-op {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: var(--step-1);
+    color: var(--text-subtle);
+  }
+  .eq-result {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--step-1);
+    color: var(--text-muted);
+  }
+  .eq-row--good .eq-result {
+    color: var(--accent);
+  }
+</style>
