@@ -7,7 +7,7 @@
 export const site = {
   name: 'Lukasz Szumilas',
   shortName: 'Lukasz Szumilas',
-  role: 'ServiceNow & AI Consultant',
+  role: 'ServiceNow & AI Specialist',
   url: 'https://lukaszszumilas.com',
   defaultTitle: 'Lukasz Szumilas · ServiceNow & AI Consulting',
   description:

@@ -1,0 +1,72 @@
+---
+// Floating "Book a consultation" CTA. Appears after the visitor scrolls past
+// the hero. Hidden on the contact page (redundant there).
+---
+
+<a href="/contact/" class="sticky-cta" data-sticky-cta aria-hidden="true" tabindex="-1">
+  Book a consultation <span aria-hidden="true">→</span>
+</a>
+
+<script is:inline>
+  (() => {
+    const el = document.querySelector('[data-sticky-cta]');
+    if (!el) return;
+    if (location.pathname.replace(/\/$/, '') === '/contact') {
+      el.remove();
+      return;
+    }
+    const update = () => {
+      const past = window.scrollY > window.innerHeight * 0.7;
+      el.classList.toggle('is-shown', past);
+      el.setAttribute('aria-hidden', String(!past));
+      el.tabIndex = past ? 0 : -1;
+    };
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+  })();
+</script>
+
+<style>
+  .sticky-cta {
+    position: fixed;
+    z-index: 90;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--accent);
+    color: var(--accent-contrast);
+    font-weight: 600;
+    padding: 0.8rem 1.3rem;
+    border-radius: var(--radius-pill);
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    transform: translateY(14px);
+    pointer-events: none;
+    transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease), background var(--dur);
+  }
+  .sticky-cta.is-shown {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+  .sticky-cta:hover {
+    background: var(--accent-hover);
+  }
+  @media (max-width: 640px) {
+    .sticky-cta {
+      left: 1rem;
+      right: 1rem;
+      bottom: 0.75rem;
+      justify-content: center;
+      padding: 0.95rem;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sticky-cta {
+      transition: opacity var(--dur) var(--ease);
+      transform: none;
+    }
+  }
+</style>

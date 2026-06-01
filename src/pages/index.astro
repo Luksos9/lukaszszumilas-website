@@ -6,13 +6,13 @@ import CtaButton from '../components/CtaButton.astro';
 import StatBadge from '../components/StatBadge.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import PostCard from '../components/PostCard.astro';
-import NewsletterForm from '../components/NewsletterForm.astro';
+import ClientStrip from '../components/ClientStrip.astro';
+import Framework from '../components/Framework.astro';
 import { site } from '../data/site';
 import { services } from '../data/services';
-
-// Flip to true once a headshot exists at /public/lukasz.jpg (or update the path).
-const HAS_HEADSHOT = false;
-const HEADSHOT = '/lukasz.jpg';
+import { areas } from '../data/areas';
+import { problems } from '../data/problems';
+import { caseStudies } from '../data/caseStudies';
 
 const posts = (await getCollection('blog'))
   .filter((p) => !p.data.draft)
@@ -24,7 +24,7 @@ const personJsonLd = {
   '@type': 'Person',
   name: site.name,
   url: site.url,
-  jobTitle: 'ServiceNow & AI Consultant',
+  jobTitle: 'ServiceNow & AI Specialist',
   description: site.description,
   sameAs: [site.socials.linkedin, site.socials.udemy, site.socials.github],
   knowsAbout: ['ServiceNow', 'Governed AI', 'Model Context Protocol', 'ITSM', 'CMDB', 'CSDM', 'AI Agents'],
@@ -32,178 +32,326 @@ const personJsonLd = {
 ---
 
 <BaseLayout jsonLd={personJsonLd}>
-  <!-- HERO -->
+  <!-- 1. HERO -->
   <section class="hero">
-    <div class:list={['container', 'hero-grid', { 'has-photo': HAS_HEADSHOT }]}>
+    <div class="container hero-grid">
       <div class="hero-text">
-        <p class="eyebrow">ServiceNow &amp; AI consulting</p>
-        <h1 class="hero-title display">I Help Companies Improve Operations with AI &amp; ServiceNow</h1>
-        <p class="hero-lead lead">
+        <p class="eyebrow" data-reveal>ServiceNow &amp; AI Specialist</p>
+        <h1 class="hero-title display">
+          <span data-reveal style="--reveal-delay:80ms">I Help Companies</span>
+          <span data-reveal style="--reveal-delay:200ms">Improve Operations</span>
+          <span data-reveal style="--reveal-delay:320ms">with <span class="accent">AI &amp; ServiceNow</span></span>
+        </h1>
+        <p class="hero-lead lead" data-reveal style="--reveal-delay:440ms">
           From ServiceNow implementations and workflow automation to AI solutions that save time,
           reduce manual work, and improve productivity.
         </p>
-        <div class="hero-cta cluster">
+        <div class="hero-cta cluster" data-reveal style="--reveal-delay:560ms">
           <CtaButton href="/contact/" size="lg">Book a consultation</CtaButton>
-          <CtaButton href="/blog/" variant="secondary" size="lg">Read the articles</CtaButton>
+          <CtaButton href="/blog/" variant="secondary" size="lg">Read my insights</CtaButton>
         </div>
-        <div class="hero-proof">
-          <StatBadge value="17+" label="ServiceNow certs, first try" />
-          <span class="trust-div" aria-hidden="true"></span>
-          <StatBadge value="10,000+" label="students taught" />
-          <span class="trust-div" aria-hidden="true"></span>
-          <StatBadge value="4+ yrs" label="enterprise delivery" />
-        </div>
-        <p class="hero-sectors muted">
-          Enterprise experience across banking, insurance, and manufacturing.
-        </p>
       </div>
-      {HAS_HEADSHOT && (
-        <div class="hero-photo">
-          <img src={HEADSHOT} alt="Lukasz Szumilas" width="440" height="520" />
-        </div>
-      )}
+      <div class="hero-photo" data-reveal style="--reveal-delay:240ms">
+        <img src="/lukasz.webp" alt="Lukasz Szumilas" width="900" height="1349" fetchpriority="high" />
+        <span class="hero-note">Practical solutions. Real impact.</span>
+      </div>
+    </div>
+
+    <div class="container trusted">
+      <span class="trusted-label">Trusted by teams in</span>
+      <ClientStrip />
     </div>
   </section>
 
-  <!-- SERVICES OVERVIEW -->
-  <Section>
-    <div class="section-head">
-      <div>
-        <p class="eyebrow">Services</p>
-        <h2 class="section-h2 display">What I do</h2>
-      </div>
-      <a href="/services/" class="see-all">All services →</a>
+  <!-- proof bar -->
+  <div class="proofbar">
+    <div class="container proofbar-grid">
+      <StatBadge value="17+" label="ServiceNow certifications" />
+      <StatBadge value="10,000+" label="students taught" />
+      <StatBadge value="4+ yrs" label="enterprise delivery" />
+      <StatBadge value="Enterprise" label="banking, insurance, manufacturing" />
     </div>
-    <div class="grid-services">
-      {services.map((s) => (
-        <ServiceCard title={s.title} tagline={s.tagline} anchor={s.anchor} />
+  </div>
+
+  <!-- 2. CONTRARIAN AI STATEMENT -->
+  <Section tone="surface">
+    <div class="contrarian">
+      <div>
+        <p class="eyebrow" data-reveal>The truth about AI</p>
+        <h2 class="contrarian-title display">
+          <span data-reveal>Most companies don't</span>
+          <span data-reveal style="--reveal-delay:140ms">need more AI tools.</span>
+        </h2>
+        <p class="contrarian-sub" data-reveal style="--reveal-delay:300ms">
+          They need better processes, automation, and the right AI use cases.
+        </p>
+      </div>
+      <div class="contrarian-body" data-reveal style="--reveal-delay:200ms">
+        <p>
+          Plenty of teams start with AI because it's the thing to do this year. The bigger wins
+          almost always come from fixing the workflow first, then adding AI where it moves a
+          number you actually care about.
+        </p>
+        <p>That's the order I work in with every client.</p>
+        <blockquote class="contrarian-quote">
+          Real change happens when the technology, the process, and the people pull in the same
+          direction.
+        </blockquote>
+      </div>
+    </div>
+  </Section>
+
+  <!-- 3. FRAMEWORK -->
+  <Section>
+    <div class="section-head" data-reveal>
+      <div>
+        <p class="eyebrow">My AI &amp; ServiceNow framework</p>
+        <h2 class="section-h2 display">A practical path from inefficiency to impact</h2>
+      </div>
+    </div>
+    <Framework />
+  </Section>
+
+  <!-- 4. AREAS I WORK IN -->
+  <Section tone="surface">
+    <p class="eyebrow" data-reveal>Areas I work in</p>
+    <h2 class="section-h2 display" data-reveal>Where I spend my time</h2>
+    <div class="grid-4">
+      {areas.map((a, i) => (
+        <article class="card" data-reveal style={`--reveal-delay:${i * 90}ms`}>
+          <h3 class="card-title">{a.title}</h3>
+          <p class="muted">{a.body}</p>
+        </article>
       ))}
     </div>
   </Section>
 
-  <!-- AI DIFFERENTIATOR BAND -->
-  <Section tone="dark">
-    <div class="ai-band">
-      <p class="eyebrow">The differentiator</p>
-      <h2 class="section-h2 display">Governed AI on ServiceNow</h2>
-      <p class="ai-lead">
-        Most AI on ServiceNow stops at the demo. I take it to production: MCP done right, with
-        agents that do only what they're allowed to and data that stays where it belongs.
-      </p>
-      <CtaButton href="/ai-servicenow/">How I do it →</CtaButton>
-    </div>
-  </Section>
-
-  <!-- WHY WORK WITH ME -->
-  <Section tone="surface">
-    <p class="eyebrow">Why work with me</p>
-    <h2 class="section-h2 display">Enterprise-grade, and I can explain it</h2>
-    <div class="grid-why">
-      <article class="why-card">
-        <h3 class="why-title">Enterprise experience</h3>
-        <p class="muted">4+ years delivering ServiceNow for banks, insurers, and manufacturers, in environments with real security review.</p>
-      </article>
-      <article class="why-card">
-        <h3 class="why-title">Educator</h3>
-        <p class="muted">10,000+ students learn certification prep from my courses. Teaching keeps the fundamentals sharp and the explanations clear.</p>
-      </article>
-      <article class="why-card">
-        <h3 class="why-title">Technical expertise</h3>
-        <p class="muted">17 ServiceNow certifications, every one passed on the first attempt, plus the AI track.</p>
-      </article>
-    </div>
-  </Section>
-
-  <!-- LATEST ARTICLES -->
+  <!-- 5. PROBLEMS I SOLVE -->
   <Section>
-    <div class="section-head">
+    <p class="eyebrow" data-reveal>Problems I solve</p>
+    <h2 class="section-h2 display" data-reveal>You're probably dealing with at least one of these</h2>
+    <div class="grid-3">
+      {problems.map((p, i) => (
+        <article class="problem" data-reveal style={`--reveal-delay:${i * 90}ms`}>
+          <h3 class="problem-title">{p.title}</h3>
+          <p class="muted">{p.body}</p>
+        </article>
+      ))}
+    </div>
+  </Section>
+
+  <!-- 6. SERVICES -->
+  <Section tone="surface">
+    <div class="section-head" data-reveal>
       <div>
-        <p class="eyebrow">Writing</p>
-        <h2 class="section-h2 display">Latest articles</h2>
+        <p class="eyebrow">How I help</p>
+        <h2 class="section-h2 display">Services that drive real business impact</h2>
       </div>
-      <a href="/blog/" class="see-all">All posts →</a>
+      <a href="/services/" class="see-all">All services →</a>
+    </div>
+    <div class="grid-services">
+      {services.map((s, i) => (
+        <div data-reveal style={`--reveal-delay:${i * 70}ms`}>
+          <ServiceCard title={s.title} tagline={s.tagline} anchor={s.anchor} />
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <!-- 7. CASE STUDIES -->
+  <Section>
+    <div class="section-head" data-reveal>
+      <div>
+        <p class="eyebrow">Selected work</p>
+        <h2 class="section-h2 display">Real impact in the enterprise</h2>
+      </div>
+      <a href="/case-studies/" class="see-all">All case studies →</a>
+    </div>
+    <div class="grid-3">
+      {caseStudies.map((c, i) => (
+        <a href="/case-studies/" class="case" data-reveal style={`--reveal-delay:${i * 90}ms`}>
+          <span class="case-sector">{c.sector}</span>
+          <h3 class="case-title">{c.title}</h3>
+          <p class="muted">{c.summary}</p>
+          <span class="case-cta">Read case study →</span>
+        </a>
+      ))}
+    </div>
+    <p class="muted case-note">Anonymized. Specifics shared under NDA on a call.</p>
+  </Section>
+
+  <!-- 8. WHY TRUST ME (static, no reveal) -->
+  <Section tone="surface">
+    <p class="eyebrow">Why organizations trust me</p>
+    <h2 class="section-h2 display">Proof, not promises</h2>
+    <div class="trust-stats">
+      <StatBadge value="17+" label="ServiceNow certifications" />
+      <StatBadge value="10,000+" label="students taught worldwide" />
+      <StatBadge value="4+ yrs" label="enterprise project experience" />
+    </div>
+    <ul class="trust-points" role="list">
+      <li><strong>Enterprise experience.</strong> Banking, insurance, and manufacturing.</li>
+      <li><strong>Educator.</strong> 10,000+ students through Lucky X courses.</li>
+      <li><strong>Speaker and content creator.</strong> Sharing practical ServiceNow and AI knowledge.</li>
+    </ul>
+  </Section>
+
+  <!-- 9. INSIGHTS -->
+  <Section>
+    <div class="section-head" data-reveal>
+      <div>
+        <p class="eyebrow">Latest insights</p>
+        <h2 class="section-h2 display">Practical writing on ServiceNow &amp; AI</h2>
+      </div>
+      <a href="/blog/" class="see-all">All articles →</a>
     </div>
     {posts.length > 0 ? (
-      <div class="grid-posts">
-        {posts.map((post) => <PostCard post={post} />)}
+      <div class="grid-3">
+        {posts.map((post, i) => (
+          <div data-reveal style={`--reveal-delay:${i * 90}ms`}>
+            <PostCard post={post} />
+          </div>
+        ))}
       </div>
     ) : (
       <p class="muted">New articles are landing soon.</p>
     )}
   </Section>
 
-  <!-- NEWSLETTER -->
-  <Section tone="dark">
-    <div class="nl-band">
-      <p class="eyebrow">Newsletter</p>
-      <h2 class="section-h2 display">{site.newsletterName}</h2>
-      <p class="ai-lead">Practical ServiceNow and AI in your inbox. Only when I have something worth your time.</p>
-      <NewsletterForm variant="card" />
-      <p class="muted nl-note">No spam. Unsubscribe anytime.</p>
-    </div>
-  </Section>
-
-  <!-- CONTACT CTA -->
-  <Section>
-    <div class="contact-cta">
-      <h2 class="section-h2 display">Let's discuss your project</h2>
-      <p class="lead">Tell me what you're working on. I'll tell you honestly whether I'm the right person for it.</p>
-      <div class="cluster">
-        <CtaButton href="/contact/" size="lg">Book a consultation</CtaButton>
-        <CtaButton href="/services/" variant="secondary" size="lg">See the services</CtaButton>
+  <!-- 10. FINAL CTA -->
+  <section class="final-cta">
+    <div class="container final-cta-inner" data-reveal>
+      <div>
+        <h2 class="final-cta-title display">Let's discuss your next ServiceNow or AI initiative</h2>
+        <p class="final-cta-sub">
+          Book a free consultation call and we'll find where AI and a better process actually move
+          the needle for you.
+        </p>
       </div>
+      <CtaButton href="/contact/" size="lg">Book a consultation</CtaButton>
     </div>
-  </Section>
+  </section>
 </BaseLayout>
 
 <style>
+  /* HERO */
   .hero {
-    padding-block: clamp(3rem, 2rem + 5vw, 6rem) clamp(2rem, 1.5rem + 2vw, 3.5rem);
+    padding-block: clamp(2.5rem, 1.5rem + 4vw, 5rem) clamp(1.5rem, 1rem + 2vw, 3rem);
   }
   .hero-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 2.5rem;
+    gap: 2rem;
     align-items: center;
   }
   .hero-title {
     font-size: var(--step-5);
-    max-width: 16ch;
     margin-bottom: 1.1rem;
+    line-height: 1.04;
+  }
+  .hero-title span {
+    display: block;
+  }
+  .hero-title .accent {
+    display: inline;
+    color: var(--accent);
   }
   .hero-lead {
-    max-width: 56ch;
+    max-width: 52ch;
     margin-bottom: 1.9rem;
   }
-  .hero-cta {
-    margin-bottom: 2.25rem;
-  }
-  .hero-proof {
-    display: flex;
-    align-items: center;
-    gap: clamp(1rem, 0.5rem + 2vw, 2rem);
-    flex-wrap: wrap;
-  }
-  .trust-div {
-    width: 1px;
-    height: 2.5rem;
-    background: var(--border-strong);
-  }
-  .hero-sectors {
-    margin-top: 1.1rem;
-    font-size: var(--step--1);
+  .hero-photo {
+    position: relative;
+    justify-self: center;
   }
   .hero-photo img {
     width: 100%;
-    max-width: 26rem;
+    max-width: 24rem;
     border-radius: var(--radius-lg);
-    object-fit: cover;
     box-shadow: var(--shadow-lg);
-    margin-inline: auto;
+    object-fit: cover;
   }
+  .hero-note {
+    position: absolute;
+    top: 1rem;
+    left: -0.5rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: var(--step-0);
+    color: var(--text-muted);
+    background: var(--bg);
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
+    display: none;
+  }
+  .trusted {
+    display: flex;
+    align-items: center;
+    gap: 1rem 1.5rem;
+    flex-wrap: wrap;
+    margin-top: 2.5rem;
+  }
+  .trusted-label {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.72rem;
+    color: var(--text-subtle);
+    font-weight: 700;
+  }
+  /* PROOF BAR */
+  .proofbar {
+    border-block: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .proofbar-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    padding-block: 1.75rem;
+  }
+  /* CONTRARIAN */
+  .contrarian {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .contrarian-title {
+    font-size: var(--step-4);
+    line-height: 1.05;
+  }
+  .contrarian-title span {
+    display: block;
+  }
+  .contrarian-sub {
+    margin-top: 1rem;
+    font-size: var(--step-1);
+    font-weight: 600;
+    color: var(--accent);
+    max-width: 28ch;
+  }
+  .contrarian-body p {
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+  .contrarian-body p + p {
+    margin-top: 1rem;
+  }
+  .contrarian-quote {
+    margin-top: 1.5rem;
+    padding: 1rem 1.25rem;
+    border-left: 3px solid var(--accent);
+    background: var(--card);
+    border-radius: var(--radius);
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    line-height: 1.4;
+  }
+  /* SHARED */
   .section-h2 {
     font-size: var(--step-3);
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
   }
   .section-head {
     display: flex;
@@ -224,59 +372,152 @@ const personJsonLd = {
   .see-all:hover {
     color: var(--accent-hover);
   }
-  .grid-services,
-  .grid-why,
-  .grid-posts {
+  .grid-3,
+  .grid-4,
+  .grid-services {
     display: grid;
     gap: clamp(1rem, 0.5rem + 1.5vw, 1.5rem);
     grid-template-columns: 1fr;
   }
-  .ai-band,
-  .nl-band,
-  .contact-cta {
-    max-width: 46rem;
-  }
-  .ai-lead {
-    color: #cfc9be;
-    max-width: 56ch;
-    margin-bottom: 1.75rem;
-    line-height: 1.6;
-  }
-  .why-card {
+  .card,
+  .problem {
     padding: 1.5rem;
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
+    height: 100%;
   }
-  .why-title {
+  .card-title,
+  .problem-title {
     font-family: var(--font-display);
     font-weight: 600;
     font-size: var(--step-1);
     margin-bottom: 0.4rem;
   }
-  .nl-note {
-    margin-top: 0.85rem;
-    font-size: var(--step--1);
-  }
-  .contact-cta {
+  /* CASE STUDIES */
+  .case {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.5rem;
+    height: 100%;
+    padding: 1.5rem;
+    background: var(--lx-dark);
+    color: var(--on-dark);
+    border-radius: var(--radius-lg);
+    transition: transform var(--dur) var(--ease), box-shadow var(--dur);
+  }
+  .case:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+  .case .muted {
+    color: #b9b3a8;
+    font-size: var(--step--1);
+    flex: 1 0 auto;
+  }
+  .case-sector {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: var(--step--1);
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .case-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--step-1);
+  }
+  .case-cta {
+    font-weight: 600;
+    color: var(--accent);
+    font-size: var(--step--1);
+  }
+  .case-note {
+    margin-top: 1.25rem;
+    font-size: var(--step--1);
+  }
+  /* TRUST */
+  .trust-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(1.25rem, 0.5rem + 3vw, 3rem);
+    margin-bottom: 1.75rem;
+  }
+  .trust-points {
+    display: grid;
+    gap: 0.6rem;
+    max-width: 60ch;
+  }
+  .trust-points li {
+    color: var(--text-muted);
+  }
+  /* FINAL CTA */
+  .final-cta {
+    background: var(--accent);
+    color: var(--accent-contrast);
+    padding-block: clamp(2.5rem, 1.5rem + 4vw, 4.5rem);
+    margin-top: var(--section-y);
+  }
+  .final-cta-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
     align-items: flex-start;
   }
-  @media (min-width: 640px) {
-    .grid-services,
-    .grid-why,
-    .grid-posts {
-      grid-template-columns: repeat(3, 1fr);
+  .final-cta-title {
+    font-size: var(--step-3);
+    max-width: 22ch;
+  }
+  .final-cta-sub {
+    margin-top: 0.6rem;
+    max-width: 50ch;
+    opacity: 0.92;
+  }
+  .final-cta :global(.btn--primary) {
+    background: var(--lx-dark);
+    color: #fff;
+  }
+  .final-cta :global(.btn--primary:hover) {
+    background: #000;
+  }
+  @media (min-width: 560px) {
+    .grid-3 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .grid-4 {
+      grid-template-columns: repeat(2, 1fr);
     }
   }
-  @media (min-width: 880px) {
-    .hero-grid.has-photo {
-      grid-template-columns: 1.4fr 1fr;
+  @media (min-width: 760px) {
+    .hero-note {
+      display: block;
+    }
+    .proofbar-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .contrarian {
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+  }
+  @media (min-width: 900px) {
+    .hero-grid {
+      grid-template-columns: 1.35fr 1fr;
+    }
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .grid-4 {
+      grid-template-columns: repeat(4, 1fr);
     }
     .grid-services {
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .final-cta-inner {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
     }
   }
 </style>

@@ -1,0 +1,93 @@
+---
+import { framework } from '../data/framework';
+---
+
+<div class="framework">
+  <ol class="fw-track" role="list">
+    {framework.map((s, i) => (
+      <Fragment>
+        <li class="fw-step" data-reveal style={`--reveal-delay:${i * 130}ms`}>
+          <span class="fw-num">{s.n}</span>
+          <h3 class="fw-title">{s.title}</h3>
+          <p class="fw-body">{s.body}</p>
+        </li>
+        {i < framework.length - 1 && (
+          <li class="fw-arrow" data-reveal style={`--reveal-delay:${i * 130 + 70}ms`} aria-hidden="true">→</li>
+        )}
+      </Fragment>
+    ))}
+  </ol>
+  <p class="fw-caption">Continuous improvement at every step.</p>
+</div>
+
+<style>
+  .fw-track {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    align-items: stretch;
+  }
+  .fw-step {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.3rem 1rem;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+  }
+  .fw-num {
+    display: inline-grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--radius-pill);
+    background: var(--accent);
+    color: var(--accent-contrast);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+  }
+  .fw-title {
+    font-size: var(--step-0);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.3rem;
+  }
+  .fw-body {
+    font-size: var(--step--1);
+    color: var(--text-muted);
+    line-height: 1.45;
+  }
+  .fw-arrow {
+    display: grid;
+    place-items: center;
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 1.3rem;
+    transform: rotate(90deg);
+  }
+  .fw-caption {
+    text-align: center;
+    margin-top: 1.4rem;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--text-subtle);
+  }
+  @media (min-width: 900px) {
+    .fw-track {
+      flex-direction: row;
+      align-items: stretch;
+    }
+    .fw-step {
+      flex: 1 1 0;
+    }
+    .fw-arrow {
+      transform: none;
+      flex: 0 0 auto;
+      align-self: center;
+    }
+  }
+</style>

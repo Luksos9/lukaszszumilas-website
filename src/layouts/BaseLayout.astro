@@ -12,6 +12,7 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Analytics from '../components/Analytics.astro';
+import StickyCta from '../components/StickyCta.astro';
 
 interface Props {
   title?: string;
@@ -44,6 +45,7 @@ const { title, description, image, article, publishedTime, noindex, canonical, j
           document.documentElement.dataset.theme = 'light';
         }
       })();
+      document.documentElement.classList.add('js');
     </script>
     <BaseHead
       title={title}
@@ -65,5 +67,23 @@ const { title, description, image, article, publishedTime, noindex, canonical, j
       <slot />
     </main>
     <Footer />
+    <StickyCta />
+    <script is:inline>
+      (() => {
+        if (!('IntersectionObserver' in window)) return;
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add('is-visible');
+                io.unobserve(e.target);
+              }
+            });
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.12 }
+        );
+        document.querySelectorAll('[data-reveal]').forEach((el) => io.observe(el));
+      })();
+    </script>
   </body>
 </html>

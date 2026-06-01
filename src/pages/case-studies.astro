@@ -1,0 +1,104 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Section from '../components/Section.astro';
+import CtaButton from '../components/CtaButton.astro';
+import { caseStudies } from '../data/caseStudies';
+---
+
+<BaseLayout
+  title="Case Studies"
+  description="Anonymized examples of ServiceNow and AI work across banking, insurance, and manufacturing."
+>
+  <PageHeader eyebrow="Case studies" title="Real impact in the enterprise">
+    Anonymized examples of the work I do across banking, insurance, and manufacturing. I'll walk
+    you through the specifics, including the numbers, on a call.
+  </PageHeader>
+
+  <Section>
+    <div class="cs-grid">
+      {caseStudies.map((c) => (
+        <article class="cs-card">
+          <span class="cs-sector">{c.sector}</span>
+          <h2 class="cs-title display">{c.title}</h2>
+          <p class="muted">{c.summary}</p>
+        </article>
+      ))}
+    </div>
+    <p class="muted cs-note">
+      Client names and exact figures are kept private. If one of these sounds like your situation,
+      <a href="/contact/">book a call</a> and I'll show you the detail.
+    </p>
+  </Section>
+
+  <Section tone="dark">
+    <div class="cta-band">
+      <h2 class="cta-h2 display">Have a similar problem?</h2>
+      <p class="cta-lead">
+        Tell me what's slowing your team down. We'll find where AI and a better process actually
+        help.
+      </p>
+      <div class="cluster">
+        <CtaButton href="/contact/" size="lg">Book a consultation</CtaButton>
+        <CtaButton href="/services/" variant="secondary" size="lg">See the services</CtaButton>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .cs-grid {
+    display: grid;
+    gap: clamp(1rem, 0.5rem + 1.5vw, 1.5rem);
+    grid-template-columns: 1fr;
+  }
+  .cs-card {
+    padding: 1.75rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
+  .cs-sector {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: var(--step--1);
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .cs-title {
+    font-size: var(--step-2);
+    margin: 0.4rem 0 0.6rem;
+  }
+  .cs-note {
+    margin-top: 1.75rem;
+    max-width: 60ch;
+    font-size: var(--step--1);
+  }
+  .cs-note a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .cta-band {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+    max-width: 46rem;
+  }
+  .cta-h2 {
+    font-size: var(--step-3);
+  }
+  .cta-lead {
+    color: #cfc9be;
+    max-width: 52ch;
+    line-height: 1.6;
+  }
+  @media (min-width: 760px) {
+    .cs-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

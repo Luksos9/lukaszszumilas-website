@@ -51,7 +51,7 @@ export const services: Service[] = [
   },
   {
     anchor: 'reviews',
-    title: 'Architecture Reviews',
+    title: 'Architecture & Code Reviews',
     tagline: 'A focused second opinion before you commit to a direction.',
     deliverables: [
       'Code review',
@@ -59,6 +59,18 @@ export const services: Service[] = [
       'Integration review',
       'Concrete, prioritized recommendations',
     ],
-    outcome: 'A short list of what to fix, what to leave alone, and what to watch.',
+    outcome: 'A short list of what to fix and what to safely leave alone.',
+  },
+  {
+    anchor: 'training',
+    title: 'Training & Workshops',
+    tagline: 'Bring your team up to speed on ServiceNow, automation, and AI adoption.',
+    deliverables: [
+      'Team workshops',
+      'ServiceNow best-practice sessions',
+      'Practical AI adoption training',
+      'Hands-on enablement',
+    ],
+    outcome: 'A team that can run and extend what we build together.',
   },
 ];

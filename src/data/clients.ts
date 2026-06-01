@@ -11,5 +11,5 @@ export const clients: Sector[] = [
   { name: 'Banking' },
   { name: 'Insurance' },
   { name: 'Manufacturing' },
-  { name: 'Enterprise IT' },
+  { name: 'Financial services' },
 ];
