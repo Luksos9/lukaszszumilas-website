@@ -7,11 +7,11 @@
 export const site = {
   name: 'Lukasz Szumilas',
   shortName: 'Lukasz Szumilas',
-  role: 'ServiceNow & AI Specialist',
+  role: 'ServiceNow & AI Consultant',
   url: 'https://lukaszszumilas.com',
-  defaultTitle: 'Lukasz Szumilas · ServiceNow & AI Specialist',
+  defaultTitle: 'Lukasz Szumilas · ServiceNow & AI Consulting',
   description:
-    'ServiceNow & AI Specialist shipping governed AI on ServiceNow, and a Udemy teacher with 10,000+ students. Consulting, courses, and writing on ServiceNow, MCP, and Claude.',
+    'I help companies improve operations with AI and ServiceNow, from platform implementations to AI solutions that cut manual work. Backed by 17 ServiceNow certifications and enterprise delivery experience.',
   // TODO(confirm): preferred public contact email.
   email: 'contact@lukaszszumilas.com',
   newsletterName: 'ServiceNow Accelerator',
@@ -21,15 +21,19 @@ export const site = {
     github: 'https://github.com/Luksos9',
     luckyx: 'https://luckyx.dev',
   },
+  booking: {
+    // TODO(launch): your Calendly scheduling link, e.g.
+    // 'https://calendly.com/lukaszszumilas/consultation'. While empty, the
+    // Contact page shows email + LinkedIn instead of an inline booking embed.
+    calendly: '',
+  },
   analytics: {
     // TODO(launch): set THIS site's own GA4 Measurement ID (G-XXXXXXXXXX).
-    // Do NOT reuse the luckyx.dev property id — it would mix the two datasets.
-    // While empty, no analytics script is emitted.
+    // Do NOT reuse the luckyx.dev property id. While empty, no analytics loads.
     ga4Id: '',
   },
   newsletter: {
     // TODO(launch): Kit/ConvertKit form id for the "ServiceNow Accelerator" list.
-    // While empty, the form renders but points nowhere (clearly a placeholder).
     kitFormId: '',
   },
 } as const;

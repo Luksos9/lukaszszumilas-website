@@ -1,0 +1,140 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Section from '../components/Section.astro';
+import CtaButton from '../components/CtaButton.astro';
+
+const capabilities = [
+  {
+    title: 'MCP integration',
+    body: 'One governed surface for AI to act through, instead of a dozen brittle scripts that each reinvent auth and error handling.',
+  },
+  {
+    title: 'Now Assist & AI Agent Studio',
+    body: "ServiceNow's native AI, configured with scopes and audit, not left wide open because it shipped that way.",
+  },
+  {
+    title: 'Knowledge assistants',
+    body: 'Answers grounded in your own ServiceNow data, with sources a user can actually check.',
+  },
+  {
+    title: 'Governance and review',
+    body: 'AI that holds up to a security review: real scopes, ACLs that still apply, audit logs, and a blast radius you can name.',
+  },
+];
+---
+
+<BaseLayout
+  title="AI & ServiceNow"
+  description="Governed AI on ServiceNow: MCP integration, Now Assist and AI Agent Studio set up with real governance, and knowledge assistants that pass a security review."
+>
+  <PageHeader eyebrow="AI & ServiceNow" title="Governed AI on ServiceNow">
+    Anyone can bolt a chatbot onto an instance. The hard part is AI a bank's security team will
+    sign off on. That's the work I do.
+  </PageHeader>
+
+  <Section>
+    <div class="page-body flow">
+      <p>
+        Most AI on ServiceNow stops at the demo. Connecting a model to an instance is easy. Making
+        it safe enough for production is the real job: data that stays where it belongs, and agents
+        that do only what they're allowed to. That takes ServiceNow knowledge, not just an API key.
+      </p>
+      <p>
+        I treat the model as the easy part and the governance as the work. The result is AI you can
+        put in front of an auditor, not just a slide.
+      </p>
+    </div>
+  </Section>
+
+  <Section tone="surface">
+    <p class="eyebrow">What I work on</p>
+    <h2 class="section-h2 display">The pieces that make AI safe on the platform</h2>
+    <div class="cap-grid">
+      {capabilities.map((c) => (
+        <article class="cap-card">
+          <h3 class="cap-title">{c.title}</h3>
+          <p class="muted">{c.body}</p>
+        </article>
+      ))}
+    </div>
+  </Section>
+
+  <Section tone="dark">
+    <div class="claude">
+      <p class="eyebrow">The Claude tilt</p>
+      <h2 class="section-h2 display">Why I lean toward Claude</h2>
+      <p class="claude-lead">
+        The durable bet is the capability: MCP and a controlled surface that holds regardless of
+        which model wins. The near-term bet is Claude, after ServiceNow made it a default model for
+        its Build Agent and shipped a supported MCP server. I'm in the Anthropic Claude Partner
+        Network on the consulting track, with a public MCP reference repo to back the approach.
+      </p>
+      <div class="cluster">
+        <CtaButton href="/blog/mcp-vs-diy-servicenow-ai-integrations/">Read: MCP vs DIY</CtaButton>
+        <CtaButton href="/blog/does-the-ai-have-my-servicenow-password/" variant="secondary">Read: does the AI have my password?</CtaButton>
+      </div>
+    </div>
+  </Section>
+
+  <Section>
+    <div class="cta-band">
+      <h2 class="section-h2 display">Thinking about AI on your ServiceNow instance?</h2>
+      <p class="lead">Start with an assessment. We map where AI actually pays off before anyone writes code.</p>
+      <div class="cluster">
+        <CtaButton href="/contact/" size="lg">Book a consultation</CtaButton>
+        <CtaButton href="/services/" variant="secondary" size="lg">See the services</CtaButton>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .page-body {
+    max-width: var(--maxw-prose);
+    font-size: var(--step-0);
+    line-height: 1.75;
+  }
+  .section-h2 {
+    font-size: var(--step-3);
+    margin-bottom: 1.5rem;
+  }
+  .cap-grid {
+    display: grid;
+    gap: clamp(1rem, 0.5rem + 1.5vw, 1.5rem);
+    grid-template-columns: 1fr;
+  }
+  .cap-card {
+    padding: 1.5rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+  .cap-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--step-1);
+    margin-bottom: 0.4rem;
+  }
+  .claude {
+    max-width: 60rem;
+  }
+  .claude-lead {
+    color: #cfc9be;
+    max-width: 60ch;
+    line-height: 1.6;
+    margin-bottom: 1.75rem;
+  }
+  .cta-band {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+    max-width: 46rem;
+  }
+  @media (min-width: 640px) {
+    .cap-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

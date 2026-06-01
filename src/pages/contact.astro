@@ -3,20 +3,37 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Section from '../components/Section.astro';
 import { site } from '../data/site';
+
+const calendly = site.booking.calendly;
 ---
 
-<BaseLayout title="Contact" description="Get in touch with Lukasz Szumilas about ServiceNow and governed-AI consulting, speaking, or the courses.">
-  <PageHeader eyebrow="Contact" title="Get in touch">
-    Consulting, a second opinion on a ServiceNow or AI plan, speaking, or a question about the
-    courses. Pick whichever is easiest.
+<BaseLayout
+  title="Book a consultation"
+  description="Book a ServiceNow or AI consultation with Lukasz Szumilas, or reach out about a project, workshop, or review."
+>
+  <PageHeader eyebrow="Contact" title="Book a consultation">
+    Consulting, a second opinion on a ServiceNow or AI plan, a workshop, or a quick question. Pick
+    whichever is easiest.
   </PageHeader>
 
   <Section>
+    {calendly ? (
+      <div class="booking">
+        <div class="calendly-inline-widget" data-url={calendly} style="min-width:320px;height:680px;"></div>
+        <script is:inline async src="https://assets.calendly.com/assets/external/widget.js"></script>
+      </div>
+    ) : (
+      <p class="muted booking-note">
+        Direct online booking is being set up. For now, email me or message me on LinkedIn and we'll
+        find a time that works.
+      </p>
+    )}
+
     <div class="contact-grid">
       <a class="contact-card" href={`mailto:${site.email}`}>
         <span class="contact-eyebrow">Email</span>
         <span class="contact-value">{site.email}</span>
-        <span class="contact-hint muted">Best for consulting and detailed questions.</span>
+        <span class="contact-hint muted">Best for project enquiries and detailed questions.</span>
       </a>
       <a class="contact-card" href={site.socials.linkedin} target="_blank" rel="noopener noreferrer">
         <span class="contact-eyebrow">LinkedIn</span>
@@ -24,6 +41,7 @@ import { site } from '../data/site';
         <span class="contact-hint muted">Where I'm most active. Good for a quick hello.</span>
       </a>
     </div>
+
     <p class="muted contact-note">
       For course support and student questions, use the Q&amp;A on the relevant
       <a href={site.socials.udemy} target="_blank" rel="noopener noreferrer">Udemy course</a> so the
@@ -33,6 +51,13 @@ import { site } from '../data/site';
 </BaseLayout>
 
 <style>
+  .booking {
+    margin-bottom: 2.5rem;
+  }
+  .booking-note {
+    margin-bottom: 2rem;
+    max-width: 60ch;
+  }
   .contact-grid {
     display: grid;
     gap: clamp(1rem, 0.5rem + 1.5vw, 1.5rem);

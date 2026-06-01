@@ -1,0 +1,51 @@
+---
+interface Props {
+  title: string;
+  tagline: string;
+  anchor: string;
+}
+const { title, tagline, anchor } = Astro.props;
+---
+
+<a href={`/services/#${anchor}`} class="service-card">
+  <h3 class="service-card-title">{title}</h3>
+  <p class="service-card-tag">{tagline}</p>
+  <span class="service-card-cta">Learn more <span aria-hidden="true">→</span></span>
+</a>
+
+<style>
+  .service-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    height: 100%;
+    padding: clamp(1.4rem, 1rem + 1.2vw, 2rem);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--dur) var(--ease), box-shadow var(--dur), border-color var(--dur);
+  }
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow);
+    border-color: var(--accent);
+  }
+  .service-card-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--step-1);
+    letter-spacing: -0.01em;
+  }
+  .service-card-tag {
+    color: var(--text-muted);
+    font-size: var(--step--1);
+    flex: 1 0 auto;
+  }
+  .service-card-cta {
+    margin-top: 0.4rem;
+    font-weight: 600;
+    color: var(--accent);
+    font-size: var(--step--1);
+  }
+</style>
