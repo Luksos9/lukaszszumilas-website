@@ -74,13 +74,15 @@ const homeActive = here === '/';
 <style>
   .dock {
     position: fixed;
-    left: 50%;
+    left: 0;
+    right: 0;
     bottom: calc(0.9rem + env(safe-area-inset-bottom, 0px));
-    transform: translateX(-50%);
     z-index: 100;
     display: flex;
     align-items: center;
     gap: 0.25rem;
+    width: max-content;
+    margin-inline: auto;
     max-width: calc(100vw - 1.25rem);
     padding: 0.4rem;
     border-radius: var(--radius-pill);
@@ -101,11 +103,11 @@ const homeActive = here === '/';
   @keyframes dockIn {
     from {
       opacity: 0;
-      transform: translate(-50%, 26px);
+      transform: translateY(26px);
     }
     to {
       opacity: 1;
-      transform: translateX(-50%);
+      transform: none;
     }
   }
   .dock-item {
@@ -193,6 +195,35 @@ const homeActive = here === '/';
     transform: translateX(3px);
   }
 
+  /* the theme toggle is a flex child of the dock — keep it from shrinking */
+  .dock :global(.theme-toggle) {
+    flex: 0 0 auto;
+  }
+  /* tighten so the whole dock fits small phones without an internal scroll */
+  @media (max-width: 520px) {
+    .dock {
+      gap: 0.15rem;
+      padding: 0.3rem;
+      max-width: calc(100vw - 0.6rem);
+    }
+    .dock-item {
+      padding: 0.55rem 0.48rem;
+    }
+    .dock-brand {
+      padding: 0.28rem;
+    }
+    .dock-brandmark {
+      width: 1.7rem;
+      height: 1.7rem;
+    }
+    .dock :global(.theme-toggle) {
+      width: 2rem;
+      height: 2rem;
+    }
+    .dock-cta {
+      padding: 0.5rem 0.6rem;
+    }
+  }
   /* >=480px: label the CTA */
   @media (min-width: 480px) {
     .dock-cta-label {

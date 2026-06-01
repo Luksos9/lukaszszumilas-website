@@ -122,6 +122,18 @@ const positions = [
     color: var(--text);
     line-height: 1.2;
   }
+  /* keep the circular layout's side nodes inside small viewports */
+  @media (max-width: 480px) {
+    .loop {
+      width: min(30rem, 86vw);
+    }
+    .loop-node {
+      width: 6.4rem;
+    }
+    .ln-title {
+      font-size: 0.7rem;
+    }
+  }
   /* nodes pop in sequentially as the ring draws */
   .js .loop-node {
     opacity: 0;
