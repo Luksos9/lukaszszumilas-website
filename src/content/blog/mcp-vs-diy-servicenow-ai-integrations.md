@@ -1,12 +1,12 @@
 ---
-title: "MCP vs DIY: how to connect AI to ServiceNow"
-description: "Two ways to wire an AI assistant into ServiceNow: hand-rolled REST glue, or the Model Context Protocol. When each one wins, and why I default to MCP now."
+title: "MCP vs Traditional Integrations on ServiceNow"
+description: "Two ways to connect AI to ServiceNow: traditional hand-built integrations, or the Model Context Protocol. When each one wins, and why I default to MCP now."
 pubDate: 2026-05-26
 tags: ["ai", "mcp", "servicenow"]
 draft: false
 ---
 
-There are two ways to connect an AI assistant to ServiceNow. You can hand-roll the integration, or you can use MCP. I spent a while doing the first one. Now I default to the second, and here's why.
+There are two ways to connect an AI assistant to ServiceNow. You can build a traditional integration, or you can use MCP. I spent a while doing the first one. Now I default to the second, and here's why.
 
 ## The DIY way
 
