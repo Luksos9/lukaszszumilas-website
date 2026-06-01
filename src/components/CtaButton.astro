@@ -22,12 +22,15 @@ const rel = external ? 'noopener noreferrer' : undefined;
   target={target}
   rel={rel}
 >
-  <span><slot /></span>
+  <span class="btn-label"><slot /></span>
   {showArrow && <span class="btn-arrow" aria-hidden="true">→</span>}
 </a>
 
 <style>
   .btn {
+    position: relative;
+    z-index: 0;
+    overflow: hidden;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -35,14 +38,20 @@ const rel = external ? 'noopener noreferrer' : undefined;
     font-weight: 600;
     line-height: 1;
     border-radius: var(--radius-pill);
-    padding: 0.8em 1.4em;
+    padding: 0.85em 1.5em;
     border: 1.5px solid transparent;
     white-space: nowrap;
-    transition: transform var(--dur) var(--ease), background var(--dur), color var(--dur),
-      border-color var(--dur), box-shadow var(--dur);
+    isolation: isolate;
+    transition: transform var(--dur) var(--ease), color var(--dur), border-color var(--dur),
+      box-shadow var(--dur);
+  }
+  .btn-label,
+  .btn-arrow {
+    position: relative;
+    z-index: 2;
   }
   .btn--lg {
-    padding: 0.95em 1.7em;
+    padding: 1em 1.8em;
     font-size: var(--step-1);
   }
   .btn:active {
@@ -54,33 +63,127 @@ const rel = external ? 'noopener noreferrer' : undefined;
   .btn:hover .btn-arrow {
     transform: translateX(4px);
   }
+
+  /* PRIMARY — "fill from the corner" morph (frosted panel sweeps in) */
   .btn--primary {
-    background: var(--accent);
+    background: transparent;
     color: var(--accent-contrast);
   }
-  .btn--primary:hover {
-    background: var(--accent-hover);
-    box-shadow: 0 0 0 1px var(--accent-soft), 0 10px 30px rgba(232, 115, 58, 0.3);
+  .btn--primary::before {
+    /* the solid orange body */
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: var(--accent);
+    border-radius: inherit;
+    transition: background var(--dur);
   }
+  .btn--primary::after {
+    /* frosted bubble in the corner that grows to fill on hover */
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    width: 2.4em;
+    height: 2.4em;
+    transform: translate(28%, 48%);
+    background: rgba(255, 255, 255, 0.22);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    border-radius: var(--radius-pill);
+    transition: transform 0.5s var(--ease), width 0.5s var(--ease), height 0.5s var(--ease),
+      border-radius 0.5s var(--ease);
+  }
+  .btn--primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 34px rgba(232, 115, 58, 0.42);
+  }
+  .btn--primary:hover::after {
+    transform: translate(0, 0);
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+  }
+  .btn--primary:active {
+    transform: translateY(0);
+  }
+
+  /* SECONDARY — glass outline, accent fills from the corner on hover */
   .btn--secondary {
-    background: color-mix(in srgb, var(--card) 70%, transparent);
+    background: color-mix(in srgb, var(--card) 55%, transparent);
     color: var(--text);
     border-color: var(--border-strong);
-    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+  .btn--secondary::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 0;
+    width: 2.2em;
+    height: 2.2em;
+    transform: translate(28%, 48%);
+    background: var(--accent-soft);
+    border-radius: var(--radius-pill);
+    transition: transform 0.5s var(--ease), width 0.5s var(--ease), height 0.5s var(--ease),
+      border-radius 0.5s var(--ease);
   }
   .btn--secondary:hover {
+    transform: translateY(-2px);
     border-color: var(--accent);
     color: var(--accent);
   }
+  .btn--secondary:hover::after {
+    transform: translate(0, 0);
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+  }
+  .btn--secondary:active {
+    transform: translateY(0);
+  }
+
+  /* GHOST — "Learn more" text link with an underline that draws in */
   .btn--ghost {
     background: transparent;
     color: var(--text);
-    padding-inline: 0.4em;
+    padding-inline: 0.25em;
+    border-radius: 0;
+    overflow: visible;
+  }
+  .btn--ghost::after {
+    content: '';
+    position: absolute;
+    left: 0.25em;
+    right: 1.7em;
+    bottom: 0.2em;
+    height: 1.5px;
+    background: var(--accent);
+    transform: scaleX(0.18);
+    transform-origin: left;
+    transition: transform 0.35s var(--ease);
   }
   .btn--ghost:hover {
     color: var(--accent);
   }
+  .btn--ghost:hover::after {
+    transform: scaleX(1);
+  }
+
   @media (prefers-reduced-motion: reduce) {
+    .btn,
+    .btn::before,
+    .btn::after,
+    .btn-arrow {
+      transition: none !important;
+    }
+    .btn:hover {
+      transform: none;
+    }
     .btn:hover .btn-arrow {
       transform: none;
     }
