@@ -9,6 +9,7 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Analytics from '../components/Analytics.astro';
+import { ClientRouter } from 'astro:transitions';
 
 interface Props {
   title?: string;
@@ -52,6 +53,7 @@ const { title, description, image, article, publishedTime, noindex, canonical, j
       jsonLd={jsonLd}
     />
     <Analytics />
+    <ClientRouter />
     <slot name="head" />
   </head>
   <body>
@@ -61,8 +63,11 @@ const { title, description, image, article, publishedTime, noindex, canonical, j
       <slot />
     </main>
     <Footer />
-    <script is:inline>
-      (() => {
+    <script>
+      // Re-run on every View Transitions navigation (astro:page-load fires on
+      // first load AND after each client navigation), so freshly-swapped
+      // [data-reveal] elements get observed instead of staying hidden.
+      function initReveal() {
         if (!('IntersectionObserver' in window)) return;
         const io = new IntersectionObserver(
           (entries) => {
@@ -75,8 +80,9 @@ const { title, description, image, article, publishedTime, noindex, canonical, j
           },
           { rootMargin: '0px 0px -8% 0px', threshold: 0.12 }
         );
-        document.querySelectorAll('[data-reveal]').forEach((el) => io.observe(el));
-      })();
+        document.querySelectorAll('[data-reveal]:not(.is-visible)').forEach((el) => io.observe(el));
+      }
+      document.addEventListener('astro:page-load', initReveal);
     </script>
   </body>
 </html>

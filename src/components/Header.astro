@@ -17,7 +17,7 @@ const cta = primaryNav.find((i) => i.cta);
 const homeActive = here === '/';
 ---
 
-<nav class="dock" aria-label="Primary">
+<nav class="dock" aria-label="Primary" transition:persist>
   <a
     href="/"
     class:list={['dock-item dock-brand', { 'is-active': homeActive }]}
@@ -53,6 +53,23 @@ const homeActive = here === '/';
     </a>
   )}
 </nav>
+
+<script>
+  // The dock is transition:persist'd, so its server-rendered active state is
+  // frozen from the first page. Re-sync the active item on every navigation.
+  function syncDock() {
+    const norm = (p: string) => (p !== '/' && p.endsWith('/') ? p.slice(0, -1) : p);
+    const here = norm(location.pathname);
+    document.querySelectorAll<HTMLAnchorElement>('.dock-item[href]').forEach((a) => {
+      const href = norm(new URL(a.href).pathname);
+      const active = href === '/' ? here === '/' : here === href || here.startsWith(href + '/');
+      a.classList.toggle('is-active', active);
+      if (active) a.setAttribute('aria-current', 'page');
+      else a.removeAttribute('aria-current');
+    });
+  }
+  document.addEventListener('astro:page-load', syncDock);
+</script>
 
 <style>
   .dock {
