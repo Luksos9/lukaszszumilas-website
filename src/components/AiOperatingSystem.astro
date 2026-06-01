@@ -22,14 +22,14 @@ const outputs = [
     ))}
   </ul>
 
-  <div class="aios-arrow" aria-hidden="true" data-reveal>↓</div>
+  <div class="aios-flow" aria-hidden="true" data-reveal><span class="aios-dot"></span></div>
 
   <div class="aios-layer" data-reveal>
     <span class="layer-pulse"></span>
     AI Layer
   </div>
 
-  <div class="aios-arrow" aria-hidden="true" data-reveal>↓</div>
+  <div class="aios-flow" aria-hidden="true" data-reveal style="--d:0.9s"><span class="aios-dot"></span></div>
 
   <ul class="aios-row outputs" role="list">
     {outputs.map((n, i) => (
@@ -78,14 +78,48 @@ const outputs = [
     background: var(--accent-soft);
     color: var(--accent);
   }
-  .aios-arrow {
-    color: var(--accent);
-    font-size: 1.4rem;
-    font-weight: 700;
-    line-height: 1;
+  .aios-flow {
+    position: relative;
+    width: 2px;
+    height: 1.7rem;
+    border-radius: 2px;
+    background: var(--border-strong);
+    overflow: hidden;
+  }
+  .aios-dot {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 6px;
+    height: 6px;
+    margin-left: -3px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0;
+  }
+  .js .aios-dot {
+    animation: aiosFlow 1.9s var(--ease) infinite;
+    animation-delay: var(--d, 0s);
+  }
+  @keyframes aiosFlow {
+    0% {
+      top: -6px;
+      opacity: 0;
+    }
+    25% {
+      opacity: 1;
+    }
+    75% {
+      opacity: 1;
+    }
+    100% {
+      top: 1.7rem;
+      opacity: 0;
+    }
   }
   .aios-layer {
     position: relative;
+    overflow: hidden;
     width: 100%;
     max-width: 46rem;
     text-align: center;
@@ -98,6 +132,36 @@ const outputs = [
     font-weight: 600;
     font-size: var(--step-1);
     letter-spacing: 0.01em;
+  }
+  .layer-pulse {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      115deg,
+      transparent 38%,
+      color-mix(in srgb, var(--accent) 35%, transparent) 50%,
+      transparent 62%
+    );
+    transform: translateX(-130%);
+  }
+  .aios-layer.is-visible .layer-pulse {
+    animation: aiosShimmer 3.6s var(--ease-out) 0.5s infinite;
+  }
+  @keyframes aiosShimmer {
+    0% {
+      transform: translateX(-130%);
+    }
+    55%,
+    100% {
+      transform: translateX(130%);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .aios-dot,
+    .layer-pulse {
+      display: none;
+    }
   }
   @media (min-width: 720px) {
     .aios-row.inputs {

@@ -10,7 +10,7 @@ interface Props {
 const { title, tagline, anchor, icon } = Astro.props;
 ---
 
-<a href={`/services/#${anchor}`} class="service-card">
+<a href={`/services/#${anchor}`} class="service-card shine">
   {icon && (
     <span class="service-icon"><Icon name={icon} size={22} /></span>
   )}
@@ -30,12 +30,18 @@ const { title, tagline, anchor, icon } = Astro.props;
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-sm);
-    transition: transform var(--dur) var(--ease), box-shadow var(--dur), border-color var(--dur);
+    transition: transform var(--dur-mid) var(--ease-out), box-shadow var(--dur-mid),
+      border-color var(--dur-mid);
   }
   .service-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow);
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
     border-color: var(--accent);
+  }
+  /* keep card text above the shine sweep */
+  .service-card > * {
+    position: relative;
+    z-index: 2;
   }
   .service-icon {
     display: inline-grid;

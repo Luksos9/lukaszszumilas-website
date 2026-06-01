@@ -20,7 +20,7 @@ const positions = [
     <span class="lc-title">Operations<br />Improvement</span>
   </div>
   {framework.map((s, i) => (
-    <div class="loop-node" style={`left:${positions[i].x}%;top:${positions[i].y}%`}>
+    <div class="loop-node" style={`left:${positions[i].x}%;top:${positions[i].y}%;--i:${i}`}>
       <span class="ln-num">{s.n}</span>
       <span class="ln-title">{s.title}</span>
     </div>
@@ -122,12 +122,64 @@ const positions = [
     color: var(--text);
     line-height: 1.2;
   }
+  /* nodes pop in sequentially as the ring draws */
+  .js .loop-node {
+    opacity: 0;
+  }
+  .loop.is-visible .loop-node {
+    animation: nodeIn 0.5s var(--ease-out) forwards;
+    animation-delay: calc(0.3s + var(--i) * 0.13s);
+  }
+  @keyframes nodeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  .js .loop-node .ln-num {
+    transform: scale(0.5);
+  }
+  .loop.is-visible .loop-node .ln-num {
+    animation: numPop 0.5s var(--ease-spring) forwards;
+    animation-delay: calc(0.34s + var(--i) * 0.13s);
+  }
+  @keyframes numPop {
+    from {
+      transform: scale(0.5);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+  .loop.is-visible .loop-center {
+    animation: hubPulse 3s var(--ease) 1.5s 2;
+  }
+  @keyframes hubPulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 transparent;
+    }
+    50% {
+      box-shadow: 0 0 0 7px var(--accent-soft);
+    }
+  }
   @media (prefers-reduced-motion: reduce) {
     .ring {
       stroke-dashoffset: 0;
     }
-    .loop.is-visible .ring {
+    .loop.is-visible .ring,
+    .loop.is-visible .loop-node,
+    .loop.is-visible .loop-node .ln-num,
+    .loop.is-visible .loop-center {
       animation: none;
+    }
+    .js .loop-node {
+      opacity: 1;
+    }
+    .js .loop-node .ln-num {
+      transform: none;
     }
   }
 </style>

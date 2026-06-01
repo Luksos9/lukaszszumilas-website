@@ -70,6 +70,23 @@ const quads = [
     background: var(--accent-soft);
     box-shadow: 0 0 0 1px var(--accent-soft);
   }
+  .matrix.is-visible .quad--win {
+    animation: winPulse 1.3s var(--ease-out) 0.7s 2;
+  }
+  @keyframes winPulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 1px var(--accent-soft);
+    }
+    50% {
+      box-shadow: 0 0 0 2px var(--accent), 0 0 22px -4px var(--ring);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .matrix.is-visible .quad--win {
+      animation: none;
+    }
+  }
   .quad-title {
     font-family: var(--font-display);
     font-weight: 600;

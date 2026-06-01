@@ -12,7 +12,7 @@ const primaryTag = tags[0];
 ---
 
 <article class="post-card">
-  <a href={href} class="post-card-link">
+  <a href={href} class="post-card-link shine">
     {primaryTag && <span class="post-card-tag">{primaryTag}</span>}
     <h3 class="post-card-title">{title}</h3>
     <p class="post-card-desc">{description}</p>
@@ -35,13 +35,17 @@ const primaryTag = tags[0];
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    transition: transform var(--dur) var(--ease), box-shadow var(--dur),
-      border-color var(--dur);
+    transition: transform var(--dur-mid) var(--ease-out), box-shadow var(--dur-mid),
+      border-color var(--dur-mid);
   }
   .post-card-link:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
     border-color: var(--accent);
+  }
+  .post-card-link > * {
+    position: relative;
+    z-index: 2;
   }
   .post-card-tag {
     align-self: flex-start;

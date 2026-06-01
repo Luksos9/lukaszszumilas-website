@@ -135,7 +135,7 @@ const jsonLd = [
       {problems.map((p, i) => {
         const weight = p.severity === 'Very Common' ? 'lead' : p.severity === 'Emerging' ? 'trail' : 'mid';
         return (
-          <div class="dx-row" data-weight={weight} data-reveal style={`--reveal-delay:${i * 70}ms`}>
+          <div class="dx-row" data-weight={weight} data-reveal="left" style={`--reveal-delay:${i * 70}ms`}>
             <div class="dx-now">
               <span class="dx-icon"><Icon name={p.icon} size={18} /></span>
               <span class="dx-copy">
@@ -174,7 +174,7 @@ const jsonLd = [
     </div>
     <div class="grid-3">
       {services.map((s, i) => (
-        <div data-reveal style={`--reveal-delay:${i * 70}ms`}>
+        <div data-reveal="scale" style={`--reveal-delay:${i * 70}ms`}>
           <ServiceCard title={s.title} tagline={s.tagline} anchor={s.anchor} icon={s.icon} />
         </div>
       ))}
@@ -230,7 +230,7 @@ const jsonLd = [
     {posts.length > 0 ? (
       <div class="grid-3">
         {posts.map((post, i) => (
-          <div data-reveal style={`--reveal-delay:${i * 90}ms`}>
+          <div data-reveal="scale" style={`--reveal-delay:${i * 90}ms`}>
             <PostCard post={post} />
           </div>
         ))}
@@ -474,6 +474,28 @@ const jsonLd = [
     color: var(--accent);
     background: var(--accent-soft);
     border-color: transparent;
+  }
+  .js .dx-icon--out {
+    transform: scale(0.6);
+    opacity: 0.4;
+  }
+  .dx-row.is-visible .dx-icon--out {
+    animation: dxPop 0.5s var(--ease-spring) 0.18s forwards;
+  }
+  @keyframes dxPop {
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .js .dx-icon--out {
+      transform: none;
+      opacity: 1;
+    }
+    .dx-row.is-visible .dx-icon--out {
+      animation: none;
+    }
   }
   .dx-arrow {
     color: var(--border-strong);

@@ -72,4 +72,39 @@ const rows = [
   .eq-row--good .eq-result {
     color: var(--accent);
   }
+  .js .eq-result {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  .eq-row.is-visible .eq-result {
+    animation: eqPop 0.55s var(--ease-spring) 0.2s forwards;
+  }
+  @keyframes eqPop {
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  .eq-row--good.is-visible {
+    animation: eqGlow 1.5s var(--ease-out) 0.5s 1;
+  }
+  @keyframes eqGlow {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 transparent;
+    }
+    45% {
+      box-shadow: 0 0 26px -4px var(--ring);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .js .eq-result {
+      transform: none;
+      opacity: 1;
+    }
+    .eq-row.is-visible .eq-result,
+    .eq-row--good.is-visible {
+      animation: none;
+    }
+  }
 </style>
