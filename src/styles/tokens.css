@@ -1,0 +1,85 @@
+/* ============================================================
+   Design tokens — Lucky X brand DNA, reused for the personal site.
+   Components reference ONLY the semantic aliases, never raw --lx-*.
+   ============================================================ */
+:root {
+  /* ---- Lucky X raw palette (brand DNA) ---- */
+  --lx-dark: #141414;
+  --lx-dark-card: #242424;
+  --lx-cream: #faf8f4;
+  --lx-cream-surface: #f3f0ea;
+  --lx-orange: #e8733a;
+  --lx-orange-dark: #c95a24;
+  --lx-ink: #1a1a1a;
+  --lx-green: #2d8a56;
+
+  /* ---- Semantic aliases (light theme) ---- */
+  --bg: var(--lx-cream);
+  --surface: var(--lx-cream-surface);
+  --card: #ffffff;
+  --text: var(--lx-ink);
+  --text-muted: #5a564f;
+  --text-subtle: #8a857c;
+  --accent: var(--lx-orange);
+  --accent-hover: var(--lx-orange-dark);
+  --accent-contrast: #ffffff;
+  --accent-soft: rgba(232, 115, 58, 0.10);
+  --success: var(--lx-green);
+  --success-soft: rgba(45, 138, 86, 0.12);
+  --border: rgba(26, 26, 26, 0.10);
+  --border-strong: rgba(26, 26, 26, 0.18);
+  --ring: rgba(232, 115, 58, 0.40);
+  --on-dark: var(--lx-cream);
+
+  /* ---- Typography ---- */
+  --font-sans: 'DM Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: 'Space Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  --font-display: 'Fraunces Variable', 'Fraunces', Georgia, 'Times New Roman', serif;
+
+  /* fluid type scale (1.2–1.25 ratio) */
+  --step--1: clamp(0.83rem, 0.81rem + 0.12vw, 0.9rem);
+  --step-0: clamp(1rem, 0.96rem + 0.22vw, 1.125rem);
+  --step-1: clamp(1.2rem, 1.12rem + 0.4vw, 1.45rem);
+  --step-2: clamp(1.45rem, 1.28rem + 0.85vw, 2rem);
+  --step-3: clamp(1.85rem, 1.55rem + 1.5vw, 2.85rem);
+  --step-4: clamp(2.25rem, 1.75rem + 2.5vw, 3.85rem);
+  --step-5: clamp(2.7rem, 1.95rem + 3.75vw, 5rem);
+
+  /* ---- Layout ---- */
+  --maxw: 1080px;
+  --maxw-prose: 72ch;
+  --maxw-narrow: 660px;
+  --gutter: clamp(1.1rem, 0.6rem + 2.4vw, 2.5rem);
+  --section-y: clamp(3.5rem, 2.5rem + 4vw, 6.5rem);
+  --radius: 14px;
+  --radius-sm: 9px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
+
+  /* ---- Effects ---- */
+  --shadow-sm: 0 1px 2px rgba(20, 20, 20, 0.04), 0 2px 6px rgba(20, 20, 20, 0.05);
+  --shadow: 0 1px 2px rgba(20, 20, 20, 0.04), 0 8px 24px rgba(20, 20, 20, 0.07);
+  --shadow-lg: 0 2px 4px rgba(20, 20, 20, 0.05), 0 18px 48px rgba(20, 20, 20, 0.12);
+
+  /* ---- Motion ---- */
+  --ease: cubic-bezier(0.2, 0.6, 0.2, 1);
+  --dur: 180ms;
+
+  color-scheme: light;
+}
+
+/* ---- Optional dark theme (set data-theme="dark" on <html>) ---- */
+:root[data-theme='dark'] {
+  --bg: var(--lx-dark);
+  --surface: #1c1c1c;
+  --card: var(--lx-dark-card);
+  --text: var(--lx-cream);
+  --text-muted: #b9b3a8;
+  --text-subtle: #8f897e;
+  --accent-contrast: #ffffff;
+  --accent-soft: rgba(232, 115, 58, 0.16);
+  --border: rgba(250, 248, 244, 0.12);
+  --border-strong: rgba(250, 248, 244, 0.22);
+  --on-dark: var(--lx-cream);
+  color-scheme: dark;
+}

@@ -1,0 +1,310 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+import CtaButton from '../components/CtaButton.astro';
+import PillarCard from '../components/PillarCard.astro';
+import StatBadge from '../components/StatBadge.astro';
+import ClientStrip from '../components/ClientStrip.astro';
+import CourseCard from '../components/CourseCard.astro';
+import PostCard from '../components/PostCard.astro';
+import NewsletterForm from '../components/NewsletterForm.astro';
+import { site } from '../data/site';
+import { featuredCourses, teachingStats } from '../data/courses';
+
+const posts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  url: site.url,
+  jobTitle: 'ServiceNow & AI Specialist',
+  description: site.description,
+  sameAs: [site.socials.linkedin, site.socials.udemy, site.socials.github],
+  knowsAbout: [
+    'ServiceNow',
+    'Governed AI',
+    'Model Context Protocol',
+    'ITSM',
+    'CMDB',
+    'CSDM',
+    'AI Agents',
+  ],
+};
+---
+
+<BaseLayout jsonLd={personJsonLd}>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <p class="eyebrow">ServiceNow &amp; AI Specialist · Udemy teacher</p>
+      <h1 class="hero-title display">
+        I ship governed AI on ServiceNow, and teach the certifications I've passed.
+      </h1>
+      <p class="hero-lead lead">
+        4+ years building ServiceNow for banks and insurers. 17 certifications, every one
+        passed on the first attempt. 10,000+ students on Udemy through Lucky X. If it runs on
+        ServiceNow, or puts AI safely on top of it, that's my work.
+      </p>
+      <div class="hero-cta cluster">
+        <CtaButton href="/consulting/" size="lg">Work with me</CtaButton>
+        <CtaButton href="/teaching/" variant="secondary" size="lg">Explore the courses</CtaButton>
+        <CtaButton href="/blog/" variant="ghost" size="lg">Read the blog →</CtaButton>
+      </div>
+      <div class="hero-trust">
+        <StatBadge value="17" label="ServiceNow certs, first try" />
+        <span class="trust-div" aria-hidden="true"></span>
+        <StatBadge value="10,000+" label="Udemy students" />
+        <span class="trust-div" aria-hidden="true"></span>
+        <StatBadge value="4.6★" label="average rating" />
+      </div>
+    </div>
+  </section>
+
+  <!-- THREE PILLARS -->
+  <Section>
+    <div class="grid-pillars">
+      <PillarCard eyebrow="Consulting" title="Work with me" href="/consulting/" cta="See how I help">
+        ServiceNow delivery plus governed AI: MCP, Now Assist, and AI Agents that survive a
+        bank's security review. Banking and insurance grade.
+      </PillarCard>
+      <PillarCard eyebrow="Teaching" title="Lucky X courses" href="/teaching/" cta="Browse the courses">
+        Practice tests for 18 ServiceNow certifications. Every answer sourced to official docs.
+        Only exams I've passed myself, on the first attempt.
+      </PillarCard>
+      <PillarCard eyebrow="Writing" title="The blog" href="/blog/" cta="Read the latest">
+        Scripting, CMDB and CSDM, certification strategy, and what governed AI on the platform
+        actually looks like in production.
+      </PillarCard>
+    </div>
+  </Section>
+
+  <!-- PROOF BAR -->
+  <Section tone="surface">
+    <p class="eyebrow">Track record</p>
+    <h2 class="section-h2 display">ServiceNow work delivered for</h2>
+    <ClientStrip />
+    <p class="muted proof-note">
+      Through consulting partners including Accenture, Reply, CoolPeople, and Nelem, in banking
+      and insurance environments.
+    </p>
+  </Section>
+
+  <!-- AI ANGLE -->
+  <Section tone="dark">
+    <div class="ai-grid">
+      <div>
+        <p class="eyebrow">The AI bet</p>
+        <h2 class="section-h2 display">Governed AI on ServiceNow, with a Claude tilt.</h2>
+        <p class="ai-lead">
+          Anyone can bolt a chatbot onto an instance. The hard part is AI that survives a bank's
+          security review: data that stays where it should, agents that do only what they're
+          allowed to, and integrations you can actually audit. That's the work I'm investing in.
+        </p>
+        <CtaButton href="/consulting/">How I can help →</CtaButton>
+      </div>
+      <ul class="ai-list" role="list">
+        <li>MCP integration patterns, not brittle DIY plumbing</li>
+        <li>Now Assist and AI Agent Studio with real governance</li>
+        <li>Anthropic Claude Partner Network (consulting track), CCA-F</li>
+        <li>A public MCP reference repo and the "MCP vs DIY" breakdown</li>
+      </ul>
+    </div>
+  </Section>
+
+  <!-- FEATURED WRITING -->
+  <Section>
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Writing</p>
+        <h2 class="section-h2 display">Latest from the blog</h2>
+      </div>
+      <a href="/blog/" class="see-all">All posts →</a>
+    </div>
+    {posts.length > 0 ? (
+      <div class="grid-posts">
+        {posts.map((post) => <PostCard post={post} />)}
+      </div>
+    ) : (
+      <p class="muted">New articles are landing soon.</p>
+    )}
+  </Section>
+
+  <!-- TEACHING TEASER -->
+  <Section tone="surface">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Teaching</p>
+        <h2 class="section-h2 display">Learn ServiceNow with Lucky X</h2>
+      </div>
+      <a href="/teaching/" class="see-all">Why Lucky X →</a>
+    </div>
+    <p class="teaching-lead">
+      Lucky X is my course brand on Udemy. Practice tests built on one rule: only certifications
+      I've passed on the first attempt, and every answer backed by official ServiceNow
+      documentation.
+    </p>
+    <div class="teaching-stats">
+      <StatBadge value={teachingStats.students} label="students" />
+      <StatBadge value={`${teachingStats.rating}★`} label="average rating" />
+      <StatBadge value={teachingStats.courses} label="courses" />
+      <StatBadge value={teachingStats.questions} label="practice questions" />
+    </div>
+    <div class="grid-courses">
+      {featuredCourses.map((c) => (
+        <CourseCard code={c.code} title={c.title} url={c.url}>{c.blurb}</CourseCard>
+      ))}
+    </div>
+    <div class="cluster teaching-cta">
+      <CtaButton href={site.socials.luckyx} external>Go to Lucky X</CtaButton>
+      <CtaButton href={site.socials.udemy} variant="secondary" external>My Udemy profile</CtaButton>
+    </div>
+  </Section>
+
+  <!-- NEWSLETTER -->
+  <Section tone="dark">
+    <div class="nl-band">
+      <p class="eyebrow">Newsletter</p>
+      <h2 class="section-h2 display">{site.newsletterName}</h2>
+      <p class="ai-lead">Practical ServiceNow and AI in your inbox. The useful stuff, no fluff.</p>
+      <NewsletterForm variant="card" />
+      <p class="muted nl-note">No spam. Unsubscribe anytime.</p>
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding-block: clamp(3rem, 2rem + 5vw, 6.5rem) clamp(2rem, 1.5rem + 2vw, 3.5rem);
+  }
+  .hero-title {
+    font-size: var(--step-5);
+    max-width: 18ch;
+    margin-bottom: 1.1rem;
+  }
+  .hero-lead {
+    max-width: 58ch;
+    margin-bottom: 1.9rem;
+  }
+  .hero-cta {
+    margin-bottom: 2.5rem;
+  }
+  .hero-trust {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 0.5rem + 2vw, 2.25rem);
+    flex-wrap: wrap;
+  }
+  .trust-div {
+    width: 1px;
+    height: 2.5rem;
+    background: var(--border-strong);
+  }
+  .section-h2 {
+    font-size: var(--step-3);
+    margin-bottom: 1.25rem;
+  }
+  .grid-pillars {
+    display: grid;
+    gap: clamp(1rem, 0.5rem + 1.5vw, 1.75rem);
+    grid-template-columns: 1fr;
+  }
+  .proof-note {
+    margin-top: 1.1rem;
+    font-size: var(--step--1);
+    max-width: 60ch;
+  }
+  .ai-grid {
+    display: grid;
+    gap: 2rem clamp(1.5rem, 1rem + 3vw, 4rem);
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+  .ai-lead {
+    color: #cfc9be;
+    max-width: 52ch;
+    margin-bottom: 1.75rem;
+    line-height: 1.6;
+  }
+  .ai-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+  .ai-list li {
+    padding-left: 1.6rem;
+    position: relative;
+    color: var(--on-dark);
+  }
+  .ai-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .section-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.75rem;
+  }
+  .section-head .section-h2 {
+    margin-bottom: 0;
+  }
+  .see-all {
+    font-weight: 600;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  .see-all:hover {
+    color: var(--accent-hover);
+  }
+  .grid-posts,
+  .grid-courses {
+    display: grid;
+    gap: clamp(1rem, 0.5rem + 1.5vw, 1.5rem);
+    grid-template-columns: 1fr;
+  }
+  .teaching-lead {
+    max-width: 60ch;
+    color: var(--text-muted);
+    margin-bottom: 1.75rem;
+  }
+  .teaching-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(1.25rem, 0.5rem + 3vw, 3rem);
+    margin-bottom: 2.25rem;
+  }
+  .teaching-cta {
+    margin-top: 2rem;
+  }
+  .nl-band {
+    max-width: 40rem;
+  }
+  .nl-note {
+    margin-top: 0.85rem;
+    font-size: var(--step--1);
+  }
+  @media (min-width: 640px) {
+    .grid-posts,
+    .grid-courses {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (min-width: 720px) {
+    .grid-pillars {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .ai-grid {
+      grid-template-columns: 1.3fr 1fr;
+    }
+  }
+</style>

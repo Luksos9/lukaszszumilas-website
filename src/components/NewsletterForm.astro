@@ -1,0 +1,63 @@
+---
+import { site } from '../data/site';
+
+interface Props {
+  variant?: 'inline' | 'card';
+}
+const { variant = 'inline' } = Astro.props;
+// Posts to the Kit/ConvertKit form from site config. While the id is unset it
+// posts to '#' (clearly a placeholder) — set site.newsletter.kitFormId at launch.
+const formId = site.newsletter.kitFormId;
+const KIT_ACTION = formId ? `https://app.kit.com/forms/${formId}/subscriptions` : '#';
+---
+
+<form class:list={['nl-form', `nl-${variant}`]} action={KIT_ACTION} method="post" data-kit-todo>
+  <label class="visually-hidden" for={`nl-email-${variant}`}>Email address</label>
+  <input
+    id={`nl-email-${variant}`}
+    class="nl-input"
+    type="email"
+    name="email_address"
+    required
+    placeholder="you@company.com"
+    autocomplete="email"
+  />
+  <button type="submit" class="nl-submit">Subscribe</button>
+</form>
+
+<style>
+  .nl-form {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+  .nl-input {
+    flex: 1 1 16rem;
+    min-width: 0;
+    padding: 0.8rem 1rem;
+    border-radius: var(--radius-pill);
+    border: 1.5px solid var(--border-strong);
+    background: var(--card);
+    color: var(--text);
+    transition: border-color var(--dur);
+  }
+  .nl-input:focus-visible {
+    border-color: var(--accent);
+    outline: none;
+  }
+  .nl-submit {
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--radius-pill);
+    background: var(--accent);
+    color: var(--accent-contrast);
+    font-weight: 600;
+    transition: background var(--dur), transform var(--dur);
+  }
+  .nl-submit:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+  }
+  .nl-card .nl-input {
+    background: var(--bg);
+  }
+</style>

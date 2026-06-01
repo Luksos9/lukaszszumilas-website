@@ -1,0 +1,40 @@
+---
+title: "MCP vs DIY: how to connect AI to ServiceNow"
+description: "Two ways to wire an AI assistant into ServiceNow: hand-rolled REST glue, or the Model Context Protocol. When each one wins, and why I default to MCP now."
+pubDate: 2026-05-26
+tags: ["ai", "mcp", "servicenow"]
+draft: false
+---
+
+There are two ways to connect an AI assistant to ServiceNow. You can hand-roll the integration, or you can use MCP. I spent a while doing the first one. Now I default to the second, and this is why.
+
+## The DIY way
+
+The do-it-yourself approach is familiar to every ServiceNow developer. You stand up a Scripted REST API, write the auth handling, parse the request, run a GlideRecord query, shape the response, and handle the errors. Then you do it again for the next use case. And again.
+
+It works. But every integration reinvents the same plumbing: authentication, pagination, error handling, rate limits. The logic that decides what the AI is allowed to touch ends up smeared across a dozen scripts. Six months later, nobody can answer "what can this assistant actually do" without reading all of them.
+
+## The MCP way
+
+MCP, the Model Context Protocol, flips the model. You run one server that exposes a deliberate set of tools and resources. The AI assistant calls those tools through a standard interface. You define the menu once, in one place.
+
+The wins are concrete:
+
+- One auth and error-handling layer instead of one per integration.
+- A single, readable list of what the assistant can do.
+- Scopes and ACLs still enforce permissions on every call.
+- New use cases mean adding a tool, not rebuilding the plumbing.
+
+ServiceNow shipping a supported MCP server changed the math here. The standard plumbing is now something you configure and govern, not something you maintain.
+
+## When DIY still wins
+
+MCP is not always the answer. If you have a single, narrow, high-volume integration that will never change, a purpose-built Scripted REST API can be simpler and faster. DIY also wins when you need a response shape so specific that a general tool interface gets in the way.
+
+The rule I use: if it is one fixed pipe, build the pipe. If it is a surface that a model will explore and that will grow over time, use MCP.
+
+## My default
+
+For anything AI-facing that will evolve, I reach for MCP first. Not because it is new, but because it puts the governance in one place I can audit, and it stops every new idea from turning into another pile of integration glue.
+
+The model will keep changing. The discipline of exposing a controlled surface, and keeping your scopes honest, will not.

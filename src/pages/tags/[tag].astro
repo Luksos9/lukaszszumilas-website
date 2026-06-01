@@ -1,0 +1,66 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import Section from '../../components/Section.astro';
+import PostCard from '../../components/PostCard.astro';
+
+export async function getStaticPaths() {
+  const posts = (await getCollection('blog')).filter((p) => !p.data.draft);
+  const tags = [...new Set(posts.flatMap((p) => p.data.tags))];
+
+  return tags.map((tag) => ({
+    params: { tag },
+    props: {
+      tag,
+      posts: posts
+        .filter((p) => p.data.tags.includes(tag))
+        .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()),
+    },
+  }));
+}
+
+const { tag, posts } = Astro.props;
+---
+
+<BaseLayout title={`#${tag}`} description={`Posts tagged ${tag} on ServiceNow and AI.`}>
+  <PageHeader eyebrow="Topic" title={`#${tag}`}>
+    {posts.length} post{posts.length === 1 ? '' : 's'} tagged “{tag}”.
+  </PageHeader>
+
+  <Section>
+    <a href="/blog/" class="back-link">← All posts</a>
+    <div class="grid-posts">
+      {posts.map((post) => <PostCard post={post} />)}
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .back-link {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 1.75rem;
+  }
+  .back-link:hover {
+    color: var(--accent-hover);
+  }
+  .grid-posts {
+    display: grid;
+    gap: clamp(1rem, 0.5rem + 1.5vw, 1.5rem);
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 600px) {
+    .grid-posts {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 900px) {
+    .grid-posts {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

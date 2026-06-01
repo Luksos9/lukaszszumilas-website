@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Section from '../components/Section.astro';
+import { site } from '../data/site';
+import '../styles/prose.css';
+// TODO(legal): have Lukasz review this before launch. Plain-language starting
+// point, not legal advice.
+---
+
+<BaseLayout title="Terms" description="Terms of use for lukaszszumilas.com.">
+  <PageHeader eyebrow="Legal" title="Terms of use" />
+
+  <Section>
+    <div class="prose">
+      <p><em>Last updated: 1 June 2026.</em></p>
+
+      <h2>Using this site</h2>
+      <p>
+        You're welcome to read, share, and link to anything here. The content is provided as-is,
+        for information. It reflects my own views and experience, not those of any employer or
+        client.
+      </p>
+
+      <h2>Content and ownership</h2>
+      <p>
+        Articles, code samples, and other content on this site are mine unless stated otherwise.
+        You may quote short excerpts with attribution and a link. Please don't republish whole
+        articles without permission.
+      </p>
+
+      <h2>Courses and external links</h2>
+      <p>
+        Links to Lucky X and Udemy courses may be affiliate or referral links, which means I may
+        earn a share when you enroll, at no extra cost to you. Course content, pricing, and
+        support are governed by Udemy's own terms.
+      </p>
+
+      <h2>No warranty</h2>
+      <p>
+        Technical content, including ServiceNow and AI guidance, is shared in good faith but
+        without warranty. Always test against your own environment and official documentation
+        before acting on it. I'm not liable for outcomes from using information on this site.
+      </p>
+
+      <h2>Contact</h2>
+      <p>Questions? Email <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+    </div>
+  </Section>
+</BaseLayout>

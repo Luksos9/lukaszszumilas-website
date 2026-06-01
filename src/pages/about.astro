@@ -1,0 +1,153 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Section from '../components/Section.astro';
+import CertBadge from '../components/CertBadge.astro';
+import CtaButton from '../components/CtaButton.astro';
+import { site } from '../data/site';
+import { certs, certStats } from '../data/certs';
+
+const snCerts = certs.filter((c) => c.group === 'servicenow');
+const aiCerts = certs.filter((c) => c.group === 'ai');
+---
+
+<BaseLayout title="About" description="Lukasz Szumilas is a ServiceNow developer and consultant, a Udemy teacher with 10,000+ students, and a specialist in governed AI on the ServiceNow platform.">
+  <PageHeader eyebrow="About" title="Lukasz Szumilas">
+    ServiceNow developer and consultant. Udemy teacher. Building toward governed AI on the
+    ServiceNow platform.
+  </PageHeader>
+
+  <Section>
+    <div class="page-body flow">
+      <p>
+        I'm a self-taught generalist who learned to build, market, sell, automate, write, and
+        teach, mostly by refusing to outsource my own education. ServiceNow is where that
+        curiosity turned into a career.
+      </p>
+      <p>
+        For the last 4+ years I've delivered ServiceNow for banks and insurers: ITSM, Service
+        Portal and Employee Center, CMDB and CSDM, and integrations in JavaScript and REST. The
+        environments are demanding, the stakes are real, and the work has to hold up to a
+        security review. That shaped how I think about everything else, including AI.
+      </p>
+      <p>
+        Alongside the consulting, I teach. Lucky X is my course brand on Udemy, with practice
+        tests used by more than 10,000 students. It runs on one rule: I only build a course for
+        an exam I've personally passed on the first attempt, and every explanation links back to
+        official ServiceNow documentation so students learn the reasoning, not just the letter.
+        {' '}{certStats.total} certifications later, that rule hasn't changed.
+      </p>
+      <p>
+        Now I'm pointing the same discipline at AI. Not chatbots for show, but governed AI on
+        ServiceNow that a bank's security team will actually sign off on: MCP done right, data
+        that stays where it belongs, and agents that do only what they're allowed to.
+      </p>
+    </div>
+  </Section>
+
+  <Section tone="surface">
+    <p class="eyebrow">Credentials</p>
+    <h2 class="section-h2 display">{certStats.total} certifications, {certStats.passedFirstTry}</h2>
+    <h3 class="cert-group-title">ServiceNow</h3>
+    <div class="cert-grid">
+      {snCerts.map((c) => <CertBadge code={c.code} name={c.name} />)}
+    </div>
+    <h3 class="cert-group-title">AI</h3>
+    <div class="cert-grid">
+      {aiCerts.map((c) => <CertBadge code={c.code} name={c.name} />)}
+    </div>
+    <p class="muted cert-note">
+      The list above is representative. The full set spans 17 ServiceNow certifications across
+      administration, development, and implementation tracks.
+    </p>
+  </Section>
+
+  <Section>
+    <div class="two-col">
+      <div>
+        <p class="eyebrow">What I do</p>
+        <ul class="do-list flow" role="list">
+          <li><strong>Consulting.</strong> ServiceNow delivery plus governed AI for enterprise teams.</li>
+          <li><strong>Teaching.</strong> Lucky X certification practice tests on Udemy.</li>
+          <li><strong>Writing.</strong> ServiceNow, MCP, and AI on the platform, here and on LinkedIn.</li>
+        </ul>
+      </div>
+      <div>
+        <p class="eyebrow">Languages</p>
+        <ul class="do-list flow" role="list">
+          <li>Polish, native</li>
+          <li>English, C2</li>
+          <li>German, B1</li>
+        </ul>
+        <div class="cv-cta">
+          <CtaButton href={site.socials.linkedin} variant="secondary" external>Full experience on LinkedIn</CtaButton>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <Section tone="dark">
+    <div class="cta-band">
+      <h2 class="section-h2 display">Want to work together?</h2>
+      <div class="cluster">
+        <CtaButton href="/consulting/">Work with me</CtaButton>
+        <CtaButton href="/newsletter/" variant="secondary">Get the newsletter</CtaButton>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .page-body {
+    max-width: var(--maxw-prose);
+    font-size: var(--step-0);
+    line-height: 1.75;
+  }
+  .section-h2 {
+    font-size: var(--step-3);
+    margin-bottom: 1.5rem;
+  }
+  .cert-group-title {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin: 1.5rem 0 0.85rem;
+  }
+  .cert-grid {
+    display: grid;
+    gap: 0.85rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  }
+  .cert-note {
+    margin-top: 1.25rem;
+    font-size: var(--step--1);
+    max-width: 60ch;
+  }
+  .two-col {
+    display: grid;
+    gap: 2.5rem;
+    grid-template-columns: 1fr;
+  }
+  .do-list {
+    line-height: 1.5;
+  }
+  .do-list li {
+    color: var(--text-muted);
+  }
+  .cv-cta {
+    margin-top: 1.5rem;
+  }
+  .cta-band {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    align-items: flex-start;
+  }
+  @media (min-width: 720px) {
+    .two-col {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

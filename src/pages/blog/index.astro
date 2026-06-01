@@ -1,0 +1,76 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import Section from '../../components/Section.astro';
+import PostCard from '../../components/PostCard.astro';
+import TagPill from '../../components/TagPill.astro';
+
+const posts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const tags = [...new Set(posts.flatMap((p) => p.data.tags))].sort();
+---
+
+<BaseLayout
+  title="Blog"
+  description="Writing on ServiceNow, governed AI, MCP and Claude, and certification strategy, by Lukasz Szumilas."
+>
+  <PageHeader eyebrow="Writing" title="Blog">
+    ServiceNow scripting and architecture, governed AI on the platform, and certification
+    strategy from someone who's passed 17 of them.
+  </PageHeader>
+
+  <Section>
+    {tags.length > 0 && (
+      <div class="blog-topics">
+        <span class="topics-label">Topics</span>
+        <div class="cluster">
+          {tags.map((t) => <TagPill tag={t} href={`/tags/${t}/`} />)}
+        </div>
+      </div>
+    )}
+
+    {posts.length > 0 ? (
+      <div class="grid-posts">
+        {posts.map((post) => <PostCard post={post} />)}
+      </div>
+    ) : (
+      <p class="muted">New articles are landing soon.</p>
+    )}
+  </Section>
+</BaseLayout>
+
+<style>
+  .blog-topics {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+  .topics-label {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.78rem;
+    color: var(--text-subtle);
+    font-weight: 700;
+  }
+  .grid-posts {
+    display: grid;
+    gap: clamp(1rem, 0.5rem + 1.5vw, 1.5rem);
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 600px) {
+    .grid-posts {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 900px) {
+    .grid-posts {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

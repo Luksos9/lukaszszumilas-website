@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lukaszszumilas.com/sitemap-index.xml

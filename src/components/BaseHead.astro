@@ -1,0 +1,67 @@
+---
+import { site } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  article?: boolean;
+  publishedTime?: Date;
+  noindex?: boolean;
+  /** Override the self-referential canonical (e.g. cross-posted content). */
+  canonical?: string;
+  /** Structured data object rendered as application/ld+json. */
+  jsonLd?: object;
+}
+
+const {
+  title,
+  description = site.description,
+  image = '/og-default.png',
+  article = false,
+  publishedTime,
+  noindex = false,
+  canonical: canonicalProp,
+  jsonLd,
+} = Astro.props;
+
+const computedTitle = title ? `${title} · ${site.name}` : site.defaultTitle;
+const canonicalHref = canonicalProp ?? new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL(image, Astro.site).href;
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="sitemap" href="/sitemap-index.xml" />
+<link rel="canonical" href={canonicalHref} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+<title>{computedTitle}</title>
+<meta name="description" content={description} />
+<meta name="author" content={site.name} />
+<meta name="theme-color" content="#e8733a" />
+
+<!-- Open Graph -->
+<meta property="og:type" content={article ? 'article' : 'website'} />
+<meta property="og:site_name" content={site.name} />
+<meta property="og:title" content={computedTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalHref} />
+<meta property="og:image" content={ogImage} />
+{article && publishedTime && (
+  <meta property="article:published_time" content={publishedTime.toISOString()} />
+)}
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={computedTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+<link rel="alternate" type="application/rss+xml" title={site.name} href={new URL('rss.xml', Astro.site)} />
+<meta name="generator" content={Astro.generator} />
+
+{jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />}

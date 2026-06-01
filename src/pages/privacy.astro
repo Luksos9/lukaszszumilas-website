@@ -1,0 +1,63 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Section from '../components/Section.astro';
+import { site } from '../data/site';
+import '../styles/prose.css';
+// TODO(legal): have Lukasz review this before launch. It is a plain-language
+// starting point, not legal advice.
+---
+
+<BaseLayout title="Privacy" description="Privacy policy for lukaszszumilas.com.">
+  <PageHeader eyebrow="Legal" title="Privacy policy" />
+
+  <Section>
+    <div class="prose">
+      <p><em>Last updated: 1 June 2026.</em></p>
+
+      <p>
+        This site, {site.url.replace('https://', '')}, is a personal website. This page explains
+        what data is collected and why. The short version: as little as possible.
+      </p>
+
+      <h2>Analytics</h2>
+      <p>
+        I use Google Analytics 4 to understand which pages are useful, in aggregate. It records
+        things like page views, approximate location (country or region), and the type of device
+        and browser. IP addresses are handled by Google and not stored by me in identifiable
+        form. I do not use this data to identify individual visitors.
+      </p>
+
+      <h2>Newsletter</h2>
+      <p>
+        If you subscribe to the {site.newsletterName} newsletter, your email address is stored by
+        my email provider (Kit, formerly ConvertKit) for the sole purpose of sending the
+        newsletter. You can unsubscribe at any time using the link in any email, which removes
+        your address.
+      </p>
+
+      <h2>Cookies</h2>
+      <p>
+        Analytics may set cookies to measure repeat visits. The site sets a small preference to
+        remember your light or dark theme choice; that stays in your browser and is never sent
+        anywhere.
+      </p>
+
+      <h2>Third-party links</h2>
+      <p>
+        This site links out to other services, including Lucky X, Udemy, LinkedIn, and GitHub.
+        Once you follow those links, their own privacy policies apply.
+      </p>
+
+      <h2>Your rights</h2>
+      <p>
+        You can ask what data relating to you is held, and request its correction or deletion.
+        For the newsletter, unsubscribing handles deletion immediately. For anything else, email
+        <a href={`mailto:${site.email}`}>{site.email}</a>.
+      </p>
+
+      <h2>Contact</h2>
+      <p>Questions about this policy? Email <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+    </div>
+  </Section>
+</BaseLayout>

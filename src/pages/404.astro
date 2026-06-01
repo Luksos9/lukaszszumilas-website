@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+import CtaButton from '../components/CtaButton.astro';
+---
+
+<BaseLayout title="Page not found" description="That page doesn't exist." noindex={true}>
+  <Section>
+    <div class="notfound">
+      <p class="eyebrow">404</p>
+      <h1 class="display nf-title">This page doesn't exist.</h1>
+      <p class="lead">The link may be old, or the page moved. Here's the way back.</p>
+      <div class="cluster nf-cta">
+        <CtaButton href="/">Go home</CtaButton>
+        <CtaButton href="/blog/" variant="secondary">Read the blog</CtaButton>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .notfound {
+    max-width: 40rem;
+    padding-block: clamp(2rem, 1rem + 4vw, 5rem);
+  }
+  .nf-title {
+    font-size: var(--step-4);
+    margin-bottom: 0.75rem;
+  }
+  .nf-cta {
+    margin-top: 1.75rem;
+  }
+</style>

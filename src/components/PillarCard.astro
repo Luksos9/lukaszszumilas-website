@@ -1,0 +1,63 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  href: string;
+  cta: string;
+}
+const { eyebrow, title, href, cta } = Astro.props;
+---
+
+<a href={href} class="pillar">
+  <span class="pillar-eyebrow">{eyebrow}</span>
+  <h3 class="pillar-title">{title}</h3>
+  <p class="pillar-desc"><slot /></p>
+  <span class="pillar-cta">{cta} <span aria-hidden="true">→</span></span>
+</a>
+
+<style>
+  .pillar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: clamp(1.4rem, 1rem + 1.2vw, 2rem);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--dur) var(--ease), box-shadow var(--dur),
+      border-color var(--dur);
+    height: 100%;
+  }
+  .pillar:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow);
+    border-color: var(--accent);
+  }
+  .pillar-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .pillar-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--step-2);
+    letter-spacing: -0.01em;
+  }
+  .pillar-desc {
+    color: var(--text-muted);
+    flex: 1 0 auto;
+  }
+  .pillar-cta {
+    margin-top: 0.5rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .pillar:hover .pillar-cta span {
+    margin-inline-start: 0.15rem;
+  }
+</style>

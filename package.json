@@ -1,0 +1,33 @@
+{
+  "name": "lukaszszumilas-website",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^6.0.1",
+    "@astrojs/partytown": "^2.1.7",
+    "@astrojs/rss": "^4.0.18",
+    "@astrojs/sitemap": "^3.7.3",
+    "@fontsource-variable/fraunces": "^5.2.9",
+    "@fontsource/dm-sans": "^5.2.8",
+    "@fontsource/space-mono": "^5.2.9",
+    "astro": "^6.4.2",
+    "sharp": "^0.34.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "cheerio": "^1.2.0",
+    "rss-parser": "^3.13.0",
+    "turndown": "^7.2.4",
+    "turndown-plugin-gfm": "^1.0.2",
+    "typescript": "^6.0.3"
+  }
+}

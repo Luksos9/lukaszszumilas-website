@@ -1,0 +1,60 @@
+---
+interface Props {
+  code: string;
+  title: string;
+  url: string;
+}
+const { code, title, url } = Astro.props;
+---
+
+<a href={url} class="course-card" target="_blank" rel="noopener noreferrer">
+  <span class="course-code">{code}</span>
+  <h3 class="course-title">{title}</h3>
+  <p class="course-blurb"><slot /></p>
+  <span class="course-cta">View on Lucky X <span aria-hidden="true">↗</span></span>
+</a>
+
+<style>
+  .course-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.4rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: transform var(--dur) var(--ease), box-shadow var(--dur),
+      border-color var(--dur);
+    height: 100%;
+  }
+  .course-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+    border-color: var(--accent);
+  }
+  .course-code {
+    align-self: flex-start;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: var(--step--1);
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-pill);
+  }
+  .course-title {
+    font-size: var(--step-1);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .course-blurb {
+    color: var(--text-muted);
+    font-size: var(--step--1);
+    flex: 1 0 auto;
+  }
+  .course-cta {
+    font-weight: 600;
+    color: var(--accent);
+    font-size: var(--step--1);
+  }
+</style>
