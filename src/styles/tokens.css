@@ -32,7 +32,7 @@
   --on-dark: var(--lx-cream);
 
   /* ---- Typography ---- */
-  --font-sans: 'DM Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-sans: 'Inter Variable', Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-mono: 'Space Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
   --font-display: 'Fraunces Variable', 'Fraunces', Georgia, 'Times New Roman', serif;
 
@@ -70,12 +70,12 @@
 
 /* ---- Optional dark theme (set data-theme="dark" on <html>) ---- */
 :root[data-theme='dark'] {
-  --bg: #0f0f0f;
+  --bg: #0b0b0b;
   --surface: #161616;
-  --card: #1a1a1a;
-  --text: #f4f1ea;
-  --text-muted: #b3ada3;
-  --text-subtle: #897f74;
+  --card: #111111;
+  --text: #ffffff;
+  --text-muted: #a1a1aa;
+  --text-subtle: #7c7c85;
   --accent-contrast: #ffffff;
   --accent-soft: rgba(232, 115, 58, 0.14);
   --border: rgba(255, 255, 255, 0.08);

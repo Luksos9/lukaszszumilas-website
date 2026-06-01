@@ -4,10 +4,14 @@ interface Props {
   variant?: 'primary' | 'secondary' | 'ghost';
   size?: 'md' | 'lg';
   external?: boolean;
+  /** Show the animated trailing arrow. Defaults on for primary + ghost. */
+  arrow?: boolean;
   class?: string;
 }
 
-const { href, variant = 'primary', size = 'md', external = false, class: cls = '' } = Astro.props;
+const { href, variant = 'primary', size = 'md', external = false, arrow, class: cls = '' } =
+  Astro.props;
+const showArrow = arrow ?? variant !== 'secondary';
 const target = external ? '_blank' : undefined;
 const rel = external ? 'noopener noreferrer' : undefined;
 ---
@@ -18,7 +22,8 @@ const rel = external ? 'noopener noreferrer' : undefined;
   target={target}
   rel={rel}
 >
-  <slot />
+  <span><slot /></span>
+  {showArrow && <span class="btn-arrow" aria-hidden="true">→</span>}
 </a>
 
 <style>
@@ -33,31 +38,35 @@ const rel = external ? 'noopener noreferrer' : undefined;
     padding: 0.8em 1.4em;
     border: 1.5px solid transparent;
     white-space: nowrap;
-    transition: transform var(--dur) var(--ease), background var(--dur),
-      color var(--dur), border-color var(--dur);
+    transition: transform var(--dur) var(--ease), background var(--dur), color var(--dur),
+      border-color var(--dur), box-shadow var(--dur);
   }
   .btn--lg {
     padding: 0.95em 1.7em;
     font-size: var(--step-1);
   }
-  .btn:hover {
-    transform: translateY(-2px);
-  }
   .btn:active {
-    transform: translateY(0);
+    transform: translateY(1px);
+  }
+  .btn-arrow {
+    transition: transform var(--dur) var(--ease);
+  }
+  .btn:hover .btn-arrow {
+    transform: translateX(4px);
   }
   .btn--primary {
     background: var(--accent);
     color: var(--accent-contrast);
-    box-shadow: var(--shadow-sm);
   }
   .btn--primary:hover {
     background: var(--accent-hover);
+    box-shadow: 0 0 0 1px var(--accent-soft), 0 10px 30px rgba(232, 115, 58, 0.3);
   }
   .btn--secondary {
-    background: var(--card);
+    background: color-mix(in srgb, var(--card) 70%, transparent);
     color: var(--text);
     border-color: var(--border-strong);
+    backdrop-filter: blur(6px);
   }
   .btn--secondary:hover {
     border-color: var(--accent);
@@ -66,9 +75,14 @@ const rel = external ? 'noopener noreferrer' : undefined;
   .btn--ghost {
     background: transparent;
     color: var(--text);
-    padding-inline: 0.5em;
+    padding-inline: 0.4em;
   }
   .btn--ghost:hover {
     color: var(--accent);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .btn:hover .btn-arrow {
+      transform: none;
+    }
   }
 </style>
