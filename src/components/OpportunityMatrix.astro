@@ -1,0 +1,92 @@
+---
+const quads = [
+  { key: 'win', title: 'Quick Wins', meta: 'High impact · Low effort', note: 'Start here.' },
+  { key: 'strategic', title: 'Strategic', meta: 'High impact · High effort', note: 'Plan and invest.' },
+  { key: 'ignore', title: 'Ignore', meta: 'Low impact · Low effort', note: 'Not worth it.' },
+  { key: 'future', title: 'Future', meta: 'Low impact · High effort', note: 'Revisit later.' },
+];
+---
+
+<div class="matrix-wrap">
+  <span class="axis axis-y">Impact</span>
+  <div class="matrix" data-reveal>
+    {quads.map((q, i) => (
+      <div class:list={['quad', { 'quad--win': q.key === 'win' }]} data-reveal style={`--reveal-delay:${i * 90}ms`}>
+        <span class="quad-title">{q.title}</span>
+        <span class="quad-meta">{q.meta}</span>
+        <span class="quad-note">{q.note}</span>
+      </div>
+    ))}
+  </div>
+  <span class="axis axis-x">Effort</span>
+</div>
+
+<style>
+  .matrix-wrap {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: 'y grid' '. x';
+    gap: 0.5rem;
+    max-width: 44rem;
+    margin-inline: auto;
+  }
+  .matrix {
+    grid-area: grid;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+  .axis {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.7rem;
+    color: var(--text-subtle);
+    font-weight: 700;
+    align-self: center;
+    justify-self: center;
+  }
+  .axis-y {
+    grid-area: y;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+  .axis-x {
+    grid-area: x;
+    padding-top: 0.25rem;
+  }
+  .quad {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-height: 7.5rem;
+    padding: 1.1rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .quad--win {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    box-shadow: 0 0 0 1px var(--accent-soft);
+  }
+  .quad-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--step-1);
+    color: var(--text);
+  }
+  .quad--win .quad-title {
+    color: var(--accent);
+  }
+  .quad-meta {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--text-subtle);
+  }
+  .quad-note {
+    margin-top: auto;
+    font-size: var(--step--1);
+    color: var(--text-muted);
+  }
+</style>

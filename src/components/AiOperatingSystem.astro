@@ -1,0 +1,110 @@
+---
+import Icon from './Icon.astro';
+const inputs = [
+  { icon: 'agent', label: 'People' },
+  { icon: 'cube', label: 'Systems' },
+  { icon: 'book', label: 'Knowledge' },
+  { icon: 'sitemap', label: 'Processes' },
+];
+const outputs = [
+  { icon: 'target', label: 'Decisions' },
+  { icon: 'gear', label: 'Automation' },
+  { icon: 'chart', label: 'Insights' },
+];
+---
+
+<div class="aios">
+  <ul class="aios-row inputs" role="list">
+    {inputs.map((n, i) => (
+      <li class="node" data-reveal style={`--reveal-delay:${i * 70}ms`}>
+        <span class="node-icon"><Icon name={n.icon} size={20} /></span>{n.label}
+      </li>
+    ))}
+  </ul>
+
+  <div class="aios-arrow" aria-hidden="true" data-reveal>↓</div>
+
+  <div class="aios-layer" data-reveal>
+    <span class="layer-pulse"></span>
+    AI Layer
+  </div>
+
+  <div class="aios-arrow" aria-hidden="true" data-reveal>↓</div>
+
+  <ul class="aios-row outputs" role="list">
+    {outputs.map((n, i) => (
+      <li class="node out" data-reveal style={`--reveal-delay:${i * 70}ms`}>
+        <span class="node-icon"><Icon name={n.icon} size={20} /></span>{n.label}
+      </li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  .aios {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.9rem;
+  }
+  .aios-row {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.75rem;
+    width: 100%;
+    max-width: 46rem;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .node {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.85rem 1rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-weight: 600;
+    color: var(--text);
+  }
+  .node-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    flex: 0 0 auto;
+    border-radius: var(--radius-sm);
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+  .aios-arrow {
+    color: var(--accent);
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .aios-layer {
+    position: relative;
+    width: 100%;
+    max-width: 46rem;
+    text-align: center;
+    padding: 1rem;
+    border-radius: var(--radius);
+    background: var(--accent-soft);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--step-1);
+    letter-spacing: 0.01em;
+  }
+  @media (min-width: 720px) {
+    .aios-row.inputs {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .aios-row.outputs {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

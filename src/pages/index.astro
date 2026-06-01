@@ -4,20 +4,31 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Section from '../components/Section.astro';
 import CtaButton from '../components/CtaButton.astro';
 import PostCard from '../components/PostCard.astro';
-import ClientStrip from '../components/ClientStrip.astro';
-import Framework from '../components/Framework.astro';
-import AiValueStream from '../components/AiValueStream.astro';
+import ServiceCard from '../components/ServiceCard.astro';
 import Icon from '../components/Icon.astro';
+import OperationsLoop from '../components/OperationsLoop.astro';
+import AiOperatingSystem from '../components/AiOperatingSystem.astro';
+import OpportunityMatrix from '../components/OpportunityMatrix.astro';
 import { site } from '../data/site';
-import { areas } from '../data/areas';
+import { services } from '../data/services';
 import { problems } from '../data/problems';
 import { caseStudies } from '../data/caseStudies';
-import { engagements } from '../data/engagements';
-import { snDomains } from '../data/snDomains';
-import { whoIWorkWith } from '../data/whoIWorkWith';
 
-// Set true and drop /public/lukasz-cutout.png for the exact cut-out hero.
 const HAS_CUTOUT = false;
+
+const allocation = [
+  { pct: 40, label: 'AI + ServiceNow' },
+  { pct: 25, label: 'Workflow Automation' },
+  { pct: 20, label: 'Architecture & Strategy' },
+  { pct: 10, label: 'Training' },
+  { pct: 5, label: 'Research' },
+];
+const proof = [
+  'ServiceNow Instructor',
+  '10,000+ students taught',
+  '4+ years enterprise experience',
+  'Speaker & content creator',
+];
 
 const posts = (await getCollection('blog'))
   .filter((p) => !p.data.draft)
@@ -49,7 +60,7 @@ const jsonLd = [
 ---
 
 <BaseLayout jsonLd={jsonLd}>
-  <!-- 1. HERO -->
+  <!-- HERO -->
   <section class="hero">
     <div class="container hero-grid">
       <div class="hero-text">
@@ -69,7 +80,6 @@ const jsonLd = [
         </div>
         <p class="cred" data-reveal style="--reveal-delay:680ms">ServiceNow instructor · 10,000+ students taught</p>
       </div>
-
       <div class="hero-photo" data-reveal style="--reveal-delay:240ms">
         <img class="hero-vector" src="/hero-vector.svg" alt="" aria-hidden="true" />
         {HAS_CUTOUT ? (
@@ -83,34 +93,21 @@ const jsonLd = [
     </div>
   </section>
 
-  <!-- WHO I WORK WITH -->
-  <Section>
-    <div class="who" data-reveal>
-      <span class="who-label">Who I work with</span>
-      <ul class="who-list" role="list">
-        {whoIWorkWith.map((r) => <li>{r}</li>)}
-      </ul>
-    </div>
-  </Section>
-
-  <!-- 4. CONTRARIAN -->
+  <!-- AI REALITY CHECK -->
   <Section tone="surface">
     <div class="contrarian">
       <div>
-        <p class="eyebrow" data-reveal>The truth about AI</p>
+        <p class="eyebrow" data-reveal>The AI reality check</p>
         <h2 class="contrarian-title display">
           <span data-reveal>Most companies don't</span>
           <span data-reveal style="--reveal-delay:140ms">need more AI tools.</span>
         </h2>
         <p class="contrarian-sub" data-reveal style="--reveal-delay:300ms">
-          They need better processes, automation, and the right AI use cases.
+          They need <span class="mark">better processes</span>, automation, and the right AI use cases.
         </p>
       </div>
       <div class="contrarian-body" data-reveal style="--reveal-delay:200ms">
-        <p>
-          Most AI projects underwhelm because they start with the model. The results come from
-          fixing the work first, in this order:
-        </p>
+        <p>Most AI projects underwhelm because they start with the model. The results come from fixing the work first, in order:</p>
         <ol class="why-order">
           <li>Fix the process.</li>
           <li>Automate the repetitive parts.</li>
@@ -122,30 +119,43 @@ const jsonLd = [
     </div>
   </Section>
 
-  <!-- 5. FRAMEWORK -->
+  <!-- SIGNATURE #1: OPERATIONS IMPROVEMENT LOOP -->
   <Section>
-    <div class="section-head" data-reveal>
-      <div>
-        <p class="eyebrow">My operational improvement framework</p>
-        <h2 class="section-h2 display">A practical path from inefficiency to impact</h2>
-      </div>
+    <div class="sig-head" data-reveal>
+      <p class="eyebrow">My methodology</p>
+      <h2 class="section-h2 display">The Operations Improvement Loop</h2>
+      <p class="sig-sub muted">A repeatable system, not a one-off project. Every engagement runs the loop.</p>
     </div>
-    <Framework />
+    <OperationsLoop />
   </Section>
 
-  <!-- 6. WHERE AI CREATES VALUE -->
+  <!-- SIGNATURE #2: AI OPERATING SYSTEM -->
   <Section tone="surface">
-    <div class="section-head" data-reveal>
-      <div>
-        <p class="eyebrow">Where AI creates value</p>
-        <h2 class="section-h2 display">AI helps at specific points, not everywhere</h2>
-      </div>
+    <div class="sig-head" data-reveal>
+      <p class="eyebrow">How AI fits</p>
+      <h2 class="section-h2 display">The AI Operating System</h2>
+      <p class="sig-sub muted">AI shouldn't sit in isolation. It works on top of your people, systems, knowledge, and processes.</p>
     </div>
-    <AiValueStream />
+    <AiOperatingSystem />
   </Section>
 
-  <!-- 7. PROBLEMS -->
+  <!-- WHERE I SPEND MY TIME -->
   <Section>
+    <p class="eyebrow" data-reveal>Where I spend my time</p>
+    <h2 class="section-h2 display" data-reveal>What I actually do, by the numbers</h2>
+    <div class="alloc">
+      {allocation.map((a, i) => (
+        <div class="alloc-row" data-reveal style={`--reveal-delay:${i * 80}ms;--pct:${a.pct}%`}>
+          <span class="alloc-label">{a.label}</span>
+          <span class="alloc-pct">{a.pct}%</span>
+          <span class="alloc-track"><span class="alloc-fill"></span></span>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <!-- PROBLEMS -->
+  <Section tone="surface">
     <p class="eyebrow" data-reveal>Problems I solve</p>
     <h2 class="section-h2 display" data-reveal>You're probably dealing with at least one of these</h2>
     <div class="grid-3">
@@ -159,62 +169,40 @@ const jsonLd = [
     </div>
   </Section>
 
-  <!-- 8. CAPABILITIES -->
-  <Section tone="surface">
-    <p class="eyebrow" data-reveal>What I do</p>
-    <h2 class="section-h2 display" data-reveal>Capabilities, framed by outcome</h2>
-    <div class="grid-4">
-      {areas.map((a, i) => (
-        <article class="card" data-reveal style={`--reveal-delay:${i * 90}ms`}>
-          <span class="card-icon"><Icon name={a.icon} /></span>
-          <h3 class="card-title">{a.title}</h3>
-          <p class="muted">{a.body}</p>
-        </article>
+  <!-- SERVICES -->
+  <Section>
+    <div class="section-head" data-reveal>
+      <div>
+        <p class="eyebrow">How I help</p>
+        <h2 class="section-h2 display">Services</h2>
+      </div>
+      <a href="/services/" class="see-all">All services →</a>
+    </div>
+    <div class="grid-3">
+      {services.map((s, i) => (
+        <div data-reveal style={`--reveal-delay:${i * 70}ms`}>
+          <ServiceCard title={s.title} tagline={s.tagline} anchor={s.anchor} icon={s.icon} />
+        </div>
       ))}
     </div>
   </Section>
 
-  <!-- 9. TYPICAL ENGAGEMENTS -->
-  <Section>
-    <p class="eyebrow" data-reveal>Typical engagements</p>
-    <h2 class="section-h2 display" data-reveal>How we'd work together</h2>
-    <div class="grid-4">
-      {engagements.map((e, i) => {
-        const Tag = e.href ? 'a' : 'div';
-        return (
-          <Tag href={e.href} class="eng" data-reveal style={`--reveal-delay:${i * 80}ms`}>
-            {e.duration && <span class="eng-duration">{e.duration}</span>}
-            <h3 class="card-title">{e.title}</h3>
-            <p class="muted">{e.body}</p>
-            {e.href && <span class="eng-cta">Learn more →</span>}
-          </Tag>
-        );
-      })}
+  <!-- SIGNATURE #3: AI OPPORTUNITY MATRIX -->
+  <Section tone="surface">
+    <div class="sig-head" data-reveal>
+      <p class="eyebrow">How I prioritize</p>
+      <h2 class="section-h2 display">The AI Opportunity Matrix</h2>
+      <p class="sig-sub muted">Not every AI idea deserves building. We start with the quick wins and plan the strategic bets.</p>
     </div>
+    <OpportunityMatrix />
   </Section>
 
-  <!-- 10. SERVICENOW EXPERTISE -->
-  <Section tone="surface">
-    <p class="eyebrow" data-reveal>ServiceNow expertise</p>
-    <h2 class="section-h2 display" data-reveal>Where I work on the platform</h2>
-    <ul class="chips" role="list" data-reveal>
-      {snDomains.map((d) => <li class="chip">{d}</li>)}
-    </ul>
-  </Section>
-
-  <!-- 11. INDUSTRY EXPERIENCE -->
+  <!-- CASE STUDIES -->
   <Section>
-    <p class="eyebrow" data-reveal>Industry experience</p>
-    <h2 class="section-h2 display" data-reveal>Enterprise environments</h2>
-    <ClientStrip />
-  </Section>
-
-  <!-- 12. CASE STUDIES -->
-  <Section tone="surface">
     <div class="section-head" data-reveal>
       <div>
         <p class="eyebrow">Selected work</p>
-        <h2 class="section-h2 display">Real impact in the enterprise</h2>
+        <h2 class="section-h2 display">Enterprise results</h2>
       </div>
       <a href="/case-studies/" class="see-all">All case studies →</a>
     </div>
@@ -228,10 +216,18 @@ const jsonLd = [
         </a>
       ))}
     </div>
-    <p class="muted case-note">Anonymized. Specifics shared under NDA on a call.</p>
   </Section>
 
-  <!-- 13. INSIGHTS -->
+  <!-- PROOF, NOT PROMISES -->
+  <Section tone="surface">
+    <p class="eyebrow" data-reveal>Proof, not promises</p>
+    <h2 class="section-h2 display" data-reveal>Why this holds up</h2>
+    <ul class="proof" role="list" data-reveal>
+      {proof.map((p) => <li class="proof-item">{p}</li>)}
+    </ul>
+  </Section>
+
+  <!-- INSIGHTS -->
   <Section>
     <div class="section-head" data-reveal>
       <div>
@@ -253,15 +249,12 @@ const jsonLd = [
     )}
   </Section>
 
-  <!-- 14. FINAL CTA -->
+  <!-- FINAL CTA -->
   <section class="final-cta">
     <div class="container final-cta-inner" data-reveal>
       <div>
         <h2 class="final-cta-title display">Let's discuss your next ServiceNow or AI initiative</h2>
-        <p class="final-cta-sub">
-          Book a free consultation call and we'll find where a better process and the right AI
-          actually move the needle for you.
-        </p>
+        <p class="final-cta-sub">Book a free consultation and we'll find where a better process and the right AI move the needle.</p>
       </div>
       <CtaButton href="/contact/" size="lg">Book a consultation</CtaButton>
     </div>
@@ -294,7 +287,7 @@ const jsonLd = [
     color: var(--accent);
   }
   .hero-lead {
-    max-width: 52ch;
+    max-width: 50ch;
     margin-bottom: 1.9rem;
   }
   .cred {
@@ -343,105 +336,22 @@ const jsonLd = [
     z-index: 1;
     filter: drop-shadow(0 18px 40px rgba(0, 0, 0, 0.5));
   }
-  /* VALUE BAR */
-  .valuebar {
-    border-block: 1px solid var(--border);
-    background: var(--surface);
-  }
-  .valuebar-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem 1.5rem;
-    padding-block: 1.5rem;
-  }
-  .vp {
-    display: flex;
-    align-items: center;
-    gap: 0.65rem;
-  }
-  .vp-icon {
-    display: inline-grid;
-    place-items: center;
-    flex: 0 0 auto;
-    width: 2.2rem;
-    height: 2.2rem;
-    border-radius: var(--radius-sm);
-    background: var(--accent-soft);
-    color: var(--accent);
-  }
-  .vp-title {
-    font-size: var(--step--1);
-    color: var(--text-muted);
-    line-height: 1.3;
-  }
-  /* WHO */
-  .who {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.75rem 1.25rem;
-  }
-  .who-label {
-    font-family: var(--font-mono);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    font-size: 0.72rem;
-    color: var(--text-subtle);
-    font-weight: 700;
-  }
-  .who-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem 0.75rem;
-  }
-  .who-list li {
-    font-weight: 600;
-    color: var(--text);
-  }
-  .who-list li:not(:last-child)::after {
-    content: '·';
-    margin-left: 0.75rem;
-    color: var(--text-subtle);
-  }
-  /* CONTRARIAN */
-  .contrarian {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-  .contrarian-title {
-    font-size: var(--step-4);
-    line-height: 1.05;
-  }
-  .contrarian-title span {
-    display: block;
-  }
-  .contrarian-sub {
-    margin-top: 1rem;
-    font-size: var(--step-1);
-    font-weight: 600;
-    color: var(--accent);
-    max-width: 28ch;
-  }
-  .contrarian-body p {
-    color: var(--text-muted);
-    line-height: 1.7;
-  }
-  .why-order {
-    margin: 1rem 0;
-    padding-left: 1.3rem;
-    display: grid;
-    gap: 0.4rem;
-    color: var(--text);
-  }
-  .why-order li::marker {
-    color: var(--accent);
-    font-family: var(--font-mono);
-  }
-  /* SHARED */
+  /* SHARED HEADS */
   .section-h2 {
     font-size: var(--step-3);
     margin-bottom: 1.5rem;
+  }
+  .sig-head {
+    text-align: center;
+    max-width: 46rem;
+    margin: 0 auto 2rem;
+  }
+  .sig-head .section-h2 {
+    margin-bottom: 0.6rem;
+  }
+  .sig-sub {
+    max-width: 52ch;
+    margin-inline: auto;
   }
   .section-head {
     display: flex;
@@ -462,14 +372,86 @@ const jsonLd = [
   .see-all:hover {
     color: var(--accent-hover);
   }
-  .grid-3,
-  .grid-4 {
+  /* CONTRARIAN */
+  .contrarian {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .contrarian-title {
+    font-size: var(--step-4);
+    line-height: 1.05;
+  }
+  .contrarian-title span {
+    display: block;
+  }
+  .contrarian-sub {
+    margin-top: 1rem;
+    font-size: var(--step-1);
+    font-weight: 600;
+    max-width: 30ch;
+  }
+  .contrarian-body p {
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+  .why-order {
+    margin: 1rem 0;
+    padding-left: 1.3rem;
+    display: grid;
+    gap: 0.4rem;
+    color: var(--text);
+  }
+  .why-order li::marker {
+    color: var(--accent);
+    font-family: var(--font-mono);
+  }
+  /* ALLOCATION */
+  .alloc {
+    display: grid;
+    gap: 1rem;
+    max-width: 46rem;
+  }
+  .alloc-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.35rem 1rem;
+    align-items: center;
+  }
+  .alloc-label {
+    font-weight: 600;
+  }
+  .alloc-pct {
+    font-family: var(--font-mono);
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .alloc-track {
+    grid-column: 1 / -1;
+    height: 0.55rem;
+    border-radius: var(--radius-pill);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .alloc-fill {
+    display: block;
+    height: 100%;
+    width: 0;
+    border-radius: var(--radius-pill);
+    background: var(--accent);
+    transition: width 1s var(--ease);
+  }
+  .alloc-row.is-visible .alloc-fill {
+    width: var(--pct);
+  }
+  /* CARDS */
+  .grid-3 {
     display: grid;
     gap: clamp(1rem, 0.5rem + 1.5vw, 1.5rem);
     grid-template-columns: 1fr;
   }
-  .card,
-  .eng {
+  .card {
     padding: 1.5rem;
     background: var(--card);
     border: 1px solid var(--border);
@@ -477,8 +459,7 @@ const jsonLd = [
     height: 100%;
     transition: transform var(--dur) var(--ease), border-color var(--dur), box-shadow var(--dur);
   }
-  .card:hover,
-  a.eng:hover {
+  .card:hover {
     transform: translateY(-3px);
     border-color: var(--accent);
     box-shadow: var(--shadow);
@@ -499,46 +480,7 @@ const jsonLd = [
     font-size: var(--step-1);
     margin-bottom: 0.4rem;
   }
-  .eng {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-  }
-  .eng-duration {
-    align-self: flex-start;
-    font-family: var(--font-mono);
-    font-size: var(--step--1);
-    font-weight: 700;
-    color: var(--accent);
-    background: var(--accent-soft);
-    padding: 0.2rem 0.6rem;
-    border-radius: var(--radius-pill);
-  }
-  .eng .muted {
-    flex: 1 0 auto;
-  }
-  .eng-cta {
-    font-weight: 600;
-    color: var(--accent);
-    font-size: var(--step--1);
-  }
-  /* CHIPS */
-  .chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem 0.7rem;
-  }
-  .chip {
-    font-family: var(--font-mono);
-    font-weight: 700;
-    font-size: var(--step--1);
-    color: var(--text);
-    border: 1px solid var(--border-strong);
-    background: var(--card);
-    padding: 0.5rem 0.95rem;
-    border-radius: var(--radius-pill);
-  }
-  /* CASE STUDIES */
+  /* CASE */
   .case {
     display: flex;
     flex-direction: column;
@@ -578,11 +520,23 @@ const jsonLd = [
     color: var(--accent);
     font-size: var(--step--1);
   }
-  .case-note {
-    margin-top: 1.25rem;
-    font-size: var(--step--1);
+  /* PROOF */
+  .proof {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 0.7rem;
   }
-  /* FINAL CTA (clean, no glow) */
+  .proof-item {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: var(--step--1);
+    color: var(--text);
+    border: 1px solid var(--border-strong);
+    background: var(--card);
+    padding: 0.5rem 0.95rem;
+    border-radius: var(--radius-pill);
+  }
+  /* FINAL CTA */
   .final-cta {
     background: var(--lx-dark);
     color: var(--lx-cream);
@@ -606,11 +560,7 @@ const jsonLd = [
     color: #cfc9be;
   }
   @media (min-width: 560px) {
-    .grid-3,
-    .grid-4 {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    .valuebar-grid {
+    .grid-3 {
       grid-template-columns: repeat(2, 1fr);
     }
   }
@@ -626,12 +576,6 @@ const jsonLd = [
     }
     .grid-3 {
       grid-template-columns: repeat(3, 1fr);
-    }
-    .grid-4 {
-      grid-template-columns: repeat(4, 1fr);
-    }
-    .valuebar-grid {
-      grid-template-columns: repeat(5, 1fr);
     }
     .final-cta-inner {
       flex-direction: row;

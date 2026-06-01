@@ -1,0 +1,133 @@
+---
+import { framework } from '../data/framework';
+// 5 fixed positions on a circle (radius 40% of the box), starting at top, clockwise.
+const positions = [
+  { x: 50, y: 9 },
+  { x: 88, y: 38 },
+  { x: 73, y: 83 },
+  { x: 27, y: 83 },
+  { x: 12, y: 38 },
+];
+---
+
+<div class="loop" data-reveal>
+  <svg class="loop-ring" viewBox="0 0 100 100" aria-hidden="true">
+    <circle class="ring-bg" cx="50" cy="50" r="40" />
+    <circle class="ring" cx="50" cy="50" r="40" />
+  </svg>
+  <div class="loop-center">
+    <span class="lc-eyebrow">The loop</span>
+    <span class="lc-title">Operations<br />Improvement</span>
+  </div>
+  {framework.map((s, i) => (
+    <div class="loop-node" style={`left:${positions[i].x}%;top:${positions[i].y}%`}>
+      <span class="ln-num">{s.n}</span>
+      <span class="ln-title">{s.title}</span>
+    </div>
+  ))}
+</div>
+
+<style>
+  .loop {
+    position: relative;
+    width: min(30rem, 92vw);
+    aspect-ratio: 1;
+    margin: 1.5rem auto 0;
+  }
+  .loop-ring {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+    overflow: visible;
+  }
+  .ring-bg {
+    fill: none;
+    stroke: var(--border-strong);
+    stroke-width: 0.6;
+  }
+  .ring {
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 0.8;
+    stroke-linecap: round;
+    stroke-dasharray: 251.2;
+    stroke-dashoffset: 251.2;
+  }
+  .loop.is-visible .ring {
+    animation: draw 1.5s var(--ease) 0.25s forwards;
+  }
+  @keyframes draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  .loop-center {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 46%;
+    height: 46%;
+    border-radius: var(--radius-pill);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    text-align: center;
+    background: var(--card);
+    border: 1px solid var(--border);
+  }
+  .lc-eyebrow {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.62rem;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .lc-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(0.95rem, 0.6rem + 1.4vw, 1.3rem);
+    line-height: 1.1;
+    color: var(--text);
+  }
+  .loop-node {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    width: 8rem;
+    text-align: center;
+  }
+  .ln-num {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--radius-pill);
+    background: var(--accent);
+    color: var(--accent-contrast);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.8rem;
+  }
+  .ln-title {
+    font-weight: 600;
+    font-size: var(--step--1);
+    color: var(--text);
+    line-height: 1.2;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ring {
+      stroke-dashoffset: 0;
+    }
+    .loop.is-visible .ring {
+      animation: none;
+    }
+  }
+</style>
