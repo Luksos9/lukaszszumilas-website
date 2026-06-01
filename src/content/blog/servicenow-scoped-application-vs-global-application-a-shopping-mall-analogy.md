@@ -1,9 +1,9 @@
 ---
-title: "ServiceNow Scoped Application  vs. Global Application: A Shopping Mall Analogy"
-description: "Welcome to the ServiceNow Mall Imagine a mall with different stores and one central security office that oversees the entire mall. Scoped Application Each st..."
+title: "Scoped vs Global Apps: A Shopping Mall Analogy"
+description: "Scoped apps are the stores. Global is the mall's security office. Here is when each one is the right call in ServiceNow."
 pubDate: 2023-11-12
 tags: ["servicenow"]
-heroImage: "/images/blog/servicenow-scoped-application-vs-global-application-a-shopping-ma.png"
+heroImage: "/images/blog/servicenow-scoped-application-vs-global-application-a-shopping-ma.webp"
 ghostSlug: "servicenow-scoped-application-vs-global-application-a-shopping-mall-analogy"
 draft: false
 ---

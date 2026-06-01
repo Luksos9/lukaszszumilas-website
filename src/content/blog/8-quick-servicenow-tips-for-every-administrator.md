@@ -1,9 +1,9 @@
 ---
-title: "8 Quick  ServiceNow Tips For Every administrator"
-description: "Optimize your ServiceNow Admin tasks with 8 key tips for faster Incident Resolution."
+title: "8 Quick ServiceNow Tips for Every Administrator"
+description: "Eight small habits that speed up everyday admin work in ServiceNow, from faster incident resolution to cleaner config."
 pubDate: 2023-10-08
 tags: ["servicenow"]
-heroImage: "/images/blog/8-quick-servicenow-tips-for-every-administrator-hero-servicenow-a.png"
+heroImage: "/images/blog/8-quick-servicenow-tips-for-every-administrator-hero-servicenow-a.webp"
 ghostSlug: "8-quick-servicenow-tips-for-every-administrator"
 draft: false
 ---
@@ -24,7 +24,7 @@ Don't miss out!
 
 ## 1\. Priority
 
-![](/images/blog/8-quick-servicenow-tips-for-every-administrator-image-4.png)
+![](/images/blog/8-quick-servicenow-tips-for-every-administrator-image-4.webp)
 
 ### Key Points:
 
@@ -58,7 +58,7 @@ But, there are some tools, that we will explore later, that help to find a solut
 
 ## 2\. SLA (Service Level Agreement)
 
-![](/images/blog/8-quick-servicenow-tips-for-every-administrator-image-5.png)
+![](/images/blog/8-quick-servicenow-tips-for-every-administrator-image-5.webp)
 
 An **SLA** is a contract that sets the expectations for incident resolution times.
 
@@ -87,7 +87,7 @@ It serves as the **standard** for evaluating how **well** and how **efficiently*
 
 ## 3\. Notifications Preview
 
-![](/images/blog/8-quick-servicenow-tips-for-every-administrator-image-6.png)
+![](/images/blog/8-quick-servicenow-tips-for-every-administrator-image-6.webp)
 
 **Notifications Preview** is awesome when resolving incidents regarding notifications.
 
@@ -101,7 +101,7 @@ They **allow you to see in real-time if a user should receive a notification** a
 You can choose Event Creator and Preview Record by using  
 **“Notification Preview”:**
 
-![](/images/blog/8-quick-servicenow-tips-for-every-administrator-image-7.png)
+![](/images/blog/8-quick-servicenow-tips-for-every-administrator-image-7.webp)
 *Image illustrating why user was not receiving notifications (he unsubscribed*
 
 ### Why Preview Notifications Matters:
@@ -122,7 +122,7 @@ You can confirm who's getting notified and solve it if they're not, ensuring smo
 
 ## 4\. User Criteria Diagnostics
 
-![](/images/blog/8-quick-servicenow-tips-for-every-administrator-image-9.png)
+![](/images/blog/8-quick-servicenow-tips-for-every-administrator-image-9.webp)
 
 **User Criteria Diagnostics (UCD)** is your go-to tool for troubleshooting access issues during incident resolution.
 
@@ -137,7 +137,7 @@ There is **UCD** for **Service Catalog** and **Knowledge**.
 
 ### Example:
 
-![](/images/blog/8-quick-servicenow-tips-for-every-administrator-image-10.png)
+![](/images/blog/8-quick-servicenow-tips-for-every-administrator-image-10.webp)
 *Image showing User Criteria Diagnostic and Evaluation for "Abel Tuter". He is able to see the Catalog Item "Service Category Request"*
 
 ### Why User Criteria Diagnostics Matter:
@@ -154,7 +154,7 @@ There is **UCD** for **Service Catalog** and **Knowledge**.
 
 ## 5\. Reference Qualifier
 
-![](/images/blog/8-quick-servicenow-tips-for-every-administrator-image-11.png)
+![](/images/blog/8-quick-servicenow-tips-for-every-administrator-image-11.webp)
 
 ServiceNow uses a **Reference Qualifier** to **limit the data displayed in reference fields.**
 
@@ -170,7 +170,7 @@ It acts as a filter, allowing **only specific records** from another table to be
 
 ### Example:
 
-![](/images/blog/8-quick-servicenow-tips-for-every-administrator-image-12.png)
+![](/images/blog/8-quick-servicenow-tips-for-every-administrator-image-12.webp)
 *Reference Qualifier that shows only Active Users in Incident form for a “Caller” field. If user is not able to select a User the possible cause may be that this User is inactive, therefore filtered by Reference Qualifier.*
 
 ### Why Reference Qualifier Matters:
@@ -186,7 +186,7 @@ If users **can't see** certain records in an Incident form, the **Reference Qual
 
 ## 6\. Impersonate
 
-![](/images/blog/8-quick-servicenow-tips-for-every-administrator-image-13.png)
+![](/images/blog/8-quick-servicenow-tips-for-every-administrator-image-13.webp)
 
 **Impersonating** a user in ServiceNow **allows you to see the system through their eyes.**
 
@@ -217,7 +217,7 @@ User-specific incidents can be tricky.
 
 ## 7\. Debug Security Rules
 
-![](/images/blog/8-quick-servicenow-tips-for-every-administrator-image-14.png)
+![](/images/blog/8-quick-servicenow-tips-for-every-administrator-image-14.webp)
 
 **Debug Security Rules** is your tool for **dissecting permission issues.**
 
@@ -231,7 +231,7 @@ This feature allows you to **see in real-time which ACLs** (Access Control Rules
 
 ### Example:
 
-![](/images/blog/8-quick-servicenow-tips-for-every-administrator-image-16.png)
+![](/images/blog/8-quick-servicenow-tips-for-every-administrator-image-16.webp)
 *Debug Security Rules: shows which accesses are granted and which are not*
 
 ### Why Debug Security Rules Matter:
@@ -250,7 +250,7 @@ It is allowing for a faster and more accurate fix, **improving** the **incident 
 
 ## 8\. Related Search Results
 
-![](/images/blog/8-quick-servicenow-tips-for-every-administrator-image-18.png)
+![](/images/blog/8-quick-servicenow-tips-for-every-administrator-image-18.webp)
 
 Related Search Results in ServiceNow offer contextual suggestions based on the incident at hand.
 
@@ -264,7 +264,7 @@ This AI-driven feature helps you quickly find solutions from past incidents or k
 
 ### Example:
 
-![](/images/blog/8-quick-servicenow-tips-for-every-administrator-image-19.png)
+![](/images/blog/8-quick-servicenow-tips-for-every-administrator-image-19.webp)
 *Here is example of Related Search Result. It is using AI in order to search for similar Incidents, Knowledge Articles and so on.*
 
 ### **Why Related Search Results Matter:**

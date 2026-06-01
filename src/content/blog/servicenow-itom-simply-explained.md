@@ -1,9 +1,9 @@
 ---
-title: "ServiceNow ITOM Simply Explained"
-description: "Imagine your IT organization as a city—ITOM is the brain that manages services, networks, and processes to keep operations running smoothly."
+title: "ServiceNow ITOM, Explained Like a City"
+description: "ITOM is the brain of a city that keeps services and networks running. Here is ITOM in plain terms."
 pubDate: 2023-10-21
 tags: ["servicenow"]
-heroImage: "/images/blog/servicenow-itom-simply-explained-hero-itom-photo.png"
+heroImage: "/images/blog/servicenow-itom-simply-explained-hero-itom-photo.webp"
 ghostSlug: "servicenow-itom-simply-explained"
 draft: false
 ---
@@ -28,7 +28,7 @@ This is where **ServiceNow's ITOM** comes in.
 
 ## ITOM
 
-![](/images/blog/servicenow-itom-simply-explained-image-79.png)
+![](/images/blog/servicenow-itom-simply-explained-image-79.webp)
 
 acts as the brain of your IT city:
 
@@ -46,7 +46,7 @@ It keeps your IT organization (city) **efficient**, **predicting issues before t
 
 ### Service Mapping:
 
-![](/images/blog/servicenow-itom-simply-explained-image-80.png)
+![](/images/blog/servicenow-itom-simply-explained-image-80.webp)
 
 Think of it as the city planning department, drawing an entire map of the city.
 
@@ -56,7 +56,7 @@ It provides a detailed **blueprint** of all IT services and their **connections*
 
 ### Event Management:
 
-![](/images/blog/servicenow-itom-simply-explained-image-81.png)
+![](/images/blog/servicenow-itom-simply-explained-image-81.webp)
 
 It's like having **surveillance cameras** around the city to **detect** and **respond** to incidents.
 
@@ -66,7 +66,7 @@ It's like having **surveillance cameras** around the city to **detect** and **re
 
 ### Cloud Management:
 
-![](/images/blog/servicenow-itom-simply-explained-image-82.png)
+![](/images/blog/servicenow-itom-simply-explained-image-82.webp)
 
 Imagine coordinating not just your city, but **neighboring** cities (**cloud environments**).
 
@@ -76,7 +76,7 @@ It **manages cloud resources** and **services** from **multiple providers** like
 
 ### Discovery:
 
-![](/images/blog/servicenow-itom-simply-explained-image-83.png)
+![](/images/blog/servicenow-itom-simply-explained-image-83.webp)
 
 Acts like the **city's survey department**, constantly **updating** the **city map**.
 
@@ -86,7 +86,7 @@ It **automatically identifies** all hardware and software present in your **IT e
 
 **Orchestration:**
 
-![](/images/blog/servicenow-itom-simply-explained-image-84.png)
+![](/images/blog/servicenow-itom-simply-explained-image-84.webp)
 
 It's the **traffic control center**, **automating** **routine tasks** across your IT infrastructure, such as resetting passwords or deploying applications.
 
@@ -94,7 +94,7 @@ It's the **traffic control center**, **automating** **routine tasks** across you
 
 ### Operational Intelligence:
 
-![](/images/blog/servicenow-itom-simply-explained-image-86.png)
+![](/images/blog/servicenow-itom-simply-explained-image-86.webp)
 
 This tool is like your **city's data analysts**, **predicting future traffic problems** based on **past** data.
 

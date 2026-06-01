@@ -1,9 +1,9 @@
 ---
-title: "5 Mistakes I did as Developer in ServiceNow. Avoid them ❌"
-description: "Introduction I started ServiceNow about 2 years ago. During this time I learned a lot about the platform. But if I had to go back in time and start again, he..."
+title: "5 Mistakes I Made as a ServiceNow Developer"
+description: "Five things I got wrong in my first two years on ServiceNow, and how to skip the lessons I learned the hard way."
 pubDate: 2023-11-11
 tags: ["servicenow"]
-heroImage: "/images/blog/5-mistakes-i-did-as-developer-in-servicenow-avoid-them-hero-hyjyu.png"
+heroImage: "/images/blog/5-mistakes-i-did-as-developer-in-servicenow-avoid-them-hero-hyjyu.webp"
 ghostSlug: "5-mistakes-i-did-as-developer-in-servicenow-avoid-them"
 draft: false
 ---

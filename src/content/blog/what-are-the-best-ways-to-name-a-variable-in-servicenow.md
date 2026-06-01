@@ -1,9 +1,9 @@
 ---
-title: "Naming variables. Is naming 'var gr' dangerous or not?"
-description: "In this article I want to explain: * What are the best ways to name a variable in ServiceNow * Why writing a code in functions is really good practice * What..."
+title: "Naming Variables in ServiceNow: Is 'var gr' Dangerous?"
+description: "Is naming a GlideRecord 'gr' a real problem? How I think about variable names, and why moving code into functions pays off."
 pubDate: 2023-10-11
 tags: ["servicenow"]
-heroImage: "/images/blog/what-are-the-best-ways-to-name-a-variable-in-servicenow-hero-dang.png"
+heroImage: "/images/blog/what-are-the-best-ways-to-name-a-variable-in-servicenow-hero-dang.webp"
 ghostSlug: "what-are-the-best-ways-to-name-a-variable-in-servicenow"
 draft: false
 ---
@@ -23,7 +23,7 @@ I will provide real life scenarios, so you can understand better.
 
 ---
 
-![](/images/blog/what-are-the-best-ways-to-name-a-variable-in-servicenow-image-50.png)
+![](/images/blog/what-are-the-best-ways-to-name-a-variable-in-servicenow-image-50.webp)
 
 **Two ServiceNow developers** are working on **business rules**, each targeting different tables in the same ServiceNow instance.
 
@@ -34,17 +34,17 @@ Both use Glide Record to query data, but focus on different aspects:
 
 ### **Developer A's Business Rule on the Incident table:**
 
-![](/images/blog/what-are-the-best-ways-to-name-a-variable-in-servicenow-image-40.png)
+![](/images/blog/what-are-the-best-ways-to-name-a-variable-in-servicenow-image-40.webp)
 *****Developer**** ****A**** named his Glide Record ****'gr'*****
 
 ### **Developer B's Business Rule on the Change table:**
 
-![](/images/blog/what-are-the-best-ways-to-name-a-variable-in-servicenow-image-41.png)
+![](/images/blog/what-are-the-best-ways-to-name-a-variable-in-servicenow-image-41.webp)
 *****Developer**** ****B**** also named his Glide Record ****'gr'*****
 
 ---
 
-![](/images/blog/what-are-the-best-ways-to-name-a-variable-in-servicenow-image-39.png)
+![](/images/blog/what-are-the-best-ways-to-name-a-variable-in-servicenow-image-39.webp)
 
 Consider a situation where an **incident is spawned from a change request.**
 
@@ -64,7 +64,7 @@ By following such **straightforward** but effective variable naming conventions,
 
 ---
 
-![](/images/blog/what-are-the-best-ways-to-name-a-variable-in-servicenow-image-42.png)
+![](/images/blog/what-are-the-best-ways-to-name-a-variable-in-servicenow-image-42.webp)
 
 Lets go through one more scenario, but with this one we will see how function scope works.
 
@@ -74,23 +74,23 @@ Both developers decide to add some utilities for their respective tables in Scri
 
 ### **First lets understand function scope:**
 
-![](/images/blog/what-are-the-best-ways-to-name-a-variable-in-servicenow-image-43.png)
+![](/images/blog/what-are-the-best-ways-to-name-a-variable-in-servicenow-image-43.webp)
 *Here we define myVariable in 2 scopes, ****global**** and ****local*****
 
 ### **Output:**
 
-![](/images/blog/what-are-the-best-ways-to-name-a-variable-in-servicenow-image-44.png)
+![](/images/blog/what-are-the-best-ways-to-name-a-variable-in-servicenow-image-44.webp)
 *As you can see same name gives ****different**** results*
 
 ---
 
 ### **Developer A's Script Include:**
 
-![](/images/blog/what-are-the-best-ways-to-name-a-variable-in-servicenow-image-45.png)
+![](/images/blog/what-are-the-best-ways-to-name-a-variable-in-servicenow-image-45.webp)
 
 ### **Developer B's Script Include:**
 
-![](/images/blog/what-are-the-best-ways-to-name-a-variable-in-servicenow-image-46.png)
+![](/images/blog/what-are-the-best-ways-to-name-a-variable-in-servicenow-image-46.webp)
 
 ---
 
@@ -118,7 +118,7 @@ In summary, function scope **should protect the gr variables** in the two Script
 
 ---
 
-![](/images/blog/what-are-the-best-ways-to-name-a-variable-in-servicenow-image-47.png)
+![](/images/blog/what-are-the-best-ways-to-name-a-variable-in-servicenow-image-47.webp)
 
 So even if two Developers defined **'var gr'** in their Script Includes as long as they defined it within function scope **it won't cause any problems** **even when both Script Includes are used in the same Script.**
 
@@ -130,11 +130,11 @@ Then function of Developer B will return it's result and even if both use same v
 
 ---
 
-![](/images/blog/what-are-the-best-ways-to-name-a-variable-in-servicenow-image-48.png)
+![](/images/blog/what-are-the-best-ways-to-name-a-variable-in-servicenow-image-48.webp)
 
 1.  Even if variable **overlap** is really rare scenario it **can happen**, especially in large instances.
 2.  To **prevent** variable **overlap** use both **descriptive naming** of variables like 'incGr' instead of just 'gr' or even 'activeIncGr' to be more **descriptive**.
 3.  To **prevent** variable **overlap** you can combine descriptive variable naming with **'dressing'** your **code** in **functions**. For example you can write your User Criteria like this:
 
-![](/images/blog/what-are-the-best-ways-to-name-a-variable-in-servicenow-image-49.png)
+![](/images/blog/what-are-the-best-ways-to-name-a-variable-in-servicenow-image-49.webp)
 *Example of User Criteria written by ****'dressing'**** it in a ****function**** and ****invoking****.*

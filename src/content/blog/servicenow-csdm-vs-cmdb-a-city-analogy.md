@@ -1,14 +1,14 @@
 ---
-title: "ServiceNow CSDM vs. CMDB A City Analogy"
-description: "At its core, the CSDM (Common Service Data Model) is a framework or guideline for how to structure data in your ServiceNow environment. Think of it like the..."
+title: "ServiceNow CSDM vs CMDB: A City Analogy"
+description: "The CMDB is the buildings. CSDM is the city plan that decides where they go. Here is the difference, explained with a city."
 pubDate: 2023-12-03
 tags: ["servicenow"]
-heroImage: "/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-hero-asdasdasd.png"
+heroImage: "/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-hero-asdasdasd.webp"
 ghostSlug: "servicenow-csdm-vs-cmdb-a-city-analogy"
 draft: false
 ---
 
-![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image.png)
+![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image.webp)
 
 At its core, the **CSDM (Common Service Data Model)** is a **framework** or **guideline** for how to **structure data** in your ServiceNow environment.
 
@@ -16,7 +16,7 @@ Think of it like the **scheme** for a **city**.
 
 ---
 
-![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-1.png)
+![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-1.webp)
 
 Just as a **city sheme** would **outline** where to **place**:
 
@@ -28,49 +28,49 @@ Just as a **city sheme** would **outline** where to **place**:
 
 ---
 
-![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-2.png)
+![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-2.webp)
 
 The **CSDM outlines where** and **how** to **place** and **connect** different **types** of service-related **data** in your ServiceNow "city."
 
 ---
 
-![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-3.png)
+![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-3.webp)
 
 Different types of **buildings** might represent different **types of data.**
 
 ---
 
-![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-4.png)
+![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-4.webp)
 
 Could represent a **business application**:
 
-![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-5.png)
+![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-5.webp)
 
 ---
 
-![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-6.png)
+![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-6.webp)
 
 Could represent a **business service**:
 
-![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-7.png)
+![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-7.webp)
 
 ---
 
-![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-8.png)
+![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-8.webp)
 
 Could represent the **relationships** between these different data points.
 
-![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-9.png)
+![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-9.webp)
 
 ---
 
-![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-10.png)
+![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-10.webp)
 
 The **layout** of the **city** (your **ServiceNow instance**) follows this **scheme** (the **CSDM**) to ensure everything is **structured** and **connected** in a logical, efficient way.
 
 ---
 
-![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-11.png)
+![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-11.webp)
 
 The **CMDB (Configuration Management Database)** is like a comprehensive **registry** or **inventory** of **all** the **buildings** in your **city**.
 
@@ -86,7 +86,7 @@ and more...
 
 ---
 
-![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-12.png)
+![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-12.webp)
 
 In ServiceNow terms, the **CMDB** contains **data** about **all** your **IT infrastructure**:
 
@@ -98,7 +98,7 @@ In ServiceNow terms, the **CMDB** contains **data** about **all** your **IT infr
 
 ---
 
-![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-13.png)
+![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-13.webp)
 
 The CSDM and CMDB are **closely related**.
 
@@ -108,7 +108,7 @@ The **CMDB** is where that structured and connected **data** is **stored**.
 
 ---
 
-![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-14.png)
+![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-14.webp)
 
 To extend our city analogy, you'd use:
 
@@ -120,7 +120,7 @@ and once it's built:
 
 ---
 
-![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-15.png)
+![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-15.webp)
 
 Imagine managing a **project** in the real world.
 
@@ -128,7 +128,7 @@ Your task is to launch a new **business application** across your organization.
 
 ---
 
-![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-16.png)
+![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-16.webp)
 
 The **CSDM** would **guide** you in **defining** and **structuring** the **data** related to this project.
 
@@ -142,7 +142,7 @@ You'd use it to determine how to:
 
 ---
 
-![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-17.png)
+![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-17.webp)
 
 Once you've **defined** and **structured** this data according to the **CSDM**, you'd **store** it in the **CMDB**.
 
@@ -152,7 +152,7 @@ This would be invaluable for managing the application's lifecycle, troubleshooti
 
 ---
 
-![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-18.png)
+![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-18.webp)
 
 The CSDM isn't a product or a feature that you switch on or off. 🚫
 
@@ -168,7 +168,7 @@ of your ServiceNow data. 🔍💡
 
 ---
 
-![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-19.png)
+![](/images/blog/servicenow-csdm-vs-cmdb-a-city-analogy-image-19.webp)
 
 1️⃣ What are the CSDM and CMDB in ServiceNow, and how are they related?
 

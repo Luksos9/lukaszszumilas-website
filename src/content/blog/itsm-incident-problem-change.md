@@ -1,14 +1,14 @@
 ---
-title: "ITSM: Incident, Problem & Change. Explained Without Overcomplication."
-description: "ITSM stands for IT Service Management, focusing on delivering quality IT services to meet the needs of the organization. It is crucial for maintaining the or..."
+title: "ITSM: Incident, Problem, and Change, Without the Jargon"
+description: "Incident, Problem, and Change are the backbone of ITSM. Here is what each one does, explained without the jargon."
 pubDate: 2023-10-10
 tags: ["servicenow"]
-heroImage: "/images/blog/itsm-incident-problem-change-hero-trzeci.png"
+heroImage: "/images/blog/itsm-incident-problem-change-hero-trzeci.webp"
 ghostSlug: "itsm-incident-problem-change"
 draft: false
 ---
 
-![](/images/blog/itsm-incident-problem-change-image-27.png)
+![](/images/blog/itsm-incident-problem-change-image-27.webp)
 
   
 **ITSM** stands for **IT Service Management,** focusing on delivering quality IT services to meet the needs of the organization.
@@ -46,7 +46,7 @@ It employs structured processes and methodologies to manage and deliver IT servi
 
 ---
 
-![](/images/blog/itsm-incident-problem-change-image-29.png)
+![](/images/blog/itsm-incident-problem-change-image-29.webp)
 
 Imagine you’re working, and you use Outlook for emails.
 
@@ -60,7 +60,7 @@ They’ll find a temporary solution until they find the real cause. If many face
 
 After investigating, if they find that a server update can fix this, they’ll request to update the server – that’s a **Change**.
 
-![](/images/blog/itsm-incident-problem-change-image-30.png)
+![](/images/blog/itsm-incident-problem-change-image-30.webp)
 
 In our scenario, the inability to connect to Outlook was an **Incident**.
 
@@ -68,7 +68,7 @@ It’s a disruption that needs immediate attention to restore normal service ope
 
 ---
 
-![](/images/blog/itsm-incident-problem-change-image-31.png)
+![](/images/blog/itsm-incident-problem-change-image-31.webp)
 
 When multiple incidents share the same unidentified cause, it’s a **Problem**.
 
@@ -76,7 +76,7 @@ It’s the underlying issue that needs to be resolved to prevent future disrupti
 
 ---
 
-![](/images/blog/itsm-incident-problem-change-image-32.png)
+![](/images/blog/itsm-incident-problem-change-image-32.webp)
 
 A **Change** is a solution to a problem or an incident.
 
@@ -84,7 +84,7 @@ It’s a systematic modification to fix the underlying issues and restore servic
 
 ---
 
-![](/images/blog/itsm-incident-problem-change-image-33.png)
+![](/images/blog/itsm-incident-problem-change-image-33.webp)
 
 **ITSM’s** structured approach in managing:
 
@@ -98,7 +98,7 @@ ensures **seamless** IT service delivery, acting as the silent guardian enabling
 
 ---
 
-![](/images/blog/itsm-incident-problem-change-image-34.png)
+![](/images/blog/itsm-incident-problem-change-image-34.webp)
 
 Of course ITSM is much more than just **Incident, Problem and Change.**
 

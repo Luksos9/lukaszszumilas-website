@@ -1,9 +1,9 @@
 ---
-title: "GlideAggregate vs GlideRecord. Improve query performance."
-description: "Let's explore how to use both to leverage better performance, as it is important subject and many times encountered in interviews."
+title: "GlideAggregate vs GlideRecord: Faster Queries"
+description: "When to reach for GlideAggregate instead of GlideRecord, and why it matters for performance (and interviews)."
 pubDate: 2023-10-22
 tags: ["servicenow"]
-heroImage: "/images/blog/glideaggregate-vs-gliderecord-how-to-leverage-both-for-better-per.png"
+heroImage: "/images/blog/glideaggregate-vs-gliderecord-how-to-leverage-both-for-better-per.webp"
 ghostSlug: "glideaggregate-vs-gliderecord-how-to-leverage-both-for-better-performance"
 draft: false
 ---
@@ -16,7 +16,7 @@ Let's explore how to use **both** to leverage **better performance**, as it is i
 
 ### First lets define GlideRecord:
 
-![](/images/blog/glideaggregate-vs-gliderecord-how-to-leverage-both-for-better-per-2.png)
+![](/images/blog/glideaggregate-vs-gliderecord-how-to-leverage-both-for-better-per-2.webp)
 *Example of GlideRecord*
 
 **GlideRecord** is used to perform **database operations** on records within a **single** ServiceNow **table**.
@@ -27,14 +27,14 @@ What is **crucial** is that GlideRecord **retrieves all information** about the 
 
 For that reason counting like in the example below is **not** the **best idea**, but lets explore why once we define how **GlideAggregate** works.
 
-![](/images/blog/glideaggregate-vs-gliderecord-how-to-leverage-both-for-better-per-3.png)
+![](/images/blog/glideaggregate-vs-gliderecord-how-to-leverage-both-for-better-per-3.webp)
 *Example of counting by using ****GlideRecord****.*
 
 ---
 
 ### Now lets define GlideAggregate:
 
-![](/images/blog/glideaggregate-vs-gliderecord-how-to-leverage-both-for-better-per-4.png)
+![](/images/blog/glideaggregate-vs-gliderecord-how-to-leverage-both-for-better-per-4.webp)
 *Example of GlideAggregate*
 
 **GlideAggregate**, on the other hand, is **used** for **database operations** that involve **calculations** or **aggregations** on a table, like SUM, AVG, MIN, MAX, and COUNT.
@@ -43,14 +43,14 @@ GlideAggregate will usually be more **efficient** for aggregations, because it *
 
 Below you can see how we could improve previous code using GlideAggregate:
 
-![](/images/blog/glideaggregate-vs-gliderecord-how-to-leverage-both-for-better-per-5.png)
+![](/images/blog/glideaggregate-vs-gliderecord-how-to-leverage-both-for-better-per-5.webp)
 *Previous example written in more efficient way by using GlideAggregate*
 
 ---
 
 ### So what's the main difference?
 
-![](/images/blog/glideaggregate-vs-gliderecord-how-to-leverage-both-for-better-per-6.png)
+![](/images/blog/glideaggregate-vs-gliderecord-how-to-leverage-both-for-better-per-6.webp)
 
 Using GlideRecord fetches all **individual** records and record's fields (**a lot of data**), demanding **significant** resources for processing.
 
@@ -66,7 +66,7 @@ It commands the database to aggregate (SUM, AVG, MIN, MAX, and COUNT) and **retu
 
 ### Now let's go a bit more advanced and see how we can leverage this in an example:
 
-![](/images/blog/glideaggregate-vs-gliderecord-how-to-leverage-both-for-better-per-7.png)
+![](/images/blog/glideaggregate-vs-gliderecord-how-to-leverage-both-for-better-per-7.webp)
 
 **Assignment Group Managers** need a way to see **backlog tasks** for **each assignment group**.
 
@@ -76,7 +76,7 @@ Desired **output** (report) should **show** only **groups** that have "**assigne
 
 This report is intended for **Assignment Group Managers** and it's designed to focus on groups that **haven't been working on their tasks for over 30 days.**
 
-![](/images/blog/glideaggregate-vs-gliderecord-how-to-leverage-both-for-better-per-8.png)
+![](/images/blog/glideaggregate-vs-gliderecord-how-to-leverage-both-for-better-per-8.webp)
 *Report of backlog tasks is needed.*
 
 ---
@@ -85,7 +85,7 @@ This report is intended for **Assignment Group Managers** and it's designed to f
 
 Using **only** ServiceNow **report's filters** to **filter out groups** with any **"on hold"** or **"work in progress" tasks** may be hard to implement (OOTB we can hide the tasks in state "on hold" or "work in progress" when we groupBy "assignment group", but not hide the entire group while we also query "assigned" and 30 days old tasks).
 
-![](/images/blog/glideaggregate-vs-gliderecord-how-to-leverage-both-for-better-per-9.png)
+![](/images/blog/glideaggregate-vs-gliderecord-how-to-leverage-both-for-better-per-9.webp)
 *Illustration of needed ****filters****. We need to create a ****Script**** that ****returns**** groups with ****only "Assigned" Task.**** By configuring filters we only could ****hide**** groups with ****"on hold"**** or ****"work in progress" tasks.*****
 
 We will create **custom filter** in order to obtain list of groups that pass this condition.
@@ -94,7 +94,7 @@ We will create **custom filter** in order to obtain list of groups that pass thi
 
 ### We may approach this task in different way, let's explore the least optimal first:
 
-![](/images/blog/glideaggregate-vs-gliderecord-how-to-leverage-both-for-better-per-10.png)
+![](/images/blog/glideaggregate-vs-gliderecord-how-to-leverage-both-for-better-per-10.webp)
 
 ### What are the things that are not optimal?
 
@@ -105,7 +105,7 @@ We will create **custom filter** in order to obtain list of groups that pass thi
 
 ### Why shouldn't we use nested GlideRecord?
 
-![](/images/blog/glideaggregate-vs-gliderecord-how-to-leverage-both-for-better-per-11.png)
+![](/images/blog/glideaggregate-vs-gliderecord-how-to-leverage-both-for-better-per-11.webp)
 
 1.**Performance Impact:** Nested GlideRecord queries multiply server-database communication, slowing performance. If you're iterating over a large number of records and running another GlideRecord query inside that loop, you're making a large number of synchronous database calls, which can lead to slow response times.
 
@@ -121,20 +121,20 @@ We will create **custom filter** in order to obtain list of groups that pass thi
 
 ### Let's see how to optimize using GlideAggregate for our example:
 
-![](/images/blog/glideaggregate-vs-gliderecord-how-to-leverage-both-for-better-per-12.png)
+![](/images/blog/glideaggregate-vs-gliderecord-how-to-leverage-both-for-better-per-12.webp)
 
 As you can notice first we get list of groups where we **filter groups** that have at least **one task** in state **"work in progress"** or **"on hold".**
 
 Then we use **separate** (not nested) **GlideRecord** to get all assignment groups without these tasks:
 
-![](/images/blog/glideaggregate-vs-gliderecord-how-to-leverage-both-for-better-per-13.png)
+![](/images/blog/glideaggregate-vs-gliderecord-how-to-leverage-both-for-better-per-13.webp)
 *Example of improved Script by using GlideAggregate and not nesting queries*
 
 ---
 
 ## Conclusions
 
-![](/images/blog/glideaggregate-vs-gliderecord-how-to-leverage-both-for-better-per-1.png)
+![](/images/blog/glideaggregate-vs-gliderecord-how-to-leverage-both-for-better-per-1.webp)
 
 1\. **Use GlideRecord to perform database operations on records within a single ServiceNow table.** It can be used to query, insert, update, and delete records.
 

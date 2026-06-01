@@ -1,54 +1,54 @@
 ---
-title: "ServiceNow API A Restaurant Analogy"
-description: "The restaurant represents a software system with an API. Just like a restaurant prepares and serves a variety of dishes, the software offers different servic..."
+title: "ServiceNow APIs: A Restaurant Analogy"
+description: "APIs explained with a restaurant. You tell the waiter what you want, the kitchen makes it, you get the dish. Here's how that maps to ServiceNow."
 pubDate: 2023-12-17
 tags: ["servicenow"]
-heroImage: "/images/blog/servicenow-api-a-restaurant-analogy-hero-api-2.png"
+heroImage: "/images/blog/servicenow-api-a-restaurant-analogy-hero-api-2.webp"
 ghostSlug: "servicenow-api-a-restaurant-analogy"
 draft: false
 ---
 
-![](/images/blog/servicenow-api-a-restaurant-analogy-image-20.png)
+![](/images/blog/servicenow-api-a-restaurant-analogy-image-20.webp)
 
 The restaurant represents a software system with an API.
 
 Just like a restaurant prepares and serves a variety of dishes, the software offers different services or data.
 
-![](/images/blog/servicenow-api-a-restaurant-analogy-image-21.png)
+![](/images/blog/servicenow-api-a-restaurant-analogy-image-21.webp)
 
 ---
 
-![](/images/blog/servicenow-api-a-restaurant-analogy-image-22.png)
+![](/images/blog/servicenow-api-a-restaurant-analogy-image-22.webp)
 
 The **waiter** in the restaurant acts like an **API**.
 
 You tell the waiter (**API**) what you want (**your request**), and the waiter goes to the kitchen (**the software system**) to get your order.
 
-![](/images/blog/servicenow-api-a-restaurant-analogy-image-23.png)
+![](/images/blog/servicenow-api-a-restaurant-analogy-image-23.webp)
 
 ---
 
-![](/images/blog/servicenow-api-a-restaurant-analogy-image-24.png)
+![](/images/blog/servicenow-api-a-restaurant-analogy-image-24.webp)
 
 The **kitchen**, where your food is **prepared**, is like the **back-end** part of the **software**.
 
 **You don’t see the cooking happening** (the internal processing), but you **receive** the **finished dish** (the data or service you requested).
 
-![](/images/blog/servicenow-api-a-restaurant-analogy-image-25.png)
+![](/images/blog/servicenow-api-a-restaurant-analogy-image-25.webp)
 
 ---
 
-![](/images/blog/servicenow-api-a-restaurant-analogy-image-26.png)
+![](/images/blog/servicenow-api-a-restaurant-analogy-image-26.webp)
 
 When you order a **dish**, it's like making an **API call**.
 
 You specify **what you want**, and the kitchen **prepares** it **based** on your **request**.
 
-![](/images/blog/servicenow-api-a-restaurant-analogy-image-27.png)
+![](/images/blog/servicenow-api-a-restaurant-analogy-image-27.webp)
 
 ---
 
-![](/images/blog/servicenow-api-a-restaurant-analogy-image-28.png)
+![](/images/blog/servicenow-api-a-restaurant-analogy-image-28.webp)
 
 -   Communication Between Applications
 -   Efficiency
@@ -58,37 +58,37 @@ You specify **what you want**, and the kitchen **prepares** it **based** on your
 
 ---
 
-![](/images/blog/servicenow-api-a-restaurant-analogy-image-29.png)
+![](/images/blog/servicenow-api-a-restaurant-analogy-image-29.webp)
 
 **APIs** allow **different software systems** to **communicate** with **each other**.
 
 This communication enables seamless **data sharing** and **functionality** between **different software**, improving user experience and system interoperability.
 
-![](/images/blog/servicenow-api-a-restaurant-analogy-image-30.png)
+![](/images/blog/servicenow-api-a-restaurant-analogy-image-30.webp)
 
 ---
 
-![](/images/blog/servicenow-api-a-restaurant-analogy-image-31.png)
+![](/images/blog/servicenow-api-a-restaurant-analogy-image-31.webp)
 
 They enable programs to **access features** or **data** of other **applications**, **services**, or **operating systems** efficiently.
 
 This leads to a **reduction** in **development time** and **resources**, as developers can leverage **existing functionalities** rather than **building** everything **from scratch**.
 
-![](/images/blog/servicenow-api-a-restaurant-analogy-image-32.png)
+![](/images/blog/servicenow-api-a-restaurant-analogy-image-32.webp)
 
 ---
 
-![](/images/blog/servicenow-api-a-restaurant-analogy-image-33.png)
+![](/images/blog/servicenow-api-a-restaurant-analogy-image-33.webp)
 
 **APIs** help in **breaking down complex software** into **simpler**, **modular** **components**.
 
 This modularity makes it **easier** to **understand**, **maintain**, and **update systems**, as well as to **isolate** problems in complex software.
 
-![](/images/blog/servicenow-api-a-restaurant-analogy-image-34.png)
+![](/images/blog/servicenow-api-a-restaurant-analogy-image-34.webp)
 
 ---
 
-![](/images/blog/servicenow-api-a-restaurant-analogy-image-35.png)
+![](/images/blog/servicenow-api-a-restaurant-analogy-image-35.webp)
 
 Think of **JSON** as **English language**.
 
@@ -98,13 +98,13 @@ Even if **Customer** and **Restaurant (API)** are from different **countries (ap
 
 Just like using **English** in **Restaurant** abroad.
 
-![](/images/blog/servicenow-api-a-restaurant-analogy-image-36.png)
+![](/images/blog/servicenow-api-a-restaurant-analogy-image-36.webp)
 
-![](/images/blog/servicenow-api-a-restaurant-analogy-image-37.png)
+![](/images/blog/servicenow-api-a-restaurant-analogy-image-37.webp)
 
 ---
 
-![](/images/blog/servicenow-api-a-restaurant-analogy-image-38.png)
+![](/images/blog/servicenow-api-a-restaurant-analogy-image-38.webp)
 
 1️⃣**Structured Data**: JSON is a format for structuring data that's easy for humans and machines to read and write.
 
@@ -118,17 +118,17 @@ Just like using **English** in **Restaurant** abroad.
 
 ---
 
-![](/images/blog/servicenow-api-a-restaurant-analogy-image-40.png)
+![](/images/blog/servicenow-api-a-restaurant-analogy-image-40.webp)
 
 Imagine you're using a **weather application** on your **phone**.
 
 You want to know the **weather forecast**.
 
-![](/images/blog/servicenow-api-a-restaurant-analogy-image-41.png)
+![](/images/blog/servicenow-api-a-restaurant-analogy-image-41.webp)
 
 ---
 
-![](/images/blog/servicenow-api-a-restaurant-analogy-image-42.png)
+![](/images/blog/servicenow-api-a-restaurant-analogy-image-42.webp)
 
 **The API Request**: You enter your city name in the app.
 
@@ -150,7 +150,7 @@ You want to know the **weather forecast**.
 
 ---
 
-![](/images/blog/servicenow-api-a-restaurant-analogy-image-43.png)
+![](/images/blog/servicenow-api-a-restaurant-analogy-image-43.webp)
 
 In this example, the API **facilitated** the **communication** between your **weather app** and the **weather service**.
 
@@ -158,7 +158,7 @@ In this example, the API **facilitated** the **communication** between your **we
 
 ---
 
-![](/images/blog/servicenow-api-a-restaurant-analogy-image-44.png)
+![](/images/blog/servicenow-api-a-restaurant-analogy-image-44.webp)
 
 1️⃣ In the restaurant analogy, what does the menu represent in relation to an API, and what role does the waiter play?
 

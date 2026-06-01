@@ -1,9 +1,9 @@
 ---
 title: "3 Tips for a Smooth ServiceNow Instance Upgrade"
-description: "In today's fast-paced business environment, staying up to date with the latest technology is crucial for maintaining a competitive edge. One aspect of techno..."
+description: "Upgrades go wrong when you skip the boring steps. Three things I do to keep a ServiceNow upgrade calm and predictable."
 pubDate: 2023-10-11
 tags: ["servicenow"]
-heroImage: "/images/blog/3-tips-for-a-smooth-servicenow-instance-upgrade-hero-dsfsdf.png"
+heroImage: "/images/blog/3-tips-for-a-smooth-servicenow-instance-upgrade-hero-dsfsdf.webp"
 ghostSlug: "3-tips-for-a-smooth-servicenow-instance-upgrade"
 draft: false
 ---

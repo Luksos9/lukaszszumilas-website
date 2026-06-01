@@ -1,9 +1,9 @@
 ---
-title: "1 Crucial Trait every Great ServiceNow DEVELOPER MUST HAVE..."
-description: "What's the one trait that separates good developers from great ones? Let's dive in. The rule is simple, the more responsibility you are willing to take the h..."
+title: "The One Trait Every Great ServiceNow Developer Needs"
+description: "What separates good ServiceNow developers from great ones is how much responsibility they are willing to take."
 pubDate: 2023-10-26
 tags: ["servicenow"]
-heroImage: "/images/blog/1-crucial-trait-every-great-servicenow-developer-must-have-hero-d.png"
+heroImage: "/images/blog/1-crucial-trait-every-great-servicenow-developer-must-have-hero-d.webp"
 ghostSlug: "1-crucial-trait-every-great-servicenow-developer-must-have"
 draft: false
 ---
@@ -14,7 +14,7 @@ Let's dive in.
 
 ---
 
-![](/images/blog/1-crucial-trait-every-great-servicenow-developer-must-have-image-144.png)
+![](/images/blog/1-crucial-trait-every-great-servicenow-developer-must-have-image-144.webp)
 
 The rule is simple, the more **responsibility** you are willing to take the higher you will go.
 
@@ -26,7 +26,7 @@ After all, people that are in high position, are there because they are responsi
 
 ---
 
-![](/images/blog/1-crucial-trait-every-great-servicenow-developer-must-have-image-145.png)
+![](/images/blog/1-crucial-trait-every-great-servicenow-developer-must-have-image-145.webp)
 
 People often **confuse responsibility.**
 
@@ -38,7 +38,7 @@ Even if something is not your **fault** it is still your **responsibility**.
 
 ---
 
-![](/images/blog/1-crucial-trait-every-great-servicenow-developer-must-have-image-146.png)
+![](/images/blog/1-crucial-trait-every-great-servicenow-developer-must-have-image-146.webp)
 
 Certainly, some people write descriptions better than others.
 
@@ -48,7 +48,7 @@ Even so, it's your **responsibility** to find the information you need and provi
 
 ---
 
-![](/images/blog/1-crucial-trait-every-great-servicenow-developer-must-have-image-147.png)
+![](/images/blog/1-crucial-trait-every-great-servicenow-developer-must-have-image-147.webp)
 
 Certainly, there should be a person that tests your solution and they should make sure there are no bugs.
 
@@ -58,7 +58,7 @@ Even so, it's your **responsibility** to ensure your solution works well and doe
 
 ---
 
-![](/images/blog/1-crucial-trait-every-great-servicenow-developer-must-have-image-148.png)
+![](/images/blog/1-crucial-trait-every-great-servicenow-developer-must-have-image-148.webp)
 
 Certainly, if you have written to someone they should give you an answer.
 
@@ -68,7 +68,7 @@ Even so, it’s your **responsibility** to try to find a way to get information,
 
 ---
 
-![](/images/blog/1-crucial-trait-every-great-servicenow-developer-must-have-image-149.png)
+![](/images/blog/1-crucial-trait-every-great-servicenow-developer-must-have-image-149.webp)
 
 Certainly, You should stick to what the story outlines for delivery.
 
@@ -78,7 +78,7 @@ Even so, it’s still Your **responsibility** to provide a solution that meets t
 
 ---
 
-![](/images/blog/1-crucial-trait-every-great-servicenow-developer-must-have-image-150.png)
+![](/images/blog/1-crucial-trait-every-great-servicenow-developer-must-have-image-150.webp)
 
 ### **Managing Workload:**
 
@@ -90,7 +90,7 @@ Being **responsible doesn't mean** living in fear of making **mistakes**. **Erro
 
 ---
 
-![](/images/blog/1-crucial-trait-every-great-servicenow-developer-must-have-image-151.png)
+![](/images/blog/1-crucial-trait-every-great-servicenow-developer-must-have-image-151.webp)
 
 Taking responsibility **empowers you** to:
 

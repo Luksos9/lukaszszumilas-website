@@ -1,9 +1,9 @@
 ---
-title: "Keep your Prod-Test-Dev instances aligned."
-description: "Why? 💡 It is crucial for maintaining consistency and control over your processes. What does that mean? 🤔 Lets see on real life scenario: You implement a sc..."
+title: "Keep Your Prod, Test, and Dev Instances Aligned"
+description: "Drift between instances is where deploys break. Here is why keeping Prod, Test, and Dev in sync saves you painful debugging."
 pubDate: 2023-11-11
 tags: ["servicenow"]
-heroImage: "/images/blog/keep-your-prod-test-dev-instances-aligned-hero-wdxaswdwa.png"
+heroImage: "/images/blog/keep-your-prod-test-dev-instances-aligned-hero-wdxaswdwa.webp"
 ghostSlug: "keep-your-prod-test-dev-instances-aligned"
 draft: false
 ---

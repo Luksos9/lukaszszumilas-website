@@ -1,9 +1,9 @@
 ---
-title: "How to turn on ECMAScript 2021 in ServiceNow ?"
-description: "1) Upgrade instance to at least Tokyo 🌆 2) Create a new app 💽 3) Navigate to \"sys_app\" page 🧭 4) Switch \"JavaScript Mode\" to ECMAScript 2021 🔄 5) Save ✅..."
+title: "How to Turn On ECMAScript 2021 in ServiceNow"
+description: "ECMAScript 2021 brings modern JavaScript to the platform. Here are the exact steps to switch a scoped app over to it."
 pubDate: 2023-11-11
 tags: ["servicenow"]
-heroImage: "/images/blog/how-to-turn-on-ecmascript-2021-in-servicenow-hero-blog-imagesasda.png"
+heroImage: "/images/blog/how-to-turn-on-ecmascript-2021-in-servicenow-hero-blog-imagesasda.webp"
 ghostSlug: "how-to-turn-on-ecmascript-2021-in-servicenow"
 draft: false
 ---

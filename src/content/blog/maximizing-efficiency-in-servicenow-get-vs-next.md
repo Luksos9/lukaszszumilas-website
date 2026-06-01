@@ -1,9 +1,9 @@
 ---
-title: "Maximizing Efficiency in ServiceNow: .get() vs .next()"
-description: "In this article I will explain how and why .get() is the most efficient way to query a single Glide Record in ServiceNow. You can't miss that !"
+title: "ServiceNow .get() vs .next(): Querying a Single Record"
+description: "Why .get() is the efficient way to pull a single GlideRecord, and what .next() costs you when you use it for that job."
 pubDate: 2023-10-22
 tags: ["servicenow"]
-heroImage: "/images/blog/maximizing-efficiency-in-servicenow-get-vs-next-hero-next-vs-get.png"
+heroImage: "/images/blog/maximizing-efficiency-in-servicenow-get-vs-next-hero-next-vs-get.webp"
 ghostSlug: "maximizing-efficiency-in-servicenow-get-vs-next"
 draft: false
 ---
@@ -18,7 +18,7 @@ Lets see what are ways to level up this code from **Beginner** to **Pro**
 
 ### Query Single Record - Level Beginner
 
-![](/images/blog/maximizing-efficiency-in-servicenow-get-vs-next-image-99.png)
+![](/images/blog/maximizing-efficiency-in-servicenow-get-vs-next-image-99.webp)
 
 If you have been in a ServiceNow for a while you immediately notice that this is **not** the **best way** to query a **single record** because of a few things.
 
@@ -28,7 +28,7 @@ Let’s explore them.
 
 ### 1\. Using ‘if (gr.next())’ instead of ‘while (gr.next())’
 
-![](/images/blog/maximizing-efficiency-in-servicenow-get-vs-next-image-107.png)
+![](/images/blog/maximizing-efficiency-in-servicenow-get-vs-next-image-107.webp)
 
 **if (gr.next())**
 
@@ -54,7 +54,7 @@ If you used **while (gr.next())** and there were **multiple** matching records, 
 
 ### **2\. Using .setLimit(1)**
 
-![](/images/blog/maximizing-efficiency-in-servicenow-get-vs-next-image-103.png)
+![](/images/blog/maximizing-efficiency-in-servicenow-get-vs-next-image-103.webp)
 
 The **.setLimit(1)** method limits the query to return only **one record**.
 
@@ -84,7 +84,7 @@ If you're interested in **multiple** records, you should use **while (gr.next())
 
 ### **3\. Using ‘.get()’**
 
-![](/images/blog/maximizing-efficiency-in-servicenow-get-vs-next-image-105.png)
+![](/images/blog/maximizing-efficiency-in-servicenow-get-vs-next-image-105.webp)
 
 My personal **favorite** is using **.get()** to query a **single** record.
 
@@ -94,7 +94,7 @@ The .get() method retrieves one record based on the sys\_id or a specified condi
 
 **But you must be aware of one thing !**
 
-![](/images/blog/maximizing-efficiency-in-servicenow-get-vs-next-image-100.png)
+![](/images/blog/maximizing-efficiency-in-servicenow-get-vs-next-image-100.webp)
 *Example of .get() usage*
 
 **Be aware** that **‘if’** statement is **crucial** !
@@ -117,7 +117,7 @@ If you need to retrieve a **single** record based on a unique condition, use **.
 
 ## Conclusions
 
-![](/images/blog/maximizing-efficiency-in-servicenow-get-vs-next-image-102.png)
+![](/images/blog/maximizing-efficiency-in-servicenow-get-vs-next-image-102.webp)
 
 1\. Use **‘if’** when querying with **single** record, use **‘while’** when querying **multiple** records.
 

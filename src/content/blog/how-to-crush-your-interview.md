@@ -1,9 +1,9 @@
 ---
-title: "How to crush your interview"
-description: "There comes a moment in your life where the spotlight shines on you – the Job Interview. Despite the paper qualifications you have, this face-to-face interac..."
+title: "How to Crush Your ServiceNow Interview"
+description: "The interview is where your CV meets pressure. Here is how I prepare so the spotlight works for me instead of against me."
 pubDate: 2023-10-24
 tags: ["servicenow"]
-heroImage: "/images/blog/how-to-crush-your-interview-hero-dall-e-2023-10-24-15.15.37-illus.png"
+heroImage: "/images/blog/how-to-crush-your-interview-hero-dall-e-2023-10-24-15.15.37-illus.webp"
 ghostSlug: "how-to-crush-your-interview"
 draft: false
 ---

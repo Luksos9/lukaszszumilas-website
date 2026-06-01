@@ -1,9 +1,9 @@
 ---
-title: "Unlocking the Benefits of ServiceNow"
-description: "In today's fast-paced business environment, organizations are constantly seeking ways to streamline their operations and improve efficiency. One platform tha..."
+title: "What ServiceNow Actually Does for a Business"
+description: "Past the buzzwords: what ServiceNow is really for, and where it earns its place in an organization."
 pubDate: 2023-10-11
 tags: ["servicenow"]
-heroImage: "/images/blog/unlocking-the-benefits-of-servicenow-hero-dall-e-2023-10-11-21.07.png"
+heroImage: "/images/blog/unlocking-the-benefits-of-servicenow-hero-dall-e-2023-10-11-21.07.webp"
 ghostSlug: "unlocking-the-benefits-of-servicenow"
 draft: false
 ---

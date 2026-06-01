@@ -1,9 +1,9 @@
 ---
-title: "ServiceNow ITSM Simply Explained"
-description: "Last time I briefly explained how ServiceNow's ITOM works. Now it's the time for ITSM ! Lets break down ITSM as a metaphore of a hospital."
+title: "ServiceNow ITSM, Explained Like a Hospital"
+description: "ITSM as a hospital, where intake and triage map onto how ServiceNow handles IT services. Here is the walkthrough."
 pubDate: 2023-10-22
 tags: ["servicenow"]
-heroImage: "/images/blog/servicenow-itsm-hero-itsm-explained.png"
+heroImage: "/images/blog/servicenow-itsm-hero-itsm-explained.webp"
 ghostSlug: "servicenow-itsm"
 draft: false
 ---
@@ -18,7 +18,7 @@ For better understanding let's break down **ITSM** as a **metaphor** of a **hosp
 
 ### ServiceNow ITSM:
 
-![](/images/blog/servicenow-itsm-image-87.png)
+![](/images/blog/servicenow-itsm-image-87.webp)
 
 Think of ServiceNow **ITSM** as a **hospital** for your **organization's IT health.**
 
@@ -28,7 +28,7 @@ It's where you go when you have an **IT issue** (illness), where you get **regul
 
 ### Incident Management:
 
-![](/images/blog/servicenow-itsm-image-88.png)
+![](/images/blog/servicenow-itsm-image-88.webp)
 
 This is like the **Emergency Room.**
 
@@ -40,7 +40,7 @@ The goal is to **restore normal service** operation as **quickly** as possible.
 
 ### Problem Management:
 
-![](/images/blog/servicenow-itsm-image-89.png)
+![](/images/blog/servicenow-itsm-image-89.webp)
 
 This is like the hospital's **diagnostics department.**
 
@@ -50,7 +50,7 @@ It's where **doctors** (IT professionals) **diagnose** the **root cause** of **r
 
 ### Change Management:
 
-![](/images/blog/servicenow-itsm-image-90.png)
+![](/images/blog/servicenow-itsm-image-90.webp)
 
 This is like the **surgery department.**
 
@@ -60,7 +60,7 @@ When you need to make a **significant change** in your IT infrastructure (like a
 
 ### Knowledge Management:
 
-![](/images/blog/servicenow-itsm-image-91.png)
+![](/images/blog/servicenow-itsm-image-91.webp)
 
 This is like the hospital's **medical library.**
 
@@ -72,7 +72,7 @@ This helps in **resolving** similar **incidents faster** in the future.
 
 ### Service Catalog:
 
-![](/images/blog/servicenow-itsm-image-92.png)
+![](/images/blog/servicenow-itsm-image-92.webp)
 
 This is like the **hospital's reception.**
 
@@ -84,7 +84,7 @@ It **provides** a user-friendly **interface** where **users** can **request** an
 
 ### Service Level Management:
 
-![](/images/blog/servicenow-itsm-image-94.png)
+![](/images/blog/servicenow-itsm-image-94.webp)
 
 This is like the **hospital's management.**
 
@@ -96,7 +96,7 @@ It **helps** in **maintaining** the **quality** of IT services.
 
 ### Requests (REQ):
 
-![](/images/blog/servicenow-itsm-image-95.png)
+![](/images/blog/servicenow-itsm-image-95.webp)
 
 Think of a request as a **patient's appointment** at the hospital.
 
@@ -108,7 +108,7 @@ In ServiceNow, these are tracked as **REQ** records.
 
 ### Requested Items (RITM):
 
-![](/images/blog/servicenow-itsm-image-96.png)
+![](/images/blog/servicenow-itsm-image-96.webp)
 
 These are the **specific services needed** during the **appointment** (REQ).
 
@@ -120,7 +120,7 @@ For instance, a check-up might include a blood test and a consultation - each a 
 
 ### Request Tasks (RQFTASK):
 
-![](/images/blog/servicenow-itsm-image-97.png)
+![](/images/blog/servicenow-itsm-image-97.webp)
 
 These are the **individual tasks** that need to be completed to **fulfill** a **RITM**.
 
@@ -130,7 +130,7 @@ By same analogy, if a blood test is a requested item (RITM), the tasks (RQFTASK)
 
 ### Conclusion
 
-![](/images/blog/servicenow-itsm-image-98.png)
+![](/images/blog/servicenow-itsm-image-98.webp)
 
 These **ITSM components** work **together** to ensure high-quality, **efficient IT service.**
 

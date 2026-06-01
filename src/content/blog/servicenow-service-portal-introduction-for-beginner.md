@@ -1,9 +1,9 @@
 ---
-title: "ServiceNow Service Portal Introduction for Beginner"
-description: "In today's digital world, organizations are constantly looking for innovative ways to improve their service delivery and enhance the user experience. One suc..."
+title: "ServiceNow Service Portal: A Beginner's Guide"
+description: "What the Service Portal is and how to start building your own. A plain guide for people new to it."
 pubDate: 2023-10-11
 tags: ["servicenow"]
-heroImage: "/images/blog/servicenow-service-portal-introduction-for-beginner-hero-num-2.png"
+heroImage: "/images/blog/servicenow-service-portal-introduction-for-beginner-hero-num-2.webp"
 ghostSlug: "servicenow-service-portal-introduction-for-beginner"
 draft: false
 ---

@@ -10,13 +10,14 @@
 | **Course deep links** | `src/data/courses.ts` | Each card links to `luckyx.dev`. Swap for exact per-course URLs if you want. |
 | **apex vs www** | `astro.config.mjs` `site` + `public/CNAME` | Currently apex (`lukaszszumilas.com`), `www` redirects to it. One-line change to flip. |
 
-## 2. Content to review (optional but recommended)
+## 2. Content to review (optional)
 
-- **Migrated post titles** — a few came across without punctuation (e.g. "ServiceNow API A Restaurant Analogy"). Edit the `title:` in `src/content/blog/*.md`.
-- **Image alt text** — migrated images have empty `alt`. Add descriptions for accessibility/SEO.
-- **The 2 AI posts** (`does-the-ai-have-my-servicenow-password.md`, `mcp-vs-diy-...md`) are AI-drafted starters in your voice — review/edit or set `draft: true` to hold them.
-- **Page copy** (home / about / consulting / teaching) — first drafts in your voice; a writing-style pass is worth it.
-- **CV PDF** — optional: drop `lukasz-szumilas-cv.pdf` in `public/files/` and restore the download button on `/about`.
+- **Titles + meta descriptions** — cleaned and rewritten for all 22 migrated posts (emojis, ALL CAPS, double spaces, and mid-sentence truncation removed). These are my edits, not your originals, so skim them.
+- **Page + post copy** — run through your writing-style rules: no em dashes, no banned words, three-item lists reduced. Still your voice to sign off on.
+- **The 2 AI posts** (`does-the-ai-have-my-servicenow-password.md`, `mcp-vs-diy-...md`) are mine, written to your rules. Read them before they go out, or set `draft: true` to hold.
+- **Client names are deliberately sector-level** (Banking, Insurance, Manufacturing, Enterprise IT) per your content boundaries, which say specific client and partner names stay off public surfaces. If you want named clients or logos, that's a call only you should make.
+- **Image alt text** — migrated images carry empty `alt`. Add descriptions where the screenshot is informational.
+- **CV PDF** — optional: drop a PDF in `public/files/` and add a download button on `/about`.
 
 ## 3. Create the repo and deploy
 

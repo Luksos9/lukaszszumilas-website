@@ -1,9 +1,9 @@
 ---
-title: "Unleashing the Power of ServiceNow's Dynamic Filters"
-description: "When working with ServiceNow, knowledge of Dynamic Filters can elevate your data management game."
+title: "ServiceNow Dynamic Filters, Explained"
+description: "Dynamic filters make reference fields and reports far more flexible. Here is how they work and where they earn their keep."
 pubDate: 2023-10-22
 tags: ["servicenow"]
-heroImage: "/images/blog/unleashing-the-power-of-servicenows-dynamic-filters-hero-funnel.png"
+heroImage: "/images/blog/unleashing-the-power-of-servicenows-dynamic-filters-hero-funnel.webp"
 ghostSlug: "unleashing-the-power-of-servicenows-dynamic-filters"
 draft: false
 ---
@@ -24,7 +24,7 @@ They can be used in reports, dashboards, and other applications.
 
 I'm sure that if you have been in a ServiceNow for a while you are familiar with filters like:
 
-![](/images/blog/unleashing-the-power-of-servicenows-dynamic-filters-image-128.png)
+![](/images/blog/unleashing-the-power-of-servicenows-dynamic-filters-image-128.webp)
 
 ---
 
@@ -32,7 +32,7 @@ I'm sure that if you have been in a ServiceNow for a while you are familiar with
 
 ### Example: First Creating a Custom Filter
 
-![](/images/blog/unleashing-the-power-of-servicenows-dynamic-filters-image-129.png)
+![](/images/blog/unleashing-the-power-of-servicenows-dynamic-filters-image-129.webp)
 
 Doesn't seem hard, so let's **define** on next slide a Scenario where problem emerges that we can solve by using **Custom Filter** and then improve by using Dynamic Filter:
 
@@ -54,7 +54,7 @@ So we cannot set it **fixed**.
 
 This second part for which we will need a **Custom Filter,** as you can see on the image below:
 
-![](/images/blog/unleashing-the-power-of-servicenows-dynamic-filters-image-139.png)
+![](/images/blog/unleashing-the-power-of-servicenows-dynamic-filters-image-139.webp)
 
 ---
 
@@ -62,7 +62,7 @@ This second part for which we will need a **Custom Filter,** as you can see on t
 
 For this first let's create a new Script Include that will be our **Custom Filter** (later we will improve useability by creating a Dynamic Filter:
 
-![](/images/blog/unleashing-the-power-of-servicenows-dynamic-filters-image-138.png)
+![](/images/blog/unleashing-the-power-of-servicenows-dynamic-filters-image-138.webp)
 
 ### Explanation:
 
@@ -76,12 +76,12 @@ By having this filter we will be able to automatically display **assignment grou
 
 ### Okay let's add it to our report's filters
 
-![](/images/blog/unleashing-the-power-of-servicenows-dynamic-filters-image-130.png)
+![](/images/blog/unleashing-the-power-of-servicenows-dynamic-filters-image-130.webp)
 *Look at what is in the filter (sys\_id returned) and what is in the field (Script Include).*
 
 ### Explanation:
 
-![](/images/blog/unleashing-the-power-of-servicenows-dynamic-filters-image-131.png)
+![](/images/blog/unleashing-the-power-of-servicenows-dynamic-filters-image-131.webp)
 
 ---
 
@@ -100,7 +100,7 @@ Here are some banefits why it's worth it:
 
 ### This is what we want to achieve:
 
-![](/images/blog/unleashing-the-power-of-servicenows-dynamic-filters-image-140.png)
+![](/images/blog/unleashing-the-power-of-servicenows-dynamic-filters-image-140.webp)
 
 ---
 
@@ -122,7 +122,7 @@ On the next slide some tips and hints how to do that in proper way and for our e
 
 ### How to set up Dynamic Filter c.d.
 
-![](/images/blog/unleashing-the-power-of-servicenows-dynamic-filters-image-141.png)
+![](/images/blog/unleashing-the-power-of-servicenows-dynamic-filters-image-141.webp)
 
 **Okay so here is brief explanation, I think there is no much for it, as Labels and Hints are pretty clear:**
 
@@ -148,16 +148,16 @@ On the next slide some tips and hints how to do that in proper way and for our e
 
 **Below is how it looks with our Custom Filter vs Dynamic Filter**
 
-![](/images/blog/unleashing-the-power-of-servicenows-dynamic-filters-image-142.png)
+![](/images/blog/unleashing-the-power-of-servicenows-dynamic-filters-image-142.webp)
 *Notice the sys\_id returned in the filter.*
 
-![](/images/blog/unleashing-the-power-of-servicenows-dynamic-filters-image-143.png)
+![](/images/blog/unleashing-the-power-of-servicenows-dynamic-filters-image-143.webp)
 *Here is dynamic filter choosen.*
 
 ---
 
 ## Conclusion
 
-![](/images/blog/unleashing-the-power-of-servicenows-dynamic-filters-image-102.png)
+![](/images/blog/unleashing-the-power-of-servicenows-dynamic-filters-image-102.webp)
 
-![](/images/blog/unleashing-the-power-of-servicenows-dynamic-filters-image-136.png)
+![](/images/blog/unleashing-the-power-of-servicenows-dynamic-filters-image-136.webp)

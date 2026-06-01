@@ -1,18 +1,15 @@
-export interface Client {
+export interface Sector {
   name: string;
-  /** Consulting partner the engagement was delivered through. */
-  via?: string;
 }
 
 /**
- * Selected organizations Lukasz has delivered ServiceNow work for, through
- * consulting partners. Shown as a credibility strip (names only, no logos).
+ * Sectors Lukasz has delivered ServiceNow work in. Deliberately sector-level,
+ * NOT named clients or partners. Per his content boundaries, specific client
+ * and consulting-partner names stay off public, cross-referenceable surfaces.
  */
-export const clients: Client[] = [
-  { name: 'Generali', via: 'Accenture' },
-  { name: 'PwC', via: 'CoolPeople' },
-  { name: 'DZ Bank', via: 'Reply' },
-  { name: 'dormakaba', via: 'Nelem' },
-  { name: 'Commerzbank', via: 'Nelem' },
-  { name: 'ABB' },
+export const clients: Sector[] = [
+  { name: 'Banking' },
+  { name: 'Insurance' },
+  { name: 'Manufacturing' },
+  { name: 'Enterprise IT' },
 ];
