@@ -2,6 +2,8 @@
 export interface NavItem {
   label: string;
   href: string;
+  /** Icon name (see Icon.astro) for the dock navigation. */
+  icon?: string;
   /** Render as the single accent button (book a consultation). */
   cta?: boolean;
   /** External links open in a new tab. */
@@ -9,12 +11,12 @@ export interface NavItem {
 }
 
 export const primaryNav: NavItem[] = [
-  { label: 'Services', href: '/services/' },
-  { label: 'AI & ServiceNow', href: '/ai-servicenow/' },
-  { label: 'Case Studies', href: '/case-studies/' },
-  { label: 'Insights', href: '/blog/' },
-  { label: 'About', href: '/about/' },
-  { label: 'Book a consultation', href: '/contact/', cta: true },
+  { label: 'Services', href: '/services/', icon: 'grid' },
+  { label: 'AI & ServiceNow', href: '/ai-servicenow/', icon: 'sparkle' },
+  { label: 'Case Studies', href: '/case-studies/', icon: 'trophy' },
+  { label: 'Insights', href: '/blog/', icon: 'book' },
+  { label: 'About', href: '/about/', icon: 'info' },
+  { label: 'Book a consultation', href: '/contact/', icon: 'target', cta: true },
 ];
 
 export const footerNav: { title: string; items: NavItem[] }[] = [
