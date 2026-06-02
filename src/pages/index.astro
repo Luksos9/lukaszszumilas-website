@@ -134,6 +134,11 @@ const jsonLd = [
       <p class="sig-sub muted">Every symptom on the left has a fix on the right. The method in between is always the same.</p>
     </div>
     <div class="dx-ledger">
+      <div class="dx-head" aria-hidden="true">
+        <span>Problem</span>
+        <span>Method</span>
+        <span>Outcome</span>
+      </div>
       {problems.map((p, i) => {
         const weight = p.severity === 'Very Common' ? 'lead' : p.severity === 'Emerging' ? 'trail' : 'mid';
         return (
@@ -146,7 +151,15 @@ const jsonLd = [
               </span>
               <span class="dx-sev" data-weight={weight}>{p.severity}</span>
             </div>
-            <span class="dx-arrow" aria-hidden="true">→</span>
+            <span class="dx-hex" aria-hidden="true">
+              <svg class="dx-hex-svg" viewBox="0 0 32 32" fill="none">
+                <path class="dx-hex-shape" d="M16 2.6 27 9v14l-11 6.4L5 23V9z" />
+                <g class="dx-hex-glyph">
+                  <circle cx="11.5" cy="13" r="1.5" /><circle cx="20.5" cy="13" r="1.5" /><circle cx="16" cy="21" r="1.5" />
+                  <path d="M13 13h6M12.2 14.3 15 19.2M19.8 14.3 17 19.2" />
+                </g>
+              </svg>
+            </span>
             <div class="dx-next">
               <span class="dx-icon dx-icon--out"><Icon name={p.outIcon} size={18} /></span>
               <span class="dx-outcome">{p.outcome}</span>
@@ -178,7 +191,7 @@ const jsonLd = [
     <div class="grid-3">
       {services.map((s, i) => (
         <div data-reveal="scale" style={`--reveal-delay:${i * 70}ms`}>
-          <ServiceCard title={s.title} tagline={s.tagline} anchor={s.anchor} icon={s.icon} />
+          <ServiceCard title={s.title} tagline={s.tagline} anchor={s.anchor} icon={s.icon} flow={s.flow} />
         </div>
       ))}
     </div>
@@ -514,14 +527,53 @@ const jsonLd = [
       animation: none;
     }
   }
-  .dx-arrow {
-    color: var(--border-strong);
-    font-size: 1.15rem;
-    line-height: 1;
-    font-weight: 700;
-    justify-self: start;
-    transform: rotate(90deg);
-    transition: color 0.25s var(--ease);
+  /* column headers above the ledger (desktop only) */
+  .dx-head {
+    display: none;
+  }
+  /* transformation node: an orange hexagon (the method) on an orange flow line.
+     mobile/stacked default = vertical connector; horizontal on desktop. */
+  .dx-hex {
+    position: relative;
+    display: grid;
+    place-items: center;
+    justify-self: center;
+    width: 2.6rem;
+    height: 3rem;
+  }
+  .dx-hex::before {
+    content: '';
+    position: absolute;
+    top: 0.15rem;
+    bottom: 0.15rem;
+    left: 50%;
+    width: 8px;
+    transform: translateX(-50%);
+    background:
+      radial-gradient(circle at center, var(--accent) 0 3px, transparent 3.5px) top center / 8px 8px no-repeat,
+      radial-gradient(circle at center, var(--accent) 0 3px, transparent 3.5px) bottom center / 8px 8px no-repeat,
+      linear-gradient(var(--accent), var(--accent)) center / 2px 100% no-repeat;
+    opacity: 0.7;
+    z-index: 0;
+  }
+  .dx-hex-svg {
+    position: relative;
+    z-index: 1;
+    width: 2.3rem;
+    height: 2.3rem;
+    transition: transform 0.25s var(--ease);
+  }
+  .dx-hex-shape {
+    fill: var(--accent-soft);
+    stroke: var(--accent);
+    stroke-width: 1.6;
+  }
+  .dx-hex-glyph {
+    fill: var(--accent-text);
+    stroke: var(--accent-text);
+    stroke-width: 1.3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
   .dx-next {
     display: flex;
@@ -556,8 +608,13 @@ const jsonLd = [
     border: 1px dashed var(--accent);
     background: transparent;
   }
-  .dx-row:hover .dx-arrow {
-    color: var(--accent-text);
+  .dx-row:hover .dx-hex-svg {
+    transform: scale(1.08);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .dx-hex-svg {
+      transition: none;
+    }
   }
   .dx-row[data-weight='lead']:hover {
     transform: translateY(-2px);
@@ -728,16 +785,48 @@ const jsonLd = [
     }
   }
   @media (min-width: 720px) {
+    .dx-head {
+      display: grid;
+      grid-template-columns: 1fr clamp(4.5rem, 8vw, 7rem) 1fr;
+      padding: 0 clamp(1rem, 2.5vw, 1.35rem);
+      margin-bottom: 0.3rem;
+    }
+    .dx-head span {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: var(--text-subtle);
+    }
+    .dx-head span:nth-child(2) {
+      text-align: center;
+    }
     .dx-row {
-      grid-template-columns: 1fr auto minmax(8rem, 0.8fr);
-      gap: clamp(0.75rem, 2vw, 1.6rem);
+      grid-template-columns: 1fr clamp(4.5rem, 8vw, 7rem) 1fr;
+      column-gap: 0;
+      row-gap: 0.5rem;
     }
     .dx-row[data-weight='lead'] .dx-label {
       font-size: var(--step-1);
     }
-    .dx-arrow {
-      transform: none;
-      justify-self: center;
+    /* flow line turns horizontal on desktop */
+    .dx-hex {
+      width: auto;
+      height: auto;
+    }
+    .dx-hex::before {
+      top: 50%;
+      bottom: auto;
+      left: 0.2rem;
+      right: 0.2rem;
+      width: auto;
+      height: 8px;
+      transform: translateY(-50%);
+      background:
+        radial-gradient(circle at center, var(--accent) 0 3px, transparent 3.5px) left center / 8px 8px no-repeat,
+        radial-gradient(circle at center, var(--accent) 0 3px, transparent 3.5px) right center / 8px 8px no-repeat,
+        linear-gradient(var(--accent), var(--accent)) center / 100% 2px no-repeat;
     }
   }
   @media (min-width: 760px) {

@@ -1,0 +1,58 @@
+---
+// Compact 3-node operational mini-workflow for a service card.
+// Line-art language: mono node chips joined by short orange connectors; the
+// final node is the outcome (accent). currentColor + tokens => dual-theme.
+interface Props {
+  steps: string[];
+  class?: string;
+}
+const { steps, class: cls = '' } = Astro.props;
+---
+
+<div class:list={['sflow', cls]}>
+  {steps.map((step, i) => (
+    <>
+      <span class:list={['sflow-node', { 'sflow-node--out': i === steps.length - 1 }]}>{step}</span>
+      {i < steps.length - 1 && (
+        <svg class="sflow-link" viewBox="0 0 24 18" fill="none" aria-hidden="true" focusable="false">
+          <path d="M12 2v10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+          <path d="M8 9l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      )}
+    </>
+  ))}
+</div>
+
+<style>
+  .sflow {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin-bottom: 0.9rem;
+  }
+  .sflow-node {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    line-height: 1.25;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    padding: 0.42rem 0.6rem;
+  }
+  .sflow-node--out {
+    color: var(--accent-text);
+    background: var(--accent-soft);
+    border-color: var(--accent);
+  }
+  .sflow-link {
+    display: block;
+    width: 24px;
+    height: 16px;
+    margin: 1px auto;
+    color: var(--accent);
+  }
+</style>

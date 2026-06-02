@@ -1,19 +1,23 @@
 ---
 import Icon from './Icon.astro';
+import ServiceFlow from './ServiceFlow.astro';
 
 interface Props {
   title: string;
   tagline: string;
   anchor: string;
   icon?: string;
+  flow?: string[];
 }
-const { title, tagline, anchor, icon } = Astro.props;
+const { title, tagline, anchor, icon, flow } = Astro.props;
 ---
 
 <a href={`/services/#${anchor}`} class="service-card shine">
-  {icon && (
+  {flow ? (
+    <ServiceFlow steps={flow} />
+  ) : icon ? (
     <span class="service-icon"><Icon name={icon} size={22} /></span>
-  )}
+  ) : null}
   <h3 class="service-card-title">{title}</h3>
   <p class="service-card-tag">{tagline}</p>
   <span class="service-card-cta">Learn more <span aria-hidden="true">→</span></span>

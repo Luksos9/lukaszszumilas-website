@@ -9,6 +9,8 @@ export interface Service {
   examples?: string[];
   deliverables?: string[];
   outcome?: string;
+  /** A 3-step operational shape shown as a mini-workflow on the homepage card. */
+  flow?: [string, string, string];
   /** Illustrated category cards — used to emphasize a featured service (e.g. Training). */
   categories?: { title: string; illo: string; blurb: string }[];
 }
@@ -23,6 +25,7 @@ export const services: Service[] = [
     icon: 'search',
     title: 'AI Opportunity Assessment',
     tagline: 'Find the repetitive work worth automating, and the order to do it in.',
+    flow: ['Systems', 'Processes', 'AI opportunities'],
     problem:
       'Teams lose hours every week to repetitive, manual work. What is rarely clear is which parts are actually worth automating, and which would cost more to automate than they save.',
     deliverables: [
@@ -38,6 +41,7 @@ export const services: Service[] = [
     icon: 'sparkle',
     title: 'AI & ServiceNow Implementations',
     tagline: 'Practical AI on the platform, built to pass a security review.',
+    flow: ['ServiceNow', 'AI layer', 'Automation'],
     examples: [
       'AI Agents',
       'Claude integrations',
@@ -52,6 +56,7 @@ export const services: Service[] = [
     icon: 'code',
     title: 'ServiceNow Development',
     tagline: 'Extend and improve the platform without piling on technical debt.',
+    flow: ['Requirements', 'Clean build', 'Upgrade-safe'],
     examples: ['Catalog items', 'Integrations (REST, JavaScript)', 'Service Portal', 'Custom apps', 'Flows'],
     outcome: 'Clean, supportable builds that survive the next upgrade.',
   },
@@ -60,6 +65,7 @@ export const services: Service[] = [
     icon: 'shield',
     title: 'Architecture & Code Reviews',
     tagline: 'A focused second opinion before you commit to a direction.',
+    flow: ['Current state', 'Analysis', 'Target state'],
     deliverables: [
       'Code review',
       'Platform review',
@@ -73,6 +79,7 @@ export const services: Service[] = [
     icon: 'cap',
     title: 'Training & Workshops',
     tagline: 'Bring your team up to speed on ServiceNow, automation, and AI adoption.',
+    flow: ['Learn', 'Apply', 'Run it independently'],
     deliverables: [
       'Team workshops',
       'ServiceNow best-practice sessions',
