@@ -265,13 +265,13 @@ const jsonLd = [
   .hero-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: clamp(2rem, 1rem + 3vw, 3.5rem);
     align-items: center;
   }
   .hero-title {
-    font-size: var(--step-5);
-    margin-bottom: 1.1rem;
-    line-height: 1.04;
+    font-size: clamp(2.3rem, 1.5rem + 2.6vw, 3.15rem);
+    margin-bottom: 1.35rem;
+    line-height: 1.08;
   }
   .hero-title span {
     display: block;
@@ -298,11 +298,11 @@ const jsonLd = [
   }
   .hero-vector {
     position: absolute;
-    inset: -6% -16% -2% -16%;
-    width: 132%;
+    inset: -6% auto -2% 2%;
+    width: 124%;
     height: auto;
     z-index: 0;
-    opacity: 0.7;
+    opacity: 0.28;
     pointer-events: none;
   }
   .hero-frame {
@@ -736,7 +736,7 @@ const jsonLd = [
   }
   @media (min-width: 900px) {
     .hero-grid {
-      grid-template-columns: 1.35fr 1fr;
+      grid-template-columns: 1.4fr 1fr;
     }
     .grid-3 {
       grid-template-columns: repeat(3, 1fr);
