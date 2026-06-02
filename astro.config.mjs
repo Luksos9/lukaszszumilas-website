@@ -4,11 +4,27 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import { ghostRedirects } from './src/data/redirects.mjs';
 
+// Lazy-load + async-decode every Markdown/MDX content image (no CLS, faster LCP).
+function rehypeContentImgAttrs() {
+  return (/** @type {any} */ tree) => {
+    /** @param {any} node */
+    const visit = (node) => {
+      if (node.type === 'element' && node.tagName === 'img' && node.properties) {
+        if (node.properties.loading == null) node.properties.loading = 'lazy';
+        if (node.properties.decoding == null) node.properties.decoding = 'async';
+      }
+      if (node.children) for (const child of node.children) visit(child);
+    };
+    visit(tree);
+  };
+}
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://lukaszszumilas.com',
   // Custom domain served at the root => NO `base`.
   trailingSlash: 'always',
+  markdown: { rehypePlugins: [rehypeContentImgAttrs] },
   build: { format: 'directory' },
   integrations: [
     mdx(),

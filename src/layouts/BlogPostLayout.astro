@@ -19,15 +19,28 @@ const { title, description, pubDate, updatedDate, tags, heroImage, ogImage, cano
   post.data;
 
 const postUrl = canonicalURL ?? new URL(`/blog/${post.id}/`, site.url).href;
+const postImage = new URL(ogImage ?? heroImage ?? '/og-default.png', site.url).href;
 const articleJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'BlogPosting',
   headline: title,
   description,
+  image: postImage,
   datePublished: pubDate.toISOString(),
   dateModified: (updatedDate ?? pubDate).toISOString(),
   author: { '@type': 'Person', name: site.name, url: site.url },
+  publisher: { '@type': 'Person', name: site.name, url: site.url },
+  mainEntityOfPage: postUrl,
   url: postUrl,
+};
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: new URL('/', site.url).href },
+    { '@type': 'ListItem', position: 2, name: 'Insights', item: new URL('/blog/', site.url).href },
+    { '@type': 'ListItem', position: 3, name: title, item: postUrl },
+  ],
 };
 ---
 
@@ -38,7 +51,7 @@ const articleJsonLd = {
   article={true}
   publishedTime={pubDate}
   canonical={canonicalURL}
-  jsonLd={articleJsonLd}
+  jsonLd={[articleJsonLd, breadcrumbJsonLd]}
 >
   <article class="post">
     <header class="post-header container container-narrow">

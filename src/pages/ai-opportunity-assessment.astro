@@ -26,6 +26,29 @@ const deliverables = [
   'Recommended next steps',
 ];
 
+const faqs = [
+  {
+    q: 'How long does the assessment take?',
+    a: 'Two to four weeks, depending on the size of your operation and how many workflows we review.',
+  },
+  {
+    q: 'Do we have to build everything with you afterwards?',
+    a: "No. You leave with a prioritized roadmap you can act on with any team, including your own. The assessment stands on its own.",
+  },
+  {
+    q: 'Is this only for ServiceNow customers?',
+    a: 'ServiceNow is where I go deepest, but the process and automation thinking applies to any operations stack. If you run ServiceNow, you also get specific platform recommendations.',
+  },
+  {
+    q: 'How is AI involved?',
+    a: "Only where it earns its place. I weigh each AI use case by effort and impact and tell you honestly where it adds value and where it's just noise.",
+  },
+  {
+    q: 'What do we need to prepare?',
+    a: 'Access to the people who actually run the workflows, and a willingness to show how work flows today, not just how the diagram says it should.',
+  },
+];
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Service',
@@ -35,12 +58,21 @@ const jsonLd = {
   areaServed: 'Europe',
   url: `${site.url}/ai-opportunity-assessment/`,
 };
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
 ---
 
 <BaseLayout
   title="AI Opportunity Assessment"
   description="A 2-4 week assessment that maps your bottlenecks, automation opportunities, and the AI use cases worth pursuing, with a prioritized roadmap and ROI estimates."
-  jsonLd={jsonLd}
+  jsonLd={[jsonLd, faqJsonLd]}
 >
   <PageHeader eyebrow="Flagship engagement · 2-4 weeks" title="AI Opportunity Assessment">
     The easiest place to start. In two to four weeks I map where your operations lose time, what to
@@ -89,6 +121,19 @@ const jsonLd = {
       bets — so the roadmap is sequenced, not just a wish list.
     </p>
     <OpportunityMatrix />
+  </Section>
+
+  <Section>
+    <p class="eyebrow">Questions</p>
+    <h2 class="section-h2 display">Frequently asked</h2>
+    <div class="faq">
+      {faqs.map((f, i) => (
+        <details class="faq-item" data-reveal style={`--reveal-delay:${i * 60}ms`}>
+          <summary>{f.q}</summary>
+          <p>{f.a}</p>
+        </details>
+      ))}
+    </div>
   </Section>
 
   <Section tone="dark">
@@ -162,6 +207,52 @@ const jsonLd = {
     gap: 1rem;
     align-items: flex-start;
     max-width: 46rem;
+  }
+  .faq {
+    max-width: 52rem;
+    display: grid;
+    gap: 0.6rem;
+  }
+  .faq-item {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--card);
+    padding: 0 1.1rem;
+    transition: border-color var(--dur) var(--ease);
+  }
+  .faq-item[open] {
+    border-color: var(--accent);
+  }
+  .faq-item summary {
+    cursor: pointer;
+    list-style: none;
+    padding: 1rem 0;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq-item summary::after {
+    content: '+';
+    font-family: var(--font-mono);
+    color: var(--accent-text);
+    font-size: 1.3rem;
+    line-height: 1;
+    transition: transform var(--dur) var(--ease);
+  }
+  .faq-item[open] summary::after {
+    transform: rotate(45deg);
+  }
+  .faq-item p {
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0 0 1.1rem;
+    max-width: 60ch;
   }
   .cta-h2 {
     font-size: var(--step-3);

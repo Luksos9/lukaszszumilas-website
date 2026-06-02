@@ -6,10 +6,12 @@ interface Props {
   external?: boolean;
   /** Show the animated trailing arrow. Defaults on for primary + ghost. */
   arrow?: boolean;
+  /** Optional analytics event name (fires via the global tracker on click). */
+  analytics?: string;
   class?: string;
 }
 
-const { href, variant = 'primary', size = 'md', external = false, arrow, class: cls = '' } =
+const { href, variant = 'primary', size = 'md', external = false, arrow, analytics, class: cls = '' } =
   Astro.props;
 const showArrow = arrow ?? variant !== 'secondary';
 const target = external ? '_blank' : undefined;
@@ -21,6 +23,7 @@ const rel = external ? 'noopener noreferrer' : undefined;
   class:list={['btn', `btn--${variant}`, `btn--${size}`, cls]}
   target={target}
   rel={rel}
+  data-analytics={analytics}
 >
   <span class="btn-label"><slot /></span>
   {showArrow && <span class="btn-arrow" aria-hidden="true">→</span>}

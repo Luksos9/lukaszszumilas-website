@@ -47,7 +47,7 @@ const homeActive = here === '/';
   <ThemeToggle />
 
   {cta && (
-    <a href={cta.href} class="dock-cta" aria-label={cta.label}>
+    <a href={cta.href} class="dock-cta" aria-label={cta.label} data-analytics="book_dock">
       <span class="dock-cta-label">Book a call</span>
       <span class="dock-cta-arrow" aria-hidden="true">→</span>
     </a>

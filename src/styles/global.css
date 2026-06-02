@@ -115,7 +115,7 @@ main {
   font-size: var(--step--1);
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent-text);
   font-weight: 700;
   margin-bottom: 0.9rem;
 }

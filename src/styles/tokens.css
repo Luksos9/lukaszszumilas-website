@@ -19,9 +19,12 @@
   --card: #ffffff;
   --text: var(--lx-ink);
   --text-muted: #5a564f;
-  --text-subtle: #8a857c;
+  --text-subtle: #6b665e;
   --accent: var(--lx-orange);
   --accent-hover: var(--lx-orange-dark);
+  /* AA-contrast accent for small text on light surfaces (the bright orange
+     fails AA on cream). Components use this for label/link text, not fills. */
+  --accent-text: var(--lx-orange-dark);
   --accent-contrast: #ffffff;
   --accent-soft: rgba(232, 115, 58, 0.10);
   --success: var(--lx-green);
@@ -81,8 +84,10 @@
   --card: #111111;
   --text: #ffffff;
   --text-muted: #a1a1aa;
-  --text-subtle: #7c7c85;
+  --text-subtle: #8a8a93;
   --accent-contrast: #ffffff;
+  /* on near-black the bright orange already passes AA, so reuse it for text */
+  --accent-text: var(--lx-orange);
   --accent-soft: rgba(232, 115, 58, 0.14);
   --border: rgba(255, 255, 255, 0.08);
   --border-strong: rgba(255, 255, 255, 0.16);

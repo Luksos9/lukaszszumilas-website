@@ -5,13 +5,14 @@ interface Props {
   variant?: 'inline' | 'card';
 }
 const { variant = 'inline' } = Astro.props;
-// Posts to the Kit/ConvertKit form from site config. While the id is unset it
-// posts to '#' (clearly a placeholder) — set site.newsletter.kitFormId at launch.
+// Posts to the Kit/ConvertKit form from site config. While the id is unset the
+// form is dormant (submit disabled + a note) — set site.newsletter.kitFormId to
+// activate it.
 const formId = site.newsletter.kitFormId;
-const KIT_ACTION = formId ? `https://app.kit.com/forms/${formId}/subscriptions` : '#';
+const KIT_ACTION = formId ? `https://app.kit.com/forms/${formId}/subscriptions` : undefined;
 ---
 
-<form class:list={['nl-form', `nl-${variant}`]} action={KIT_ACTION} method="post" data-kit-todo>
+<form class:list={['nl-form', `nl-${variant}`]} action={KIT_ACTION} method="post">
   <label class="visually-hidden" for={`nl-email-${variant}`}>Email address</label>
   <input
     id={`nl-email-${variant}`}
@@ -21,9 +22,17 @@ const KIT_ACTION = formId ? `https://app.kit.com/forms/${formId}/subscriptions` 
     required
     placeholder="you@company.com"
     autocomplete="email"
+    disabled={!formId}
   />
-  <button type="submit" class="nl-submit">Subscribe</button>
+  <button type="submit" class="nl-submit" data-analytics="newsletter_submit" disabled={!formId}>
+    Subscribe
+  </button>
 </form>
+{!formId && (
+  <p class="nl-dormant muted">
+    Sign-up opens soon — <a href={site.socials.linkedin} target="_blank" rel="noopener noreferrer">follow on LinkedIn</a> in the meantime.
+  </p>
+)}
 
 <style>
   .nl-form {
@@ -59,5 +68,23 @@ const KIT_ACTION = formId ? `https://app.kit.com/forms/${formId}/subscriptions` 
   }
   .nl-card .nl-input {
     background: var(--bg);
+  }
+  .nl-input:disabled,
+  .nl-submit:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+  .nl-submit:disabled:hover {
+    background: var(--accent);
+    transform: none;
+  }
+  .nl-dormant {
+    margin-top: 0.7rem;
+    font-size: var(--step--1);
+  }
+  .nl-dormant a {
+    color: var(--accent-text);
+    text-decoration: underline;
+    text-underline-offset: 2px;
   }
 </style>

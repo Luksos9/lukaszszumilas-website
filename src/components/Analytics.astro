@@ -13,7 +13,10 @@ const id = site.analytics.ga4Id;
           dataLayer.push(arguments);
         }
         gtag('js', new Date());
-        gtag('config', id, { anonymize_ip: true });
+        // Disable the automatic page_view; we send it on every astro:page-load
+        // (View Transitions don't reload the page) from the helper in BaseLayout.
+        gtag('config', id, { anonymize_ip: true, send_page_view: false });
+        window.__GA_ID = id;
       </script>
     </>
   )
