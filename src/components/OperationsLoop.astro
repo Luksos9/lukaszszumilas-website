@@ -16,16 +16,64 @@ const positions = [
     <circle class="ring" cx="50" cy="50" r="40" />
   </svg>
   <div class="loop-center">
-    <span class="lc-eyebrow">The loop</span>
-    <span class="lc-title">Operations<br />Improvement</span>
+    <div class="lc-state lc-state--default is-shown">
+      <span class="lc-eyebrow">The loop</span>
+      <span class="lc-title">Operations<br />Improvement</span>
+    </div>
+    {framework.map((s, i) => (
+      <div class="lc-state" data-state={i}>
+        <span class="lc-eyebrow">Step {s.n}</span>
+        <span class="lc-title lc-title--sm">{s.title}</span>
+        <span class="lc-body">{s.body}</span>
+      </div>
+    ))}
   </div>
   {framework.map((s, i) => (
-    <div class="loop-node" style={`left:${positions[i].x}%;top:${positions[i].y}%;--i:${i}`}>
+    <button
+      type="button"
+      class="loop-node"
+      data-state={i}
+      aria-label={`Step ${s.n}: ${s.title}. ${s.body}`}
+      style={`left:${positions[i].x}%;top:${positions[i].y}%;--i:${i}`}
+    >
       <span class="ln-num">{s.n}</span>
       <span class="ln-title">{s.title}</span>
-    </div>
+    </button>
   ))}
 </div>
+
+<script>
+  // Hover/focus/tap a step -> its detail morphs into the loop's center.
+  // Hover previews; click/tap pins it (toggle); works on touch + keyboard.
+  function initLoop() {
+    document.querySelectorAll('.loop').forEach((loop) => {
+      const states = loop.querySelectorAll('.lc-state');
+      const nodes = loop.querySelectorAll('.loop-node');
+      if (!nodes.length) return;
+      let pinned = -1;
+      const show = (idx: number) => {
+        states.forEach((s) => {
+          const on =
+            idx < 0
+              ? s.classList.contains('lc-state--default')
+              : s.getAttribute('data-state') === String(idx);
+          s.classList.toggle('is-shown', on);
+        });
+      };
+      nodes.forEach((node, i) => {
+        node.addEventListener('mouseenter', () => show(i));
+        node.addEventListener('mouseleave', () => show(pinned));
+        node.addEventListener('focus', () => show(i));
+        node.addEventListener('blur', () => show(pinned));
+        node.addEventListener('click', () => {
+          pinned = pinned === i ? -1 : i;
+          show(pinned);
+        });
+      });
+    });
+  }
+  document.addEventListener('astro:page-load', initLoop);
+</script>
 
 <style>
   .loop {
@@ -67,17 +115,32 @@ const positions = [
     position: absolute;
     inset: 0;
     margin: auto;
-    width: 46%;
-    height: 46%;
+    width: 50%;
+    height: 50%;
     border-radius: var(--radius-pill);
+    text-align: center;
+    background: var(--card);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  /* each step's detail cross-fades into the center on hover / focus / tap */
+  .lc-state {
+    position: absolute;
+    inset: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 0.3rem;
-    text-align: center;
-    background: var(--card);
-    border: 1px solid var(--border);
+    padding: clamp(0.6rem, 0.2rem + 2vw, 1.4rem);
+    opacity: 0;
+    transform: scale(0.94);
+    transition: opacity 0.32s var(--ease), transform 0.32s var(--ease);
+    pointer-events: none;
+  }
+  .lc-state.is-shown {
+    opacity: 1;
+    transform: none;
   }
   .lc-eyebrow {
     font-family: var(--font-mono);
@@ -94,6 +157,16 @@ const positions = [
     line-height: 1.1;
     color: var(--text);
   }
+  .lc-title--sm {
+    font-size: clamp(0.9rem, 0.6rem + 1vw, 1.1rem);
+    line-height: 1.15;
+  }
+  .lc-body {
+    font-size: clamp(0.68rem, 0.5rem + 0.6vw, 0.82rem);
+    line-height: 1.35;
+    color: var(--text-muted);
+    max-width: 94%;
+  }
   .loop-node {
     position: absolute;
     transform: translate(-50%, -50%);
@@ -102,7 +175,17 @@ const positions = [
     align-items: center;
     gap: 0.3rem;
     width: 8rem;
+    padding: 0;
     text-align: center;
+    cursor: pointer;
+  }
+  .loop-node:hover .ln-num,
+  .loop-node:focus-visible .ln-num {
+    box-shadow: 0 0 0 4px var(--accent-soft);
+  }
+  .loop-node:hover .ln-title,
+  .loop-node:focus-visible .ln-title {
+    color: var(--accent-text);
   }
   .ln-num {
     display: grid;
@@ -115,12 +198,14 @@ const positions = [
     font-family: var(--font-mono);
     font-weight: 700;
     font-size: 0.8rem;
+    transition: box-shadow var(--dur) var(--ease);
   }
   .ln-title {
     font-weight: 600;
     font-size: var(--step--1);
     color: var(--text);
     line-height: 1.2;
+    transition: color var(--dur) var(--ease);
   }
   /* keep the circular layout's side nodes inside small viewports */
   @media (max-width: 480px) {
