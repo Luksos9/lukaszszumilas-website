@@ -14,6 +14,17 @@ const rows = [
       <span class="eq-ai">AI</span>
       <span class="eq-op" aria-hidden="true">=</span>
       <span class="eq-result">{r.result}</span>
+      <span class="eq-viz" aria-hidden="true">
+        {r.tone === 'bad' ? (
+          <svg viewBox="0 0 64 36" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path class="viz-path" d="M3 26 C 11 6 15 31 23 16 C 29 5 33 32 41 17 C 47 7 51 30 61 12" />
+          </svg>
+        ) : (
+          <svg viewBox="0 0 64 36" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path class="viz-path" d="M3 31 L20 31 L36 17 L60 5 M60 5 L52 5 M60 5 L60 13" />
+          </svg>
+        )}
+      </span>
     </div>
   ))}
 </div>
@@ -72,6 +83,32 @@ const rows = [
   .eq-row--good .eq-result {
     color: var(--accent-text);
   }
+  /* outcome visual: a tangled scribble for chaos, a clean rising arrow for impact */
+  .eq-viz {
+    display: inline-flex;
+    flex: 0 0 auto;
+    color: var(--text-subtle);
+  }
+  .eq-viz svg {
+    width: 64px;
+    height: 36px;
+    display: block;
+  }
+  .eq-row--good .eq-viz {
+    color: var(--accent-text);
+  }
+  .js .eq-viz .viz-path {
+    stroke-dasharray: 220;
+    stroke-dashoffset: 220;
+  }
+  .eq-row.is-visible .viz-path {
+    animation: vizDraw 1s var(--ease-out) 0.35s forwards;
+  }
+  @keyframes vizDraw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
   .js .eq-result {
     transform: scale(0.8);
     opacity: 0;
@@ -104,6 +141,12 @@ const rows = [
     }
     .eq-row.is-visible .eq-result,
     .eq-row--good.is-visible {
+      animation: none;
+    }
+    .js .eq-viz .viz-path {
+      stroke-dashoffset: 0;
+    }
+    .eq-row.is-visible .viz-path {
       animation: none;
     }
   }
