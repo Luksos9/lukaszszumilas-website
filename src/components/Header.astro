@@ -80,6 +80,17 @@ const homeActive = here === '/';
   })();
 
   // ---- Section scroll-guide: rebuild from the current page's [data-nav] sections ----
+  const RAIL_ICONS: Record<string, string> = {
+    home: '<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/>',
+    sparkle: '<path d="M12 3l1.7 5.1L19 10l-5.3 1.9L12 17l-1.7-5.1L5 10z"/>',
+    trend: '<path d="M3 17l6-6 4 4 7-7"/><path d="M17 8h4v4"/>',
+    flow: '<circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="M7 6h10M6.5 7.7 11 16M17.5 7.7 13 16"/>',
+    target: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/>',
+    grid: '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
+    trophy: '<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4v1.5A3.5 3.5 0 0 0 7.5 11M17 6h3v1.5A3.5 3.5 0 0 1 16.5 11"/>',
+    book: '<path d="M5 4a2 2 0 0 1 2-2h12v16H7a2 2 0 0 0-2 2z"/><path d="M19 18H7a2 2 0 0 0-2 2"/>',
+    arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+  };
   let railIO: IntersectionObserver | undefined;
   function buildRail() {
     const rail = document.querySelector<HTMLElement>('[data-rail]');
@@ -97,12 +108,16 @@ const homeActive = here === '/';
       a.className = 'rail-dot';
       const label = sec.getAttribute('data-nav') || '';
       a.setAttribute('aria-label', label);
+      const icon = sec.getAttribute('data-nav-icon') || 'target';
+      a.innerHTML =
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" ' +
+        'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+        (RAIL_ICONS[icon] || RAIL_ICONS.target) +
+        '</svg>';
       const tip = document.createElement('span');
       tip.className = 'rail-tip';
       tip.textContent = label;
-      const mark = document.createElement('i');
-      mark.className = 'rail-mark';
-      a.append(tip, mark);
+      a.appendChild(tip);
       rail.appendChild(a);
       return a;
     });
@@ -269,7 +284,7 @@ const homeActive = here === '/';
     transform: translateY(-2px);
   }
 
-  /* section scroll-guide, right edge */
+  /* section scroll-guide, right edge — Lucky X-style glass pill with icons */
   .rail {
     position: fixed;
     top: 50%;
@@ -278,59 +293,70 @@ const homeActive = here === '/';
     z-index: 80;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    gap: 0.85rem;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 0.4rem;
+    border-radius: var(--radius-pill);
+    background: color-mix(in srgb, var(--surface) 82%, transparent);
+    border: 1px solid var(--border-strong);
+    box-shadow: var(--shadow-lg);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+    backdrop-filter: blur(14px) saturate(1.2);
   }
   .rail[data-empty] {
     display: none;
   }
-  .rail-dot {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 0.55rem;
-    cursor: pointer;
-    padding: 0.15rem 0;
+  /* rail dots are created in client JS, so their styles must be :global
+     (Astro scoping only tags server-rendered elements). */
+  :global(.rail-dot) {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 2.15rem;
+    height: 2.15rem;
+    border-radius: var(--radius-pill);
+    color: var(--text-muted);
+    transition: color var(--dur) var(--ease), background var(--dur) var(--ease),
+      box-shadow var(--dur) var(--ease);
   }
-  .rail-mark {
-    display: block;
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    border: 1.5px solid var(--border-strong);
-    background: transparent;
-    transition: transform var(--dur) var(--ease), background var(--dur) var(--ease),
-      border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+  :global(.rail-dot svg) {
+    width: 18px;
+    height: 18px;
   }
-  .rail-dot:hover .rail-mark {
-    border-color: var(--accent);
+  :global(.rail-dot:hover) {
+    color: var(--text);
+    background: var(--accent-soft);
   }
-  .rail-dot.is-active .rail-mark {
-    background: var(--accent);
-    border-color: var(--accent);
-    transform: scale(1.3);
-    box-shadow: 0 0 0 4px var(--accent-soft);
+  :global(.rail-dot.is-active) {
+    color: var(--accent-text);
+    background: var(--accent-soft);
+    box-shadow: 0 0 0 1.5px var(--accent), 0 0 16px -3px var(--ring);
   }
-  .rail-tip {
+  /* label tooltip to the left, on hover */
+  :global(.rail-tip) {
+    position: absolute;
+    right: calc(100% + 0.5rem);
+    top: 50%;
+    transform: translateY(-50%) translateX(4px);
+    white-space: nowrap;
     font-family: var(--font-mono);
     text-transform: uppercase;
     letter-spacing: 0.06em;
     font-size: 0.6rem;
     font-weight: 700;
-    color: var(--text-subtle);
-    white-space: nowrap;
+    color: var(--text);
+    background: color-mix(in srgb, var(--surface) 92%, transparent);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.22rem 0.5rem;
+    box-shadow: var(--shadow);
     opacity: 0;
-    transform: translateX(6px);
-    transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
     pointer-events: none;
+    transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
   }
-  .rail-dot:hover .rail-tip,
-  .rail-dot.is-active .rail-tip {
+  :global(.rail-dot:hover .rail-tip) {
     opacity: 1;
-    transform: none;
-  }
-  .rail-dot.is-active .rail-tip {
-    color: var(--accent-text);
+    transform: translateY(-50%) translateX(0);
   }
 
   /* lock background scroll while the menu is open */

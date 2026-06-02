@@ -5,10 +5,12 @@ interface Props {
   class?: string;
   /** Adds an id + data-nav so the section appears in the right-edge scroll guide. */
   navLabel?: string;
+  /** Icon name (see Header rail icons) shown for this section in the scroll guide. */
+  navIcon?: string;
   /** Opt-in: renders a `decor` slot behind the content and clips it (background art). */
   decor?: boolean;
 }
-const { id, tone = 'default', class: cls = '', navLabel, decor = false } = Astro.props;
+const { id, tone = 'default', class: cls = '', navLabel, navIcon, decor = false } = Astro.props;
 const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 const sectionId = id ?? (navLabel ? slugify(navLabel) : undefined);
 ---
@@ -17,6 +19,7 @@ const sectionId = id ?? (navLabel ? slugify(navLabel) : undefined);
   id={sectionId}
   class:list={['section', `tone-${tone}`, { 'has-decor': decor }, cls]}
   data-nav={navLabel}
+  data-nav-icon={navIcon}
 >
   {decor && <slot name="decor" />}
   <div class="container">
