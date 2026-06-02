@@ -289,6 +289,15 @@ const jsonLd = [
     max-width: 50ch;
     margin-bottom: 1.9rem;
   }
+  /* keep the two hero CTAs side by side; stack only on very small screens */
+  .hero-cta {
+    flex-wrap: nowrap;
+  }
+  @media (max-width: 559px) {
+    .hero-cta {
+      flex-wrap: wrap;
+    }
+  }
   .cred {
     margin-top: 1.9rem;
     font-family: var(--font-mono);

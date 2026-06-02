@@ -10,8 +10,7 @@ const year = new Date().getFullYear();
   <div class="container footer-grid">
     <div class="footer-brand">
       <a href="/" class="brand" aria-label={`${site.name}, home`}>
-        <span class="brand-mark" aria-hidden="true">ŁS</span>
-        <span class="brand-name">{site.name}</span>
+        <img class="footer-logo" src="/footer-logo.webp" alt={site.name} width="480" height="311" loading="lazy" />
       </a>
       <p class="footer-blurb muted">
         Operational Efficiency Advisor. I help organizations reduce manual work and improve
@@ -72,6 +71,12 @@ const year = new Date().getFullYear();
     align-items: center;
     gap: 0.6rem;
     font-weight: 700;
+  }
+  .footer-logo {
+    display: block;
+    width: clamp(11rem, 9rem + 6vw, 13.5rem);
+    height: auto;
+    border-radius: var(--radius);
   }
   .brand-mark {
     display: grid;
