@@ -8,6 +8,7 @@ import ServiceCard from '../components/ServiceCard.astro';
 import Icon from '../components/Icon.astro';
 import OperationsLoop from '../components/OperationsLoop.astro';
 import ProcessEquation from '../components/ProcessEquation.astro';
+import BgDecor from '../components/BgDecor.astro';
 import { site } from '../data/site';
 import { services } from '../data/services';
 import { problems } from '../data/problems';
@@ -79,7 +80,8 @@ const jsonLd = [
   </section>
 
   <!-- 1. WHY DIFFERENT — THE AI REALITY CHECK -->
-  <Section tone="surface" navLabel="AI reality">
+  <Section tone="surface" navLabel="AI reality" decor>
+    <BgDecor slot="decor" variant="corner-br" />
     <div class="contrarian">
       <div>
         <p class="eyebrow" data-reveal>The AI reality check</p>
@@ -164,7 +166,8 @@ const jsonLd = [
   </Section>
 
   <!-- 5. CAN YOU HELP ME — SERVICES -->
-  <Section tone="surface" navLabel="Services">
+  <Section tone="surface" navLabel="Services" decor>
+    <BgDecor slot="decor" variant="pipeline-edge" />
     <div class="section-head" data-reveal>
       <div>
         <p class="eyebrow">How I help</p>
@@ -182,7 +185,8 @@ const jsonLd = [
   </Section>
 
   <!-- 6. HAVE YOU DONE IT BEFORE — CASE STUDIES (TRANSFORMATION) -->
-  <Section navLabel="Work">
+  <Section navLabel="Work" decor>
+    <BgDecor slot="decor" variant="diamond-corner" />
     <div class="section-head" data-reveal>
       <div>
         <p class="eyebrow">Selected work</p>
@@ -242,6 +246,7 @@ const jsonLd = [
 
   <!-- 8. FINAL CTA -->
   <section class="final-cta" id="book" data-nav="Book">
+    <BgDecor variant="grid" />
     <div class="container final-cta-inner" data-reveal>
       <p class="final-cta-eyebrow">Start here</p>
       <h2 class="final-cta-title display">Ready to find the AI opportunities inside your ServiceNow environment?</h2>
@@ -667,6 +672,10 @@ const jsonLd = [
   }
   /* FINAL CTA */
   .final-cta {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    overflow: clip;
     background: var(--lx-dark);
     color: var(--lx-cream);
     padding-block: clamp(3.5rem, 2rem + 6vw, 6.5rem);
@@ -674,6 +683,8 @@ const jsonLd = [
     border-top: 1px solid var(--border);
   }
   .final-cta-inner {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
