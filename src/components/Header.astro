@@ -121,6 +121,18 @@ const homeActive = here === '/';
       rail.appendChild(a);
       return a;
     });
+    // single ring that glides to whichever dot is active (Lucky X-style)
+    const indicator = document.createElement('span');
+    indicator.className = 'rail-indicator';
+    rail.appendChild(indicator);
+    const moveInd = (dot: HTMLElement) => {
+      indicator.style.width = dot.offsetWidth + 'px';
+      indicator.style.height = dot.offsetHeight + 'px';
+      indicator.style.transform =
+        'translate(' + dot.offsetLeft + 'px,' + dot.offsetTop + 'px)';
+    };
+    dots[0].classList.add('is-active');
+    moveInd(dots[0]);
     if (railIO) railIO.disconnect();
     railIO = new IntersectionObserver(
       (entries) => {
@@ -128,6 +140,7 @@ const homeActive = here === '/';
           if (e.isIntersecting) {
             const idx = sections.indexOf(e.target as HTMLElement);
             dots.forEach((d, i) => d.classList.toggle('is-active', i === idx));
+            if (dots[idx]) moveInd(dots[idx]);
           }
         });
       },
@@ -310,6 +323,7 @@ const homeActive = here === '/';
      (Astro scoping only tags server-rendered elements). */
   :global(.rail-dot) {
     position: relative;
+    z-index: 1;
     display: grid;
     place-items: center;
     width: 2.15rem;
@@ -319,6 +333,18 @@ const homeActive = here === '/';
     transition: color var(--dur) var(--ease), background var(--dur) var(--ease),
       box-shadow var(--dur) var(--ease);
   }
+  /* single indicator that glides between dots as the active section changes */
+  :global(.rail-indicator) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    border-radius: var(--radius-pill);
+    background: var(--accent-soft);
+    box-shadow: 0 0 0 1.5px var(--accent), 0 0 16px -3px var(--ring);
+    pointer-events: none;
+    transition: transform 0.42s var(--ease-out), width 0.3s var(--ease), height 0.3s var(--ease);
+  }
   :global(.rail-dot svg) {
     width: 18px;
     height: 18px;
@@ -327,10 +353,11 @@ const homeActive = here === '/';
     color: var(--text);
     background: var(--accent-soft);
   }
+  /* the ring/fill is drawn by the sliding .rail-indicator; the active dot
+     just tints its icon (transparent bg so the indicator shows through). */
   :global(.rail-dot.is-active) {
     color: var(--accent-text);
-    background: var(--accent-soft);
-    box-shadow: 0 0 0 1.5px var(--accent), 0 0 16px -3px var(--ring);
+    background: transparent;
   }
   /* label tooltip to the left, on hover */
   :global(.rail-tip) {

@@ -389,8 +389,10 @@ const jsonLd = [
     gap: 2rem;
   }
   .contrarian-title {
-    font-size: var(--step-4);
-    line-height: 1.05;
+    /* sized so each line fits its column on one line → exactly two lines,
+       from 320px through desktop (verified against the longest line's width). */
+    font-size: clamp(1.65rem, 1.1rem + 2.2vw, 2.4rem);
+    line-height: 1.1;
   }
   .contrarian-title span {
     display: block;
@@ -739,11 +741,6 @@ const jsonLd = [
     }
   }
   @media (min-width: 760px) {
-    .contrarian {
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem 3.5rem;
-      align-items: center;
-    }
     .cs-flow {
       grid-template-columns: 1fr auto 1fr auto 1fr;
       align-items: start;
@@ -760,6 +757,16 @@ const jsonLd = [
     }
     .grid-3 {
       grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  /* split the contrarian block into two columns only once each column is wide
+     enough (~419px) to keep the headline on two lines; below this it stacks
+     full-width (where the headline easily stays two lines). */
+  @media (min-width: 960px) {
+    .contrarian {
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem 3.5rem;
+      align-items: center;
     }
   }
 </style>
