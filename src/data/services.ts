@@ -9,6 +9,8 @@ export interface Service {
   examples?: string[];
   deliverables?: string[];
   outcome?: string;
+  /** Illustrated category cards — used to emphasize a featured service (e.g. Training). */
+  categories?: { title: string; illo: string; blurb: string }[];
 }
 
 /**
@@ -76,6 +78,28 @@ export const services: Service[] = [
       'ServiceNow best-practice sessions',
       'Practical AI adoption training',
       'Hands-on enablement',
+    ],
+    categories: [
+      {
+        title: 'Team workshops',
+        illo: 'workshops',
+        blurb: 'Focused, hands-on sessions tailored to your team and your platform.',
+      },
+      {
+        title: 'ServiceNow best practices',
+        illo: 'best-practice',
+        blurb: 'The patterns that keep the platform clean, supportable, and upgrade-safe.',
+      },
+      {
+        title: 'Practical AI adoption',
+        illo: 'ai-adoption',
+        blurb: 'Where AI genuinely helps your workflows — and where it is just noise.',
+      },
+      {
+        title: 'Hands-on enablement',
+        illo: 'enablement',
+        blurb: 'Your team learns to run and extend what we build together.',
+      },
     ],
     outcome: 'A team that can run and extend what we build together.',
   },

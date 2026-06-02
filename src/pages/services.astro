@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Section from '../components/Section.astro';
 import CtaButton from '../components/CtaButton.astro';
+import TrainingIllustration from '../components/TrainingIllustration.astro';
 import { services } from '../data/services';
 import { site } from '../data/site';
 ---
@@ -19,7 +20,7 @@ import { site } from '../data/site';
   <Section>
     <div class="services-list">
       {services.map((s) => (
-        <article id={s.anchor} class="service">
+        <article id={s.anchor} class:list={['service', { 'service--featured': s.categories }]}>
           <h2 class="service-title display">{s.title}</h2>
           {s.problem && <p class="service-problem">{s.problem}</p>}
           {s.examples && (
@@ -30,12 +31,26 @@ import { site } from '../data/site';
               </ul>
             </div>
           )}
-          {s.deliverables && (
+          {s.deliverables && !s.categories && (
             <div>
               <p class="service-label">What you get</p>
               <ul class="service-items" role="list">
                 {s.deliverables.map((d) => <li>{d}</li>)}
               </ul>
+            </div>
+          )}
+          {s.categories && (
+            <div class="train">
+              <p class="service-label">What you get</p>
+              <div class="train-grid">
+                {s.categories.map((c) => (
+                  <div class="train-card shine">
+                    <span class="train-illo"><TrainingIllustration illo={c.illo} /></span>
+                    <h3 class="train-card-title">{c.title}</h3>
+                    <p class="train-card-blurb muted">{c.blurb}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
           {s.outcome && (
@@ -103,6 +118,55 @@ import { site } from '../data/site';
     background: var(--accent-soft);
     border-radius: var(--radius);
     border: 1px solid var(--border);
+  }
+  /* featured service (Training) — illustrated grid in a distinct panel */
+  .service--featured {
+    padding: clamp(1.4rem, 1rem + 2vw, 2.25rem);
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-lg);
+  }
+  .train-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+  .train-card {
+    padding: 1.25rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+  }
+  .train-card:hover {
+    border-color: var(--accent);
+    box-shadow: var(--shadow);
+  }
+  .train-card > * {
+    position: relative;
+    z-index: 2;
+  }
+  .train-illo {
+    display: block;
+    width: 76px;
+    color: var(--text);
+    margin-bottom: 0.6rem;
+  }
+  .train-card-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--step-1);
+    margin-bottom: 0.3rem;
+  }
+  .train-card-blurb {
+    font-size: var(--step--1);
+    line-height: 1.5;
+  }
+  @media (min-width: 560px) {
+    .train-grid {
+      grid-template-columns: 1fr 1fr;
+    }
   }
   .cta-band {
     display: flex;
