@@ -3,11 +3,22 @@ interface Props {
   id?: string;
   tone?: 'default' | 'surface' | 'dark';
   class?: string;
+  /** Adds an id + data-nav so the section appears in the right-edge scroll guide. */
+  navLabel?: string;
+  /** Opt-in: renders a `decor` slot behind the content and clips it (background art). */
+  decor?: boolean;
 }
-const { id, tone = 'default', class: cls = '' } = Astro.props;
+const { id, tone = 'default', class: cls = '', navLabel, decor = false } = Astro.props;
+const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+const sectionId = id ?? (navLabel ? slugify(navLabel) : undefined);
 ---
 
-<section id={id} class:list={['section', `tone-${tone}`, cls]}>
+<section
+  id={sectionId}
+  class:list={['section', `tone-${tone}`, { 'has-decor': decor }, cls]}
+  data-nav={navLabel}
+>
+  {decor && <slot name="decor" />}
   <div class="container">
     <slot />
   </div>
@@ -23,5 +34,15 @@ const { id, tone = 'default', class: cls = '' } = Astro.props;
   }
   .tone-dark :global(.muted) {
     color: #b9b3a8;
+  }
+  /* only decorated sections clip + establish a stacking context */
+  .section.has-decor {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+  }
+  .section.has-decor > .container {
+    position: relative;
+    z-index: 1;
   }
 </style>

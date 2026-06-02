@@ -1,7 +1,6 @@
 ---
 import { primaryNav } from '../data/nav';
 import { site } from '../data/site';
-import Icon from './Icon.astro';
 import ThemeToggle from './ThemeToggle.astro';
 
 const path = Astro.url.pathname;
@@ -11,122 +10,217 @@ const isActive = (href: string) => {
   const h = norm(href);
   return h === '/' ? here === '/' : here === h || here.startsWith(h + '/');
 };
-
 const links = primaryNav.filter((i) => !i.cta);
 const cta = primaryNav.find((i) => i.cta);
 const homeActive = here === '/';
 ---
 
-<nav class="dock" aria-label="Primary" transition:persist>
-  <a
-    href="/"
-    class:list={['dock-item dock-brand', { 'is-active': homeActive }]}
-    aria-label={`${site.name}, home`}
-    aria-current={homeActive ? 'page' : undefined}
-  >
-    <span class="dock-brandmark" aria-hidden="true">ŁS</span>
+<div class="chrome" transition:persist>
+  <a href="/" class="brand" aria-label={`${site.name}, home`}>
+    <span class="brand-mark" aria-hidden="true">ŁS</span>
   </a>
 
-  <span class="dock-divider" aria-hidden="true"></span>
+  <button
+    class="burger"
+    type="button"
+    data-burger
+    aria-label="Open menu"
+    aria-expanded="false"
+    aria-controls="site-menu"
+  >
+    <span class="burger-lines" aria-hidden="true"><span></span><span></span><span></span></span>
+  </button>
 
-  {links.map((i) => (
-    <a
-      href={i.href}
-      class:list={['dock-item', { 'is-active': isActive(i.href) }]}
-      aria-label={i.label}
-      title={i.label}
-      aria-current={isActive(i.href) ? 'page' : undefined}
-    >
-      <span class="dock-ico"><Icon name={i.icon ?? 'target'} size={20} /></span>
-      <span class="dock-label">{i.label}</span>
-    </a>
-  ))}
+  <div class="menu" id="site-menu" data-menu hidden>
+    <nav class="menu-inner" aria-label="Primary">
+      <a href="/" class:list={['menu-link', { 'is-active': homeActive }]}>Home</a>
+      {links.map((i) => (
+        <a
+          href={i.href}
+          class:list={['menu-link', { 'is-active': isActive(i.href) }]}
+          aria-current={isActive(i.href) ? 'page' : undefined}
+        >
+          {i.label}
+        </a>
+      ))}
+      {cta && (
+        <a href={cta.href} class="menu-cta" data-analytics="book_menu">
+          {cta.label} <span aria-hidden="true">→</span>
+        </a>
+      )}
+      <div class="menu-tools"><ThemeToggle /></div>
+    </nav>
+  </div>
 
-  <span class="dock-divider" aria-hidden="true"></span>
-
-  <ThemeToggle />
-
-  {cta && (
-    <a href={cta.href} class="dock-cta" aria-label={cta.label} data-analytics="book_dock">
-      <span class="dock-cta-label">Book a call</span>
-      <span class="dock-cta-arrow" aria-hidden="true">→</span>
-    </a>
-  )}
-</nav>
+  <nav class="rail" data-rail aria-label="Page sections"></nav>
+</div>
 
 <script>
-  // The dock is transition:persist'd, so its server-rendered active state is
-  // frozen from the first page. Re-sync the active item on every navigation.
-  function syncDock() {
-    const norm = (p: string) => (p !== '/' && p.endsWith('/') ? p.slice(0, -1) : p);
-    const here = norm(location.pathname);
-    document.querySelectorAll<HTMLAnchorElement>('.dock-item[href]').forEach((a) => {
-      const href = norm(new URL(a.href).pathname);
+  // ---- Hamburger menu (chrome is transition:persist'd, so bind once) ----
+  (() => {
+    const burger = document.querySelector<HTMLButtonElement>('[data-burger]');
+    const menu = document.querySelector<HTMLElement>('[data-menu]');
+    if (!burger || !menu || burger.dataset.bound) return;
+    burger.dataset.bound = '1';
+    const setOpen = (open: boolean) => {
+      burger.setAttribute('aria-expanded', String(open));
+      menu.hidden = !open;
+      document.documentElement.classList.toggle('menu-open', open);
+    };
+    burger.addEventListener('click', () => setOpen(!!menu.hidden));
+    menu.addEventListener('click', (e) => {
+      if (e.target === menu) setOpen(false);
+    });
+    menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') setOpen(false);
+    });
+  })();
+
+  // ---- Section scroll-guide: rebuild from the current page's [data-nav] sections ----
+  let railIO: IntersectionObserver | undefined;
+  function buildRail() {
+    const rail = document.querySelector<HTMLElement>('[data-rail]');
+    if (!rail) return;
+    const sections = Array.from(document.querySelectorAll<HTMLElement>('[data-nav]'));
+    rail.replaceChildren();
+    if (sections.length < 2) {
+      rail.dataset.empty = '1';
+      return;
+    }
+    delete rail.dataset.empty;
+    const dots = sections.map((sec) => {
+      const a = document.createElement('a');
+      a.href = '#' + sec.id;
+      a.className = 'rail-dot';
+      const label = sec.getAttribute('data-nav') || '';
+      a.setAttribute('aria-label', label);
+      const tip = document.createElement('span');
+      tip.className = 'rail-tip';
+      tip.textContent = label;
+      const mark = document.createElement('i');
+      mark.className = 'rail-mark';
+      a.append(tip, mark);
+      rail.appendChild(a);
+      return a;
+    });
+    if (railIO) railIO.disconnect();
+    railIO = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            const idx = sections.indexOf(e.target as HTMLElement);
+            dots.forEach((d, i) => d.classList.toggle('is-active', i === idx));
+          }
+        });
+      },
+      { rootMargin: '-45% 0px -45% 0px', threshold: 0 }
+    );
+    sections.forEach((s) => railIO!.observe(s));
+  }
+  document.addEventListener('astro:page-load', buildRail);
+
+  // ---- Keep the menu's active link in sync (persisted menu) ----
+  function syncMenu() {
+    const n = (p: string) => (p !== '/' && p.endsWith('/') ? p.slice(0, -1) : p);
+    const here = n(location.pathname);
+    document.querySelectorAll<HTMLAnchorElement>('.menu-link[href]').forEach((a) => {
+      const href = n(new URL(a.href).pathname);
       const active = href === '/' ? here === '/' : here === href || here.startsWith(href + '/');
       a.classList.toggle('is-active', active);
-      if (active) a.setAttribute('aria-current', 'page');
-      else a.removeAttribute('aria-current');
     });
   }
-  document.addEventListener('astro:page-load', syncDock);
-
-  // Dock starts at the top; once the first section scrolls fully out of view it
-  // slides to the bottom. Re-init on every View Transitions navigation.
-  let dockPosObserver: IntersectionObserver | undefined;
-  function initDockPosition() {
-    const dock = document.querySelector('.dock');
-    const anchor =
-      document.querySelector('.hero, .page-header, .post-header') ||
-      document.getElementById('main')?.firstElementChild;
-    if (!dock || !anchor) return;
-    if (dockPosObserver) dockPosObserver.disconnect();
-    dock.classList.remove('is-bottom');
-    dockPosObserver = new IntersectionObserver(
-      (entries) => dock.classList.toggle('is-bottom', !entries[0].isIntersecting),
-      { threshold: 0 }
-    );
-    dockPosObserver.observe(anchor);
-  }
-  document.addEventListener('astro:page-load', initDockPosition);
+  document.addEventListener('astro:page-load', syncMenu);
 </script>
 
 <style>
-  .dock {
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    width: max-content;
-    margin-inline: auto;
-    max-width: calc(100vw - 1.25rem);
-    padding: 0.4rem;
-    border-radius: var(--radius-pill);
-    background: color-mix(in srgb, var(--surface) 80%, transparent);
-    border: 1px solid var(--border-strong);
-    box-shadow: var(--shadow-lg);
-    -webkit-backdrop-filter: blur(16px) saturate(1.3);
-    backdrop-filter: blur(16px) saturate(1.3);
-    overflow-x: auto;
-    scrollbar-width: none;
-    /* TOP resting position; slides to the bottom once the first section scrolls away */
-    transform: translateY(0.9rem);
-    transition: transform 0.55s var(--ease-out);
-    will-change: transform;
+  /* the persisted wrapper itself takes no space; its children are fixed */
+  .chrome {
+    display: contents;
   }
-  .dock::-webkit-scrollbar {
+
+  /* brand mark, top-left */
+  .brand {
+    position: fixed;
+    top: clamp(0.85rem, 0.6rem + 1vw, 1.25rem);
+    left: clamp(0.9rem, 0.6rem + 1.5vw, 1.6rem);
+    z-index: 90;
+  }
+  .brand-mark {
+    display: grid;
+    place-items: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: var(--radius-sm);
+    background: var(--accent);
+    color: var(--accent-contrast);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: -0.02em;
+    box-shadow: var(--shadow);
+  }
+
+  /* hamburger, top-right (always visible) */
+  .burger {
+    position: fixed;
+    top: clamp(0.85rem, 0.6rem + 1vw, 1.25rem);
+    right: clamp(0.9rem, 0.6rem + 1.5vw, 1.6rem);
+    z-index: 92;
+    display: grid;
+    place-items: center;
+    width: 2.9rem;
+    height: 2.9rem;
+    border-radius: var(--radius-pill);
+    background: color-mix(in srgb, var(--surface) 82%, transparent);
+    border: 1px solid var(--border-strong);
+    box-shadow: var(--shadow);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    transition: transform var(--dur) var(--ease), border-color var(--dur) var(--ease);
+  }
+  .burger:hover {
+    transform: translateY(-1px);
+    border-color: var(--accent);
+  }
+  .burger-lines {
+    display: grid;
+    gap: 5px;
+  }
+  .burger-lines span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--text);
+    transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
+  }
+  .burger[aria-expanded='true'] .burger-lines span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .burger[aria-expanded='true'] .burger-lines span:nth-child(2) {
+    opacity: 0;
+  }
+  .burger[aria-expanded='true'] .burger-lines span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* full-screen menu overlay */
+  .menu {
+    position: fixed;
+    inset: 0;
+    z-index: 91;
+    display: grid;
+    place-items: center;
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    -webkit-backdrop-filter: blur(16px) saturate(1.2);
+    backdrop-filter: blur(16px) saturate(1.2);
+    animation: menuIn 0.32s var(--ease-out);
+  }
+  .menu[hidden] {
     display: none;
   }
-  .dock.is-bottom {
-    transform: translateY(calc(100dvh - 100% - 0.9rem - env(safe-area-inset-bottom, 0px)));
-  }
-  .dock {
-    animation: dockFade 0.5s var(--ease-out) 0.15s backwards;
-  }
-  @keyframes dockFade {
+  @keyframes menuIn {
     from {
       opacity: 0;
     }
@@ -134,151 +228,124 @@ const homeActive = here === '/';
       opacity: 1;
     }
   }
-  .dock-item {
-    display: inline-flex;
+  .menu-inner {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 0.45rem;
-    flex: 0 0 auto;
-    padding: 0.5rem 0.62rem;
-    border-radius: var(--radius-pill);
-    color: var(--text-muted);
+    gap: 0.35rem;
+    text-align: center;
+    padding: 2rem;
+  }
+  .menu-link {
+    font-family: var(--font-display);
     font-weight: 600;
-    font-size: var(--step--1);
-    line-height: 1;
-    white-space: nowrap;
-    transition: color var(--dur) var(--ease), background var(--dur) var(--ease),
-      box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease);
+    font-size: var(--step-2);
+    line-height: 1.25;
+    color: var(--text-muted);
+    padding: 0.25rem 1rem;
+    transition: color var(--dur) var(--ease), transform var(--dur) var(--ease);
   }
-  .dock-item:hover {
+  .menu-link:hover {
     color: var(--text);
-    background: var(--accent-soft);
-    transform: translateY(-2px);
+    transform: translateY(-1px);
   }
-  .dock-ico {
-    display: inline-grid;
-    place-items: center;
-  }
-  .dock-label {
-    display: none;
-  }
-  .dock-item.is-active {
+  .menu-link.is-active {
     color: var(--accent-text);
-    background: var(--accent-soft);
-    box-shadow: 0 0 0 1.5px var(--accent), 0 0 20px -3px rgba(232, 115, 58, 0.55);
   }
-  .dock-brand {
-    padding: 0.32rem;
-  }
-  .dock-brandmark {
-    display: grid;
-    place-items: center;
-    width: 1.95rem;
-    height: 1.95rem;
-    border-radius: var(--radius-sm);
-    background: var(--accent);
-    color: var(--accent-contrast);
-    font-family: var(--font-mono);
-    font-weight: 700;
-    font-size: 0.8rem;
-    letter-spacing: -0.02em;
-  }
-  .dock-divider {
-    flex: 0 0 auto;
-    width: 1px;
-    height: 1.7rem;
-    background: var(--border);
-    display: none;
-  }
-  .dock-cta {
+  .menu-cta {
+    margin-top: 1.1rem;
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    flex: 0 0 auto;
     background: var(--accent);
     color: var(--accent-contrast);
     font-weight: 700;
-    font-size: var(--step--1);
-    padding: 0.6rem 0.85rem;
+    padding: 0.8rem 1.5rem;
     border-radius: var(--radius-pill);
-    white-space: nowrap;
-    transition: background var(--dur) var(--ease), transform var(--dur) var(--ease),
-      box-shadow var(--dur) var(--ease);
+    transition: background var(--dur) var(--ease), transform var(--dur) var(--ease);
   }
-  .dock-cta:hover {
+  .menu-cta:hover {
     background: var(--accent-hover);
-    transform: translateY(-1px);
-    box-shadow: 0 8px 22px rgba(232, 115, 58, 0.45);
+    transform: translateY(-2px);
   }
-  .dock-cta-label {
-    display: none;
-  }
-  .dock-cta-arrow {
-    transition: transform var(--dur) var(--ease);
-  }
-  .dock-cta:hover .dock-cta-arrow {
-    transform: translateX(3px);
+  .menu-tools {
+    margin-top: 1.5rem;
   }
 
-  /* the theme toggle is a flex child of the dock — keep it from shrinking */
-  .dock :global(.theme-toggle) {
-    flex: 0 0 auto;
+  /* section scroll-guide, right edge */
+  .rail {
+    position: fixed;
+    top: 50%;
+    right: clamp(0.6rem, 0.2rem + 1vw, 1.2rem);
+    transform: translateY(-50%);
+    z-index: 80;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.85rem;
   }
-  /* tighten so the whole dock fits small phones without an internal scroll */
-  @media (max-width: 520px) {
-    .dock {
-      gap: 0.15rem;
-      padding: 0.3rem;
-      max-width: calc(100vw - 0.6rem);
-    }
-    .dock-item {
-      padding: 0.55rem 0.48rem;
-    }
-    .dock-brand {
-      padding: 0.28rem;
-    }
-    .dock-brandmark {
-      width: 1.7rem;
-      height: 1.7rem;
-    }
-    .dock :global(.theme-toggle) {
-      width: 2rem;
-      height: 2rem;
-    }
-    .dock-cta {
-      padding: 0.5rem 0.6rem;
-    }
+  .rail[data-empty] {
+    display: none;
   }
-  /* >=480px: label the CTA */
-  @media (min-width: 480px) {
-    .dock-cta-label {
-      display: inline;
-    }
+  .rail-dot {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.55rem;
+    cursor: pointer;
+    padding: 0.15rem 0;
   }
-  /* >=720px: dividers + the active item shows its label */
-  @media (min-width: 720px) {
-    .dock {
-      gap: 0.3rem;
-      padding: 0.45rem;
-    }
-    .dock-divider {
-      display: block;
-    }
-    .dock-item.is-active .dock-label {
-      display: inline;
-    }
+  .rail-mark {
+    display: block;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border-strong);
+    background: transparent;
+    transition: transform var(--dur) var(--ease), background var(--dur) var(--ease),
+      border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
   }
-  /* >=1100px: every item shows its label */
-  @media (min-width: 1100px) {
-    .dock-label {
-      display: inline;
-    }
+  .rail-dot:hover .rail-mark {
+    border-color: var(--accent);
   }
-  @media (prefers-reduced-motion: reduce) {
-    .dock-cta:hover {
-      transform: none;
-    }
-    .dock-cta:hover .dock-cta-arrow {
-      transform: none;
+  .rail-dot.is-active .rail-mark {
+    background: var(--accent);
+    border-color: var(--accent);
+    transform: scale(1.3);
+    box-shadow: 0 0 0 4px var(--accent-soft);
+  }
+  .rail-tip {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: var(--text-subtle);
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(6px);
+    transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+    pointer-events: none;
+  }
+  .rail-dot:hover .rail-tip,
+  .rail-dot.is-active .rail-tip {
+    opacity: 1;
+    transform: none;
+  }
+  .rail-dot.is-active .rail-tip {
+    color: var(--accent-text);
+  }
+
+  /* lock background scroll while the menu is open */
+  :global(html.menu-open) {
+    overflow: hidden;
+  }
+
+  /* mobile: only the hamburger — hide brand + section rail */
+  @media (max-width: 768px) {
+    .brand,
+    .rail {
+      display: none;
     }
   }
 </style>
