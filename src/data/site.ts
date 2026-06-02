@@ -12,8 +12,7 @@ export const site = {
   defaultTitle: 'Lukasz Szumilas · ServiceNow, AI & Operational Improvement',
   description:
     'I help organizations reduce manual work and improve operations using ServiceNow, AI, and process design: identifying bottlenecks, automating repetitive work, and applying AI where it creates measurable business value.',
-  // TODO(confirm): preferred public contact email.
-  email: 'contact@lukaszszumilas.com',
+  email: 'lukasz.szumilas97@gmail.com',
   newsletterName: 'ServiceNow Accelerator',
   socials: {
     linkedin: 'https://www.linkedin.com/in/lukasz-szumilas-servicenowdeveloper/',

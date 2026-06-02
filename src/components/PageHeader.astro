@@ -16,7 +16,8 @@ const { eyebrow, title } = Astro.props;
 
 <style>
   .page-header {
-    padding-block: clamp(2.75rem, 2rem + 3vw, 5rem) 0;
+    /* extra top space clears the top-docked nav before it slides to the bottom */
+    padding-block: clamp(5rem, 3.75rem + 3vw, 6.5rem) 0;
   }
   .page-title {
     font-size: var(--step-4);

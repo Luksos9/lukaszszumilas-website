@@ -35,6 +35,7 @@ export const { getStaticPaths, GET } = await OGImageRoute({
   getImageOptions: (_path, page: { title: string; tagline: string }) => ({
     title: page.title,
     description: page.tagline,
+    logo: { path: './public/apple-touch-icon.png', size: [84] },
     bgGradient: [
       [13, 13, 13],
       [13, 13, 13],

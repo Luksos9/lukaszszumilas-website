@@ -259,7 +259,8 @@ const jsonLd = [
   .hero {
     position: relative;
     overflow: hidden;
-    padding-block: clamp(2.5rem, 1.5rem + 4vw, 5rem) clamp(1.5rem, 1rem + 2vw, 3rem);
+    /* extra top space clears the top-docked nav before it slides to the bottom */
+    padding-block: clamp(5rem, 3.5rem + 4vw, 6.5rem) clamp(1.5rem, 1rem + 2vw, 3rem);
   }
   .hero-grid {
     display: grid;
@@ -277,7 +278,7 @@ const jsonLd = [
   }
   .hero-title .accent {
     display: inline;
-    color: var(--accent);
+    color: var(--accent-text);
   }
   .hero-lead {
     max-width: 50ch;
@@ -361,7 +362,7 @@ const jsonLd = [
   }
   .see-all {
     font-weight: 600;
-    color: var(--accent);
+    color: var(--accent-text);
     white-space: nowrap;
   }
   .see-all:hover {
@@ -398,7 +399,7 @@ const jsonLd = [
     color: var(--text);
   }
   .why-order li::marker {
-    color: var(--accent);
+    color: var(--accent-text);
     font-family: var(--font-mono);
   }
   /* GRID (services, insights) */
@@ -471,7 +472,7 @@ const jsonLd = [
     transition: color 0.25s var(--ease), border-color 0.25s var(--ease);
   }
   .dx-icon--out {
-    color: var(--accent);
+    color: var(--accent-text);
     background: var(--accent-soft);
     border-color: transparent;
   }
@@ -530,27 +531,27 @@ const jsonLd = [
     white-space: nowrap;
   }
   .dx-sev[data-weight='lead'] {
-    color: var(--accent);
-    border-color: var(--accent);
+    color: var(--accent-text);
+    border-color: var(--accent-text);
     background: var(--accent-soft);
   }
   .dx-sev[data-weight='trail'] {
-    color: var(--accent);
+    color: var(--accent-text);
     border: 1px dashed var(--accent);
     background: transparent;
   }
   .dx-row:hover .dx-arrow {
-    color: var(--accent);
+    color: var(--accent-text);
   }
   .dx-row[data-weight='lead']:hover {
     transform: translateY(-2px);
-    border-color: var(--accent);
+    border-color: var(--accent-text);
     box-shadow: var(--shadow);
   }
   .dx-row[data-weight='mid']:hover .dx-icon,
   .dx-row[data-weight='trail']:hover .dx-icon {
-    border-color: var(--accent);
-    color: var(--accent);
+    border-color: var(--accent-text);
+    color: var(--accent-text);
   }
   .dx-pattern {
     max-width: 46rem;
@@ -562,7 +563,7 @@ const jsonLd = [
     line-height: 1.45;
   }
   .dx-pattern .accent {
-    color: var(--accent);
+    color: var(--accent-text);
   }
   .dx-bridge {
     display: flex;
@@ -582,7 +583,7 @@ const jsonLd = [
     letter-spacing: 0.07em;
     font-size: var(--step--1);
     font-weight: 700;
-    color: var(--accent);
+    color: var(--accent-text);
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
@@ -607,7 +608,7 @@ const jsonLd = [
     transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
   }
   .cs:hover {
-    border-color: var(--accent);
+    border-color: var(--accent-text);
     box-shadow: var(--shadow);
   }
   .cs-head {
@@ -621,7 +622,7 @@ const jsonLd = [
     text-transform: uppercase;
     letter-spacing: 0.06em;
     font-size: var(--step--1);
-    color: var(--accent);
+    color: var(--accent-text);
     font-weight: 700;
   }
   .cs-title {
@@ -653,7 +654,7 @@ const jsonLd = [
     line-height: 1.5;
   }
   .cs-stage--out .cs-stage-label {
-    color: var(--accent);
+    color: var(--accent-text);
   }
   .cs-stage--out p {
     color: var(--text);
@@ -686,7 +687,7 @@ const jsonLd = [
     text-transform: uppercase;
     letter-spacing: 0.08em;
     font-size: var(--step--1);
-    color: var(--accent);
+    color: var(--accent-text);
     font-weight: 700;
   }
   .final-cta-title {

@@ -36,7 +36,7 @@ const { title, tagline, anchor, icon } = Astro.props;
   .service-card:hover {
     transform: translateY(-5px);
     box-shadow: var(--shadow-lg);
-    border-color: var(--accent);
+    border-color: var(--accent-text);
   }
   /* keep card text above the shine sweep */
   .service-card > * {
@@ -50,7 +50,7 @@ const { title, tagline, anchor, icon } = Astro.props;
     height: 2.7rem;
     border-radius: var(--radius);
     background: var(--accent-soft);
-    color: var(--accent);
+    color: var(--accent-text);
     margin-bottom: 0.3rem;
   }
   .service-card-title {
@@ -67,7 +67,7 @@ const { title, tagline, anchor, icon } = Astro.props;
   .service-card-cta {
     margin-top: 0.4rem;
     font-weight: 600;
-    color: var(--accent);
+    color: var(--accent-text);
     font-size: var(--step--1);
   }
 </style>

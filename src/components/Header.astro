@@ -69,6 +69,25 @@ const homeActive = here === '/';
     });
   }
   document.addEventListener('astro:page-load', syncDock);
+
+  // Dock starts at the top; once the first section scrolls fully out of view it
+  // slides to the bottom. Re-init on every View Transitions navigation.
+  let dockPosObserver: IntersectionObserver | undefined;
+  function initDockPosition() {
+    const dock = document.querySelector('.dock');
+    const anchor =
+      document.querySelector('.hero, .page-header, .post-header') ||
+      document.getElementById('main')?.firstElementChild;
+    if (!dock || !anchor) return;
+    if (dockPosObserver) dockPosObserver.disconnect();
+    dock.classList.remove('is-bottom');
+    dockPosObserver = new IntersectionObserver(
+      (entries) => dock.classList.toggle('is-bottom', !entries[0].isIntersecting),
+      { threshold: 0 }
+    );
+    dockPosObserver.observe(anchor);
+  }
+  document.addEventListener('astro:page-load', initDockPosition);
 </script>
 
 <style>
@@ -76,7 +95,7 @@ const homeActive = here === '/';
     position: fixed;
     left: 0;
     right: 0;
-    bottom: calc(0.9rem + env(safe-area-inset-bottom, 0px));
+    top: 0;
     z-index: 100;
     display: flex;
     align-items: center;
@@ -93,21 +112,26 @@ const homeActive = here === '/';
     backdrop-filter: blur(16px) saturate(1.3);
     overflow-x: auto;
     scrollbar-width: none;
+    /* TOP resting position; slides to the bottom once the first section scrolls away */
+    transform: translateY(0.9rem);
+    transition: transform 0.55s var(--ease-out);
+    will-change: transform;
   }
   .dock::-webkit-scrollbar {
     display: none;
   }
-  .dock {
-    animation: dockIn 0.6s var(--ease-out) 0.15s backwards;
+  .dock.is-bottom {
+    transform: translateY(calc(100dvh - 100% - 0.9rem - env(safe-area-inset-bottom, 0px)));
   }
-  @keyframes dockIn {
+  .dock {
+    animation: dockFade 0.5s var(--ease-out) 0.15s backwards;
+  }
+  @keyframes dockFade {
     from {
       opacity: 0;
-      transform: translateY(26px);
     }
     to {
       opacity: 1;
-      transform: none;
     }
   }
   .dock-item {
@@ -138,7 +162,7 @@ const homeActive = here === '/';
     display: none;
   }
   .dock-item.is-active {
-    color: var(--accent);
+    color: var(--accent-text);
     background: var(--accent-soft);
     box-shadow: 0 0 0 1.5px var(--accent), 0 0 20px -3px rgba(232, 115, 58, 0.55);
   }
