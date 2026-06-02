@@ -17,19 +17,22 @@ const homeActive = here === '/';
 
 <div class="chrome" transition:persist>
   <a href="/" class="brand" aria-label={`${site.name}, home`}>
-    <span class="brand-mark" aria-hidden="true">ŁS</span>
+    <img class="brand-logo" src="/logo-mark.webp" alt="" width="340" height="172" fetchpriority="high" />
   </a>
 
-  <button
-    class="burger"
-    type="button"
-    data-burger
-    aria-label="Open menu"
-    aria-expanded="false"
-    aria-controls="site-menu"
-  >
-    <span class="burger-lines" aria-hidden="true"><span></span><span></span><span></span></span>
-  </button>
+  <div class="topbar-right">
+    <ThemeToggle />
+    <button
+      class="burger"
+      type="button"
+      data-burger
+      aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="site-menu"
+    >
+      <span class="burger-lines" aria-hidden="true"><span></span><span></span><span></span></span>
+    </button>
+  </div>
 
   <div class="menu" id="site-menu" data-menu hidden>
     <nav class="menu-inner" aria-label="Primary">
@@ -48,7 +51,6 @@ const homeActive = here === '/';
           {cta.label} <span aria-hidden="true">→</span>
         </a>
       )}
-      <div class="menu-tools"><ThemeToggle /></div>
     </nav>
   </div>
 
@@ -146,27 +148,25 @@ const homeActive = here === '/';
     left: clamp(0.9rem, 0.6rem + 1.5vw, 1.6rem);
     z-index: 90;
   }
-  .brand-mark {
-    display: grid;
-    place-items: center;
-    width: 2.2rem;
-    height: 2.2rem;
+  .brand-logo {
+    display: block;
+    height: clamp(2rem, 1.6rem + 1vw, 2.5rem);
+    width: auto;
     border-radius: var(--radius-sm);
-    background: var(--accent);
-    color: var(--accent-contrast);
-    font-family: var(--font-mono);
-    font-weight: 700;
-    font-size: 0.85rem;
-    letter-spacing: -0.02em;
     box-shadow: var(--shadow);
   }
 
-  /* hamburger, top-right (always visible) */
-  .burger {
+  /* top-right control group: theme toggle + hamburger (always visible) */
+  .topbar-right {
     position: fixed;
     top: clamp(0.85rem, 0.6rem + 1vw, 1.25rem);
     right: clamp(0.9rem, 0.6rem + 1.5vw, 1.6rem);
     z-index: 92;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .burger {
     display: grid;
     place-items: center;
     width: 2.9rem;
@@ -267,9 +267,6 @@ const homeActive = here === '/';
   .menu-cta:hover {
     background: var(--accent-hover);
     transform: translateY(-2px);
-  }
-  .menu-tools {
-    margin-top: 1.5rem;
   }
 
   /* section scroll-guide, right edge */
