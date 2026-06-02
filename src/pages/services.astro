@@ -1,66 +1,141 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageHeader from '../components/PageHeader.astro';
 import Section from '../components/Section.astro';
 import CtaButton from '../components/CtaButton.astro';
+import ServiceFlow from '../components/ServiceFlow.astro';
 import TrainingIllustration from '../components/TrainingIllustration.astro';
+import Icon from '../components/Icon.astro';
 import { services } from '../data/services';
 import { site } from '../data/site';
+
+// Self-identify by situation, then jump to the matching engagement below.
+const situations = [
+  { icon: 'sparkle', text: "We want to use AI but aren't sure where it pays off", anchor: 'assessment', label: 'AI Opportunity Assessment' },
+  { icon: 'clock', text: 'We lose too much time to manual, repetitive work', anchor: 'implementations', label: 'AI & ServiceNow Implementations' },
+  { icon: 'cube', text: 'Our ServiceNow platform has become hard to maintain', anchor: 'development', label: 'ServiceNow Development' },
+  { icon: 'shield', text: 'We want an expert review before committing further', anchor: 'reviews', label: 'Architecture & Code Reviews' },
+];
+const sectors = ['Banking', 'Insurance', 'Manufacturing'];
 ---
 
 <BaseLayout
   title="Services"
-  description="ServiceNow and AI consulting: AI opportunity assessments, AI & ServiceNow implementations, platform development, and architecture reviews."
+  description="ServiceNow and AI consulting: AI opportunity assessments, AI & ServiceNow implementations, platform development, and architecture reviews — matched to your situation."
 >
-  <PageHeader eyebrow="Services" title="How I can help">
-    Consulting for teams that run on ServiceNow and want AI that actually ships. From the first
-    assessment through implementation, development, and review.
-  </PageHeader>
+  <!-- 1. HERO -->
+  <header class="svc-hero">
+    <div class="container svc-hero-inner">
+      <p class="eyebrow" data-reveal>Services</p>
+      <h1 class="svc-hero-title display" data-reveal>How I can help</h1>
+      <p class="svc-hero-sub" data-reveal style="--reveal-delay:120ms">
+        Consulting for teams that run on ServiceNow and want AI that actually ships — from the
+        first assessment through implementation, development, and review.
+      </p>
+      <div class="svc-hero-cta" data-reveal style="--reveal-delay:200ms">
+        <CtaButton href="/contact/" size="lg">Book a consultation</CtaButton>
+      </div>
+      <ul class="svc-trust" data-reveal style="--reveal-delay:280ms">
+        <li>10,000+ students taught</li>
+        <li>Enterprise delivery experience</li>
+        <li>ServiceNow &amp; AI specialist</li>
+      </ul>
+    </div>
+  </header>
 
+  <!-- 2. CHOOSE YOUR SITUATION -->
+  <Section tone="surface">
+    <div class="svc-head" data-reveal>
+      <p class="eyebrow">Start here</p>
+      <h2 class="svc-h2 display">Which sounds like you?</h2>
+      <p class="svc-head-sub muted">Pick the situation closest to yours — it points to the right engagement.</p>
+    </div>
+    <div class="situations">
+      {situations.map((s, i) => (
+        <a href={`#${s.anchor}`} class="situation shine" data-reveal="scale" style={`--reveal-delay:${i * 70}ms`}>
+          <span class="situation-icon"><Icon name={s.icon} size={20} /></span>
+          <span class="situation-quote">“{s.text}”</span>
+          <span class="situation-link">{s.label} <span aria-hidden="true">→</span></span>
+        </a>
+      ))}
+    </div>
+  </Section>
+
+  <!-- 3. SERVICES -->
   <Section>
-    <div class="services-list">
+    <div class="svc-head" data-reveal>
+      <p class="eyebrow">The engagements</p>
+      <h2 class="svc-h2 display">What each one looks like</h2>
+    </div>
+    <div class="svc-list">
       {services.map((s) => (
-        <article id={s.anchor} class:list={['service', { 'service--featured': s.categories }]}>
-          <h2 class="service-title display">{s.title}</h2>
-          {s.problem && <p class="service-problem">{s.problem}</p>}
-          {s.examples && (
-            <div>
-              <p class="service-label">What it covers</p>
-              <ul class="service-items" role="list">
-                {s.examples.map((e) => <li>{e}</li>)}
-              </ul>
-            </div>
-          )}
-          {s.deliverables && !s.categories && (
-            <div>
-              <p class="service-label">What you get</p>
-              <ul class="service-items" role="list">
-                {s.deliverables.map((d) => <li>{d}</li>)}
-              </ul>
-            </div>
-          )}
-          {s.categories && (
-            <div class="train">
-              <p class="service-label">What you get</p>
+        <article id={s.anchor} class:list={['svc', { 'svc--featured': s.categories }]} data-reveal>
+          <div class="svc-body">
+            <h3 class="svc-title display">{s.title}</h3>
+            {s.forWho && (
+              <p class="svc-for"><span class="svc-for-tag">For</span> {s.forWho}</p>
+            )}
+            {(s.deliverables || s.examples) && (
+              <div class="svc-get">
+                <p class="svc-label">What you get</p>
+                <ul class="svc-items" role="list">
+                  {(s.deliverables || s.examples)!.map((d) => <li>{d}</li>)}
+                </ul>
+              </div>
+            )}
+            {s.categories && (
               <div class="train-grid">
                 {s.categories.map((c) => (
-                  <div class="train-card shine">
+                  <div class="train-card">
                     <span class="train-illo"><TrainingIllustration illo={c.illo} /></span>
-                    <h3 class="train-card-title">{c.title}</h3>
+                    <h4 class="train-card-title">{c.title}</h4>
                     <p class="train-card-blurb muted">{c.blurb}</p>
                   </div>
                 ))}
               </div>
-            </div>
-          )}
-          {s.outcome && (
-            <p class="service-outcome"><strong>Outcome:</strong> {s.outcome}</p>
+            )}
+            {s.outcome && (
+              <p class="svc-outcome"><strong>Outcome:</strong> {s.outcome}</p>
+            )}
+            <a class="svc-cta" href="/contact/">Discuss this <span aria-hidden="true">→</span></a>
+          </div>
+          {s.journey && (
+            <aside class="svc-journey">
+              <p class="svc-journey-label">How it works</p>
+              <ServiceFlow steps={s.journey} />
+            </aside>
           )}
         </article>
       ))}
     </div>
   </Section>
 
+  <!-- 4. PROOF -->
+  <Section tone="surface">
+    <div class="proof">
+      <div class="proof-stats" data-reveal>
+        <div class="proof-stat">
+          <span class="proof-num">10,000+</span>
+          <span class="proof-cap">students taught</span>
+        </div>
+        <div class="proof-stat">
+          <span class="proof-num">Enterprise</span>
+          <span class="proof-cap">delivery experience</span>
+        </div>
+        <div class="proof-stat">
+          <span class="proof-num">ServiceNow + AI</span>
+          <span class="proof-cap">specialist focus</span>
+        </div>
+      </div>
+      <div class="proof-sectors" data-reveal style="--reveal-delay:140ms">
+        <p class="svc-label">Sectors I've worked across</p>
+        <ul class="sector-list" role="list">
+          {sectors.map((x) => <li>{x}</li>)}
+        </ul>
+      </div>
+    </div>
+  </Section>
+
+  <!-- 5. FINAL CTA -->
   <Section tone="dark">
     <div class="cta-band">
       <h2 class="cta-h2 display">Have a project or a problem worth solving?</h2>
@@ -76,64 +151,232 @@ import { site } from '../data/site';
 </BaseLayout>
 
 <style>
-  .services-list {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(2rem, 1.5rem + 2.5vw, 3.75rem);
-    max-width: 72ch;
+  /* ---- 1. HERO ---- */
+  .svc-hero {
+    padding-block: clamp(5rem, 3.75rem + 3vw, 6.5rem) clamp(1.5rem, 1rem + 2vw, 2.75rem);
   }
-  .service {
-    scroll-margin-top: 6rem;
+  .svc-hero-inner {
+    max-width: 52rem;
   }
-  .service-title {
-    font-size: var(--step-3);
-    margin-bottom: 0.75rem;
+  .svc-hero-title {
+    font-size: clamp(2.4rem, 1.6rem + 3vw, 3.6rem);
+    line-height: 1.04;
+    margin: 0.4rem 0 0.9rem;
   }
-  .service-problem {
+  .svc-hero-sub {
     color: var(--text-muted);
+    font-size: var(--step-1);
+    line-height: 1.6;
+    max-width: 50ch;
   }
-  .service-label {
+  .svc-hero-cta {
+    margin-top: 1.5rem;
+  }
+  .svc-trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    margin-top: 1.75rem;
+    padding: 0;
+    list-style: none;
+  }
+  .svc-trust li {
+    position: relative;
     font-family: var(--font-mono);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    font-size: 0.78rem;
+    font-size: var(--step--1);
     color: var(--text-subtle);
-    font-weight: 700;
-    margin: 1.25rem 0 0.5rem;
+    padding-left: 1.1rem;
   }
-  .service-items {
-    display: grid;
-    gap: 0.4rem;
-    padding-left: 1.2rem;
+  .svc-trust li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
   }
-  .service-items li {
-    color: var(--text);
+
+  /* ---- shared section heads ---- */
+  .svc-head {
+    max-width: 50rem;
+    margin-bottom: clamp(1.5rem, 1rem + 2vw, 2.5rem);
   }
-  .service-items li::marker {
-    color: var(--accent-text);
+  .svc-h2 {
+    font-size: var(--step-3);
+    line-height: 1.1;
+    margin-top: 0.3rem;
   }
-  .service-outcome {
-    margin-top: 1.25rem;
-    padding: 0.85rem 1.1rem;
-    background: var(--accent-soft);
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
+  .svc-head-sub {
+    margin-top: 0.6rem;
+    font-size: var(--step-1);
+    line-height: 1.5;
   }
-  /* featured service (Training) — illustrated grid in a distinct panel */
-  .service--featured {
-    padding: clamp(1.4rem, 1rem + 2vw, 2.25rem);
-    background: var(--surface);
-    border: 1px solid var(--border-strong);
-    border-radius: var(--radius-lg);
-  }
-  .train-grid {
+
+  /* ---- 2. SITUATIONS ---- */
+  .situations {
     display: grid;
     grid-template-columns: 1fr;
     gap: 1rem;
-    margin-top: 0.5rem;
+  }
+  .situation {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: 'icon quote' 'link link';
+    gap: 0.5rem 0.9rem;
+    align-items: start;
+    padding: clamp(1.1rem, 0.9rem + 1vw, 1.5rem);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--dur-mid) var(--ease-out), box-shadow var(--dur-mid), border-color var(--dur-mid);
+  }
+  .situation > * {
+    position: relative;
+    z-index: 2;
+  }
+  .situation:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent-text);
+    box-shadow: var(--shadow-lg);
+  }
+  .situation-icon {
+    grid-area: icon;
+    display: inline-grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: var(--radius);
+    background: var(--accent-soft);
+    color: var(--accent-text);
+  }
+  .situation-quote {
+    grid-area: quote;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--step-1);
+    line-height: 1.3;
+    color: var(--text);
+  }
+  .situation-link {
+    grid-area: link;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    font-weight: 700;
+    color: var(--accent-text);
+  }
+
+  /* ---- 3. SERVICES ---- */
+  .svc-list {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.25rem, 0.9rem + 1.5vw, 2rem);
+  }
+  .svc {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(1.25rem, 1rem + 1.5vw, 2.25rem);
+    padding: clamp(1.4rem, 1rem + 1.6vw, 2.1rem);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    scroll-margin-top: 6rem;
+  }
+  .svc--featured {
+    border-color: var(--border-strong);
+    background: var(--surface);
+  }
+  .svc-title {
+    font-size: var(--step-2);
+    line-height: 1.15;
+    margin-bottom: 0.6rem;
+  }
+  .svc-for {
+    color: var(--text);
+    font-size: var(--step-0);
+    line-height: 1.5;
+  }
+  .svc-for-tag {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: var(--accent-text);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-pill);
+    padding: 0.12rem 0.5rem;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+  }
+  .svc-label {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.72rem;
+    color: var(--text-subtle);
+    font-weight: 700;
+    margin: 1.1rem 0 0.5rem;
+  }
+  .svc-items {
+    display: grid;
+    gap: 0.35rem;
+    padding-left: 1.1rem;
+  }
+  .svc-items li {
+    color: var(--text);
+  }
+  .svc-items li::marker {
+    color: var(--accent-text);
+  }
+  .svc-outcome {
+    margin-top: 1.1rem;
+    padding: 0.8rem 1rem;
+    background: var(--accent-soft);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .svc-cta {
+    display: inline-block;
+    margin-top: 1.1rem;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: var(--step--1);
+    font-weight: 700;
+    color: var(--accent-text);
+  }
+  .svc-cta:hover {
+    color: var(--accent-hover);
+  }
+  /* journey rail (right column on desktop) */
+  .svc-journey {
+    align-self: center;
+  }
+  .svc-journey-label {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: var(--text-subtle);
+    text-align: center;
+    margin-bottom: 0.6rem;
+  }
+
+  /* Training illustrated cards (featured service) */
+  .train-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+    margin-top: 0.6rem;
   }
   .train-card {
-    padding: 1.25rem;
+    padding: 1.1rem;
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
@@ -143,31 +386,72 @@ import { site } from '../data/site';
     border-color: var(--accent);
     box-shadow: var(--shadow);
   }
-  .train-card > * {
-    position: relative;
-    z-index: 2;
-  }
   .train-illo {
     display: block;
-    width: 76px;
+    width: 64px;
     color: var(--text);
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.5rem;
   }
   .train-card-title {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: var(--step-1);
-    margin-bottom: 0.3rem;
+    font-size: var(--step-0);
+    margin-bottom: 0.25rem;
   }
   .train-card-blurb {
     font-size: var(--step--1);
     line-height: 1.5;
   }
-  @media (min-width: 560px) {
-    .train-grid {
-      grid-template-columns: 1fr 1fr;
-    }
+
+  /* ---- 4. PROOF ---- */
+  .proof {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.5rem, 1rem + 2vw, 2.5rem);
   }
+  .proof-stats {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .proof-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 1.1rem 1.25rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+  .proof-num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--step-2);
+    color: var(--accent-text);
+    line-height: 1.1;
+  }
+  .proof-cap {
+    color: var(--text-muted);
+    font-size: var(--step--1);
+  }
+  .sector-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+    padding: 0;
+    list-style: none;
+  }
+  .sector-list li {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--text);
+    padding: 0.35rem 0.85rem;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-pill);
+  }
+
+  /* ---- 5. CTA ---- */
   .cta-band {
     display: flex;
     flex-direction: column;
@@ -182,5 +466,32 @@ import { site } from '../data/site';
     color: #cfc9be;
     max-width: 52ch;
     line-height: 1.6;
+  }
+
+  /* ---- responsive ---- */
+  @media (min-width: 620px) {
+    .situations {
+      grid-template-columns: 1fr 1fr;
+    }
+    .situation {
+      grid-template-areas: 'icon quote' '. link';
+    }
+    .proof-stats {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .train-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (min-width: 820px) {
+    /* engagements with a journey become two columns: copy + process rail */
+    .svc:not(.svc--featured) {
+      grid-template-columns: 1.7fr 0.9fr;
+      align-items: center;
+    }
+    .svc-journey {
+      border-left: 1px solid var(--border);
+      padding-left: clamp(1.25rem, 1rem + 1.5vw, 2.25rem);
+    }
   }
 </style>

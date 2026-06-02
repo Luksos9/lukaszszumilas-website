@@ -11,6 +11,10 @@ export interface Service {
   outcome?: string;
   /** A 3-step operational shape shown as a mini-workflow on the homepage card. */
   flow?: [string, string, string];
+  /** One-line "who this is for" shown on the Services page. */
+  forWho?: string;
+  /** The engagement journey shown as a vertical workflow on the Services page. */
+  journey?: string[];
   /** Illustrated category cards — used to emphasize a featured service (e.g. Training). */
   categories?: { title: string; illo: string; blurb: string }[];
 }
@@ -26,6 +30,8 @@ export const services: Service[] = [
     title: 'AI Opportunity Assessment',
     tagline: 'Find the repetitive work worth automating, and the order to do it in.',
     flow: ['Systems', 'Processes', 'AI opportunities'],
+    forWho: "You know AI matters, but you're not sure where it actually pays off.",
+    journey: ['Current state', 'Discovery', 'Process analysis', 'AI opportunities', 'Roadmap'],
     problem:
       'Teams lose hours every week to repetitive, manual work. What is rarely clear is which parts are actually worth automating, and which would cost more to automate than they save.',
     deliverables: [
@@ -42,6 +48,8 @@ export const services: Service[] = [
     title: 'AI & ServiceNow Implementations',
     tagline: 'Practical AI on the platform, built to pass a security review.',
     flow: ['ServiceNow', 'AI layer', 'Automation'],
+    forWho: 'Your team loses hours every week to manual, repetitive work.',
+    journey: ['ServiceNow', 'AI layer', 'Automation', 'Business value'],
     examples: [
       'AI Agents',
       'Claude integrations',
@@ -57,6 +65,8 @@ export const services: Service[] = [
     title: 'ServiceNow Development',
     tagline: 'Extend and improve the platform without piling on technical debt.',
     flow: ['Requirements', 'Clean build', 'Upgrade-safe'],
+    forWho: 'Your ServiceNow platform has grown hard to change safely.',
+    journey: ['Modules', 'Workflows', 'Integrations', 'Maintainable platform'],
     examples: ['Catalog items', 'Integrations (REST, JavaScript)', 'Service Portal', 'Custom apps', 'Flows'],
     outcome: 'Clean, supportable builds that survive the next upgrade.',
   },
@@ -66,6 +76,8 @@ export const services: Service[] = [
     title: 'Architecture & Code Reviews',
     tagline: 'A focused second opinion before you commit to a direction.',
     flow: ['Current state', 'Analysis', 'Target state'],
+    forWho: 'You want an expert second opinion before investing further.',
+    journey: ['Current state', 'Review', 'Recommendations', 'Target state'],
     deliverables: [
       'Code review',
       'Platform review',
@@ -80,6 +92,7 @@ export const services: Service[] = [
     title: 'Training & Workshops',
     tagline: 'Bring your team up to speed on ServiceNow, automation, and AI adoption.',
     flow: ['Learn', 'Apply', 'Run it independently'],
+    forWho: 'You want your team to confidently run and extend it themselves.',
     deliverables: [
       'Team workshops',
       'ServiceNow best-practice sessions',
