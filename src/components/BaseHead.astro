@@ -17,7 +17,7 @@ interface Props {
 const {
   title,
   description = site.description,
-  image = '/og-default.png',
+  image,
   article = false,
   publishedTime,
   noindex = false,
@@ -27,7 +27,19 @@ const {
 
 const computedTitle = title ? `${title} · ${site.name}` : site.defaultTitle;
 const canonicalHref = canonicalProp ?? new URL(Astro.url.pathname, Astro.site).href;
-const ogImage = new URL(image, Astro.site).href;
+
+// Per-route generated share card (src/pages/og/[...route].png.ts). An explicit
+// `image` prop always wins; otherwise use the generated card for known routes,
+// then fall back to the static default.
+const OG_ROUTES = new Set([
+  '', 'services', 'ai-servicenow', 'ai-opportunity-assessment', 'case-studies',
+  'about', 'newsletter', 'contact', 'teaching', 'blog',
+]);
+const slug = Astro.url.pathname.replace(/^\/+|\/+$/g, '');
+let autoOg = '/og-default.png';
+if (slug.startsWith('blog/')) autoOg = `/og/${slug}.png`;
+else if (OG_ROUTES.has(slug)) autoOg = `/og/${slug === '' ? 'index' : slug}.png`;
+const ogImage = new URL(image ?? autoOg, Astro.site).href;
 ---
 
 <meta charset="utf-8" />

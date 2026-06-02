@@ -19,7 +19,7 @@ const { title, description, pubDate, updatedDate, tags, heroImage, ogImage, cano
   post.data;
 
 const postUrl = canonicalURL ?? new URL(`/blog/${post.id}/`, site.url).href;
-const postImage = new URL(ogImage ?? heroImage ?? '/og-default.png', site.url).href;
+const postImage = new URL(ogImage ?? heroImage ?? `/og/blog/${post.id}.png`, site.url).href;
 const articleJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'BlogPosting',
