@@ -1,0 +1,141 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroBg from '../components/HeroBg.astro';
+import CtaButton from '../components/CtaButton.astro';
+
+// Internal comparison page (noindex, not linked in nav) for choosing a hero
+// backdrop motif. Each block renders a real hero layout behind a variant.
+type Demo = { variant: 'loop' | 'bold' | 'dense' | 'circuit' | 'stream' | 'os'; speed?: number; label: string; note: string };
+const DEMOS: Demo[] = [
+  { variant: 'loop', label: '1 · Loop — current baseline', note: 'subtle frame · 5s pulse' },
+  { variant: 'bold', label: '2 · Bolder', note: 'stronger lines + dots · thicker, 3.8s pulse' },
+  { variant: 'dense', label: '3 · Denser network', note: 'extra nodes + truss links · tighter dot-grid' },
+  { variant: 'circuit', label: '4 · Circuit board', note: 'PCB orthogonal traces + vias · 3.4s' },
+  { variant: 'stream', label: '5 · Data stream', note: 'flowing dotted streams · mixed speeds' },
+  { variant: 'os', label: '6 · People → AI → Decisions', note: 'operating-system flow across the top' },
+  { variant: 'bold', speed: 2.2, label: '7 · Bold · FAST pulse', note: 'same as #2 but speed = 2.2s' },
+  { variant: 'bold', speed: 8, label: '8 · Bold · SLOW pulse', note: 'same as #2 but speed = 8s' },
+];
+---
+
+<BaseLayout title="Hero backdrop lab" description="Internal preview" noindex>
+  <div class="lab-intro container">
+    <p class="eyebrow">Internal preview — not linked publicly</p>
+    <h1 class="display">Hero backdrop — pick a motif</h1>
+    <p class="lead">
+      Each block below is the real hero layout with a different backdrop. All variants stay in the
+      margins/gutters and never cross the headline or the photo. Toggle dark/light with the theme
+      button (top-right) to compare both. Tell me the number you like — and any tweak (bolder, faster, etc.).
+    </p>
+  </div>
+
+  {
+    DEMOS.map((d) => (
+      <section class="lab-hero">
+        <div class="lab-tag">
+          <strong>{d.label}</strong>
+          <span>{d.note}</span>
+        </div>
+        <HeroBg variant={d.variant} speed={d.speed} />
+        <div class="container hero-grid">
+          <div class="hero-text">
+            <p class="eyebrow">ServiceNow · AI · Process</p>
+            <h2 class="hero-title display">
+              <span>Reduce Manual Work.</span>
+              <span>Improve Productivity.</span>
+              <span>Scale <span class="accent">Operations</span>.</span>
+            </h2>
+            <p class="hero-lead lead">
+              I help organisations cut manual effort and scale with AI — combining process design,
+              ServiceNow and pragmatic automation.
+            </p>
+            <div class="hero-cta cluster">
+              <CtaButton href="/contact/" size="lg">Book a consultation</CtaButton>
+              <CtaButton href="/services/" variant="secondary" size="lg">Explore my approach</CtaButton>
+            </div>
+            <p class="cred">Operational efficiency advisor · 10,000+ students taught</p>
+          </div>
+          <div class="hero-photo">
+            <img class="hero-cutout" src="/lukasz-cutout.webp" alt="" width="900" height="1349" />
+          </div>
+        </div>
+      </section>
+    ))
+  }
+</BaseLayout>
+
+<style>
+  .lab-intro {
+    padding-block: clamp(3rem, 2rem + 3vw, 5rem) 1rem;
+  }
+  .lab-intro h1 { font-size: var(--step-4); margin: 0.4rem 0 1rem; }
+  .lab-intro .lead { max-width: 60ch; }
+
+  /* hero layout — mirrors the homepage hero so each demo is realistic */
+  .lab-hero {
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid var(--border);
+    padding-block: clamp(4rem, 3rem + 3vw, 6rem) clamp(1.5rem, 1rem + 2vw, 3rem);
+  }
+  .lab-hero:nth-child(even) { background: var(--surface); }
+  .hero-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(2rem, 1rem + 3vw, 3.5rem);
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .hero-grid { grid-template-columns: 1.4fr 1fr; }
+  }
+  .hero-title {
+    font-size: clamp(2.3rem, 1.5rem + 2.6vw, 3.15rem);
+    margin-bottom: 1.35rem;
+    line-height: 1.08;
+  }
+  .hero-title span { display: block; }
+  .hero-title .accent { display: inline; color: var(--accent-text); }
+  .hero-lead { max-width: 50ch; margin-bottom: 1.9rem; }
+  .hero-cta { flex-wrap: nowrap; }
+  @media (max-width: 559px) { .hero-cta { flex-wrap: wrap; } }
+  .cred {
+    margin-top: 1.9rem;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--text-subtle);
+  }
+  .hero-photo { position: relative; justify-self: center; width: 100%; max-width: 26rem; }
+  .hero-cutout {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    display: block;
+    filter: drop-shadow(var(--cutout-shadow));
+    -webkit-mask-image: linear-gradient(to bottom, #000 64%, rgba(0, 0, 0, 0.5) 85%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 64%, rgba(0, 0, 0, 0.5) 85%, transparent 100%);
+  }
+
+  .lab-tag {
+    position: absolute;
+    top: 0.9rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    gap: 0.6rem;
+    align-items: baseline;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: calc(100% - 2rem);
+    padding: 0.35rem 0.85rem;
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--bg) 78%, transparent);
+    backdrop-filter: blur(6px);
+    font-size: var(--step--1);
+  }
+  .lab-tag strong { font-weight: 600; }
+  .lab-tag span { color: var(--text-muted); font-family: var(--font-mono); font-size: 0.8em; }
+</style>

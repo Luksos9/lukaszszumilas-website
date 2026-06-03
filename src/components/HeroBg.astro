@@ -1,79 +1,221 @@
 ---
-// Hero backdrop: a faint blueprint dot-grid + a ServiceNow/AI "workflow loop"
-// that FRAMES the content rather than crossing it. The circuit traces a rounded
-// rectangle around the perimeter (nodes = process steps, glowing hex = AI hub),
-// with orange "data" pulses orbiting the frame. A frame-shaped mask keeps the
-// centre — where the headline and the person sit — completely clear, and the
-// side rails only appear on wide screens where real gutters exist. The dot-grid
-// fades out of the centre too. Behind the hero content; dual-theme; reduced-motion safe.
+// Hero backdrop — a faint technical pattern that FRAMES the content (it lives in
+// the top/bottom margins and the side gutters) and never crosses the headline or
+// the person. A frame-shaped mask keeps the centre clear for every variant; the
+// side rails only appear >=1440px (where real gutters exist) and the whole mesh
+// is hidden <900px (dot-grid only). Dual-theme (token colours); reduced-motion safe.
+//
+// Variants (set via `variant`): each is a different motif, all confined to the frame.
+//   loop    — rounded-rectangle "workflow loop" (the baseline)
+//   bold    — the loop, with stronger lines/dots and a thicker, quicker pulse
+//   dense   — the loop + a richer node/connector network in the margins
+//   circuit — PCB-style orthogonal traces with vias
+//   stream  — flowing data-stream lines (multiple speeds)
+//   os      — the literal "People -> AI -> Decisions" operating-system shape
+// `speed` (seconds per pulse cycle) overrides the variant default.
+interface Props {
+  variant?: 'loop' | 'bold' | 'dense' | 'circuit' | 'stream' | 'os';
+  speed?: number;
+  class?: string;
+}
+const { variant = 'loop', speed, class: cls = '' } = Astro.props;
+const isLoopFamily = variant === 'loop' || variant === 'bold' || variant === 'dense';
+const speedStyle = speed ? `--hb-speed:${speed}s` : undefined;
+
 const hex = (cx: number, cy: number, r: number) => {
   const a = 0.866 * r;
   const b = 0.5 * r;
   return `M${cx} ${cy - r} L${cx + a} ${cy - b} L${cx + a} ${cy + b} L${cx} ${cy + r} L${cx - a} ${cy + b} L${cx - a} ${cy - b} Z`;
 };
 
-// Rounded-rectangle "track" hugging the viewBox perimeter. Sized tall enough that
-// its top line sits in the margin above the headline and its bottom line in the
-// margin below it, so the loop ENCLOSES the content rather than crossing it.
+/* ---- loop / bold / dense ---- */
 const TRACK =
   'M214 70 H1386 Q1452 70 1452 136 V474 Q1452 540 1386 540 H214 Q148 540 148 474 V136 Q148 70 214 70 Z';
-// The track split into two halves so two pulses orbit it (clockwise).
 const FLOW_TOP = 'M148 305 V136 Q148 70 214 70 H1386 Q1452 70 1452 136 V305';
 const FLOW_BOTTOM = 'M1452 305 V474 Q1452 540 1386 540 H214 Q148 540 148 474 V305';
 
-type Node = { t: 'rect' | 'circle' | 'hex'; x: number; y: number; r?: number; s?: number };
-// Process nodes sitting on the track. Side nodes (y in the mid-band) only show on
-// wide screens; top/bottom nodes show whenever the loop is visible.
-const NODES: Node[] = [
-  { t: 'circle', x: 420, y: 70, r: 6 }, // top
-  { t: 'circle', x: 760, y: 70, r: 4 }, // top
-  { t: 'rect', x: 1452, y: 210, s: 22 }, // right rail (gutter)
-  { t: 'circle', x: 1452, y: 360, r: 6 }, // right rail (gutter)
-  { t: 'hex', x: 1140, y: 540, r: 12 }, // bottom
-  { t: 'circle', x: 640, y: 540, r: 6 }, // bottom
-  { t: 'rect', x: 148, y: 360, s: 20 }, // left rail (gutter)
-  { t: 'circle', x: 148, y: 200, r: 6 }, // left rail (gutter)
+type N = { t: 'rect' | 'circle' | 'hex'; x: number; y: number; r?: number; s?: number };
+const NODES: N[] = [
+  { t: 'circle', x: 420, y: 70, r: 6 },
+  { t: 'circle', x: 760, y: 70, r: 4 },
+  { t: 'rect', x: 1452, y: 210, s: 22 },
+  { t: 'circle', x: 1452, y: 360, r: 6 },
+  { t: 'hex', x: 1140, y: 540, r: 12 },
+  { t: 'circle', x: 640, y: 540, r: 6 },
+  { t: 'rect', x: 148, y: 360, s: 20 },
+  { t: 'circle', x: 148, y: 200, r: 6 },
 ];
-
-// Short "ports" branching OUTWARD from the track (never toward the centre).
-const STUBS: { d: string; n: Node }[] = [
+const STUBS: { d: string; n: N }[] = [
   { d: 'M420 70 V34', n: { t: 'circle', x: 420, y: 30, r: 3 } },
   { d: 'M1452 210 H1508', n: { t: 'rect', x: 1513, y: 205, s: 10 } },
   { d: 'M148 360 H92', n: { t: 'circle', x: 88, y: 360, r: 3 } },
 ];
+
+/* dense: extra nodes + a second parallel trace in each band + small truss links */
+const DENSE_NODES: N[] = [
+  { t: 'circle', x: 300, y: 70, r: 3 }, { t: 'circle', x: 560, y: 70, r: 3 },
+  { t: 'circle', x: 980, y: 70, r: 4 }, { t: 'circle', x: 1280, y: 70, r: 5 },
+  { t: 'rect', x: 420, y: 540, s: 12 }, { t: 'circle', x: 880, y: 540, r: 4 },
+  { t: 'circle', x: 1300, y: 540, r: 5 },
+  { t: 'circle', x: 148, y: 290, r: 4 }, { t: 'circle', x: 148, y: 450, r: 3 },
+  { t: 'circle', x: 1452, y: 290, r: 4 }, { t: 'rect', x: 1452, y: 440, s: 12 },
+];
+const TRUSS_X = [300, 480, 660, 840, 1020, 1200, 1320];
+const DENSE_LINKS = [
+  'M260 50 H1340', // upper parallel trace (further into the top margin)
+  'M280 560 H1320', // lower parallel trace (further into the bottom margin)
+  ...TRUSS_X.map((x) => `M${x} 70 L${x + 26} 50`),
+  ...TRUSS_X.map((x) => `M${x} 540 L${x + 26} 560`),
+];
+
+/* ---- circuit (PCB) ---- */
+const CIRCUIT_TRACES = [
+  'M170 70 H1430', // main top bus
+  'M250 96 H720 V74 H1180 V96 H1360', // stair-stepped top route
+  'M170 506 H1430', // main bottom bus
+  'M1360 480 H880 V502 H440 V480 H230', // stair-stepped bottom route
+  'M150 118 V458', // left bus (gutter)
+  'M1450 118 V458', // right bus (gutter)
+  'M170 70 H156 V118', 'M1430 70 H1444 V118', // top corners
+  'M170 506 H156 V458', 'M1430 506 H1444 V458', // bottom corners
+];
+const CIRCUIT_VIAS: [number, number][] = [
+  [170, 70], [600, 70], [1010, 70], [1430, 70],
+  [170, 506], [600, 506], [1010, 506], [1430, 506],
+  [150, 200], [150, 380], [1450, 200], [1450, 380],
+  [720, 74], [1180, 74], [440, 502], [880, 502],
+];
+const CIRCUIT_FLOWS = ['M170 70 H1430', 'M1430 506 H170'];
+
+/* ---- stream ---- */
+const wavy = (y: number, a: number) =>
+  `M110 ${y} C 420 ${y - a}, 700 ${y + a}, 980 ${y} S 1490 ${y - a}, 1490 ${y}`;
+const STREAM: { d: string; accent: boolean; dur: number; delay: number }[] = [
+  { d: wavy(44, 10), accent: false, dur: 7, delay: 0 },
+  { d: wavy(64, 7), accent: true, dur: 3.2, delay: -1 },
+  { d: wavy(84, 12), accent: false, dur: 9, delay: -2 },
+  { d: wavy(478, 12), accent: false, dur: 8, delay: -0.5 },
+  { d: wavy(500, 8), accent: true, dur: 3.6, delay: -2.4 },
+  { d: wavy(522, 10), accent: false, dur: 6.5, delay: -1.5 },
+];
+
+/* ---- os: People -> AI -> Decisions, across the top margin ---- */
+const OS_IN: N[] = [
+  { t: 'circle', x: 250, y: 40, r: 6 },
+  { t: 'circle', x: 250, y: 66, r: 6 },
+  { t: 'circle', x: 250, y: 92, r: 6 },
+];
+const OS_OUT: N[] = [
+  { t: 'rect', x: 1338, y: 40, s: 13 },
+  { t: 'rect', x: 1338, y: 66, s: 13 },
+  { t: 'rect', x: 1338, y: 92, s: 13 },
+];
+const OS_IN_LINKS = OS_IN.map((n) => `M${n.x + 12} ${n.y} C 470 ${n.y}, 600 66, 778 66`);
+const OS_OUT_LINKS = OS_OUT.map((n) => `M822 66 C 1010 66, 1140 ${n.y}, ${n.x - 12} ${n.y}`);
 ---
 
-<div class="hero-bg" aria-hidden="true">
+<div class:list={['hero-bg', `hb--${variant}`, cls]} style={speedStyle} aria-hidden="true">
   <svg viewBox="0 0 1600 560" fill="none" preserveAspectRatio="xMidYMid slice">
-    <path class="hb-track" d={TRACK} />
-    <g class="hb-flows">
-      <path class="hb-flow" d={FLOW_TOP} pathLength="100" />
-      <path class="hb-flow" d={FLOW_BOTTOM} pathLength="100" style="animation-delay:-2s" />
-    </g>
-    <g class="hb-stubs">
-      {STUBS.map((s) => <path d={s.d} />)}
-      {STUBS.map((s) =>
-        s.n.t === 'rect' ? (
-          <rect class="hb-node" x={s.n.x} y={s.n.y} width={s.n.s} height={s.n.s} rx="2" />
-        ) : (
-          <circle class="hb-node" cx={s.n.x} cy={s.n.y} r={s.n.r} />
-        )
-      )}
-    </g>
-    <g class="hb-nodes">
-      {NODES.map((n) =>
-        n.t === 'rect' ? (
-          <rect class="hb-node" x={n.x - n.s! / 2} y={n.y - n.s! / 2} width={n.s} height={n.s} rx="4" />
-        ) : n.t === 'hex' ? (
-          <path class="hb-node" d={hex(n.x, n.y, n.r!)} />
-        ) : (
-          <circle class="hb-node" cx={n.x} cy={n.y} r={n.r} />
-        )
-      )}
-      <!-- AI hub: glowing accent node on the top of the frame -->
-      <path class="hb-node hb-acc" d={hex(1120, 70, 20)} />
-      <circle class="hb-acc-dot" cx="1120" cy="70" r="5" />
-    </g>
+    {variant === 'os' && (
+      <defs>
+        <marker id="hbArrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+          <path d="M0 1 L9 5 L0 9 Z" fill="currentColor" />
+        </marker>
+      </defs>
+    )}
+
+    {isLoopFamily && (
+      <Fragment>
+        {variant === 'dense' && (
+          <g class="hb-dense">
+            {DENSE_LINKS.map((d) => <path d={d} />)}
+          </g>
+        )}
+        <path class="hb-track" d={TRACK} />
+        <g class="hb-flows">
+          <path class="hb-flow" d={FLOW_TOP} pathLength="100" />
+          <path class="hb-flow" d={FLOW_BOTTOM} pathLength="100" style="animation-delay:-2s" />
+        </g>
+        <g class="hb-stubs">
+          {STUBS.map((s) => <path d={s.d} />)}
+          {STUBS.map((s) =>
+            s.n.t === 'rect' ? (
+              <rect class="hb-node" x={s.n.x} y={s.n.y} width={s.n.s} height={s.n.s} rx="2" />
+            ) : (
+              <circle class="hb-node" cx={s.n.x} cy={s.n.y} r={s.n.r} />
+            )
+          )}
+        </g>
+        <g class="hb-nodes">
+          {[...NODES, ...(variant === 'dense' ? DENSE_NODES : [])].map((n) =>
+            n.t === 'rect' ? (
+              <rect class="hb-node" x={n.x - n.s! / 2} y={n.y - n.s! / 2} width={n.s} height={n.s} rx="4" />
+            ) : n.t === 'hex' ? (
+              <path class="hb-node" d={hex(n.x, n.y, n.r!)} />
+            ) : (
+              <circle class="hb-node" cx={n.x} cy={n.y} r={n.r} />
+            )
+          )}
+          <path class="hb-node hb-acc" d={hex(1120, 70, 20)} />
+          <circle class="hb-acc-dot" cx="1120" cy="70" r="5" />
+        </g>
+      </Fragment>
+    )}
+
+    {variant === 'circuit' && (
+      <Fragment>
+        <g class="hb-track-g">
+          {CIRCUIT_TRACES.map((d) => <path class="hb-track" d={d} />)}
+        </g>
+        <g class="hb-flows">
+          {CIRCUIT_FLOWS.map((d, i) => (
+            <path class="hb-flow" d={d} pathLength="100" style={`animation-delay:${-i * 1.6}s`} />
+          ))}
+        </g>
+        <g class="hb-vias">
+          {CIRCUIT_VIAS.map(([x, y]) => (
+            <Fragment>
+              <circle class="hb-node" cx={x} cy={y} r="5.5" />
+              <circle class="hb-via-dot" cx={x} cy={y} r="1.8" />
+            </Fragment>
+          ))}
+          <circle class="hb-node hb-acc" cx="760" cy="74" r="11" />
+          <circle class="hb-acc-dot" cx="760" cy="74" r="3.5" />
+        </g>
+      </Fragment>
+    )}
+
+    {variant === 'stream' && (
+      <g class="hb-streams">
+        {STREAM.map((s) => (
+          <path
+            class:list={['hb-stream', { 'hb-stream--acc': s.accent }]}
+            d={s.d}
+            pathLength="100"
+            style={`animation-duration:${s.dur}s;animation-delay:${s.delay}s`}
+          />
+        ))}
+      </g>
+    )}
+
+    {variant === 'os' && (
+      <Fragment>
+        <g class="hb-os-links">
+          {[...OS_IN_LINKS, ...OS_OUT_LINKS].map((d) => <path class="hb-os-link" d={d} />)}
+        </g>
+        <g class="hb-flows">
+          {[...OS_IN_LINKS, ...OS_OUT_LINKS].map((d, i) => (
+            <path class="hb-flow" d={d} pathLength="100" style={`animation-delay:${-i * 0.5}s`} />
+          ))}
+        </g>
+        <g class="hb-nodes">
+          {OS_IN.map((n) => <circle class="hb-node" cx={n.x} cy={n.y} r={n.r} />)}
+          {OS_OUT.map((n) => <rect class="hb-node" x={n.x - n.s! / 2} y={n.y - n.s! / 2} width={n.s} height={n.s} rx="3" />)}
+          <path class="hb-node hb-acc" d={hex(800, 66, 20)} />
+          <circle class="hb-acc-dot" cx="800" cy="66" r="5" />
+        </g>
+      </Fragment>
+    )}
   </svg>
 </div>
 
@@ -85,37 +227,44 @@ const STUBS: { d: string; n: Node }[] = [
     pointer-events: none;
     overflow: hidden;
     color: var(--text-muted);
+    /* per-variant knobs (overridable) */
+    --hb-line-op: 0.5;
+    --hb-dot-op: 0.07;
+    --hb-dot-size: 30px;
+    --hb-flow-w: 2;
+    --hb-speed: 5s;
   }
+  .hb--bold { --hb-line-op: 0.74; --hb-dot-op: 0.12; --hb-flow-w: 3.2; --hb-speed: 3.8s; }
+  .hb--dense { --hb-line-op: 0.5; --hb-dot-op: 0.1; --hb-dot-size: 22px; --hb-flow-w: 2.4; --hb-speed: 4.4s; }
+  .hb--circuit { --hb-line-op: 0.62; --hb-dot-op: 0.08; --hb-dot-size: 26px; --hb-flow-w: 2.8; --hb-speed: 3.4s; }
+  .hb--stream { --hb-line-op: 0.4; --hb-dot-op: 0.06; --hb-flow-w: 2.4; --hb-speed: 3s; }
+  .hb--os { --hb-line-op: 0.55; --hb-dot-op: 0.07; --hb-flow-w: 2.8; --hb-speed: 3.6s; }
+
   /* blueprint dot-grid — cleared from the centre so it never sits under the text */
   .hero-bg::before {
     content: '';
     position: absolute;
     inset: 0;
     background-image: radial-gradient(circle, currentColor 1.1px, transparent 1.3px);
-    background-size: 30px 30px;
-    opacity: 0.07;
+    background-size: var(--hb-dot-size) var(--hb-dot-size);
+    opacity: var(--hb-dot-op);
     -webkit-mask-image: radial-gradient(120% 96% at 50% 44%, transparent 0 27%, #000 66%);
     mask-image: radial-gradient(120% 96% at 50% 44%, transparent 0 27%, #000 66%);
   }
-  /* the circuit frame: only on screens wide/tall enough to have margins for it */
+  /* the mesh: framed away from the centre; only as wide as the margins allow */
   .hero-bg svg {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
-    opacity: 0.62;
-    /* top + bottom bands only — keeps the centre clear at every width */
+    opacity: 0.92;
     -webkit-mask-image: linear-gradient(to bottom, #000 0 13%, transparent 24% 76%, #000 87% 100%);
     mask-image: linear-gradient(to bottom, #000 0 13%, transparent 24% 76%, #000 87% 100%);
   }
   @media (max-width: 899px) {
-    /* no room for a frame on stacked layouts — keep just the faint dot-grid */
-    .hero-bg svg {
-      display: none;
-    }
+    .hero-bg svg { display: none; }
   }
   @media (min-width: 1440px) {
-    /* real gutters exist — add the side rails for the full loop */
     .hero-bg svg {
       -webkit-mask-image:
         linear-gradient(to bottom, #000 0 13%, transparent 24% 76%, #000 87% 100%),
@@ -127,47 +276,61 @@ const STUBS: { d: string; n: Node }[] = [
       mask-composite: add;
     }
   }
+
   .hb-track {
     stroke: currentColor;
-    stroke-width: 1.2;
-    opacity: 0.5;
+    stroke-width: 1.3;
+    opacity: var(--hb-line-op);
   }
-  .hb-stubs path {
+  .hb-stubs path,
+  .hb-dense path,
+  .hb-os-link {
     stroke: currentColor;
     stroke-width: 1.1;
-    opacity: 0.42;
+    opacity: calc(var(--hb-line-op) * 0.82);
   }
   .hb-flow {
     stroke: var(--accent);
-    stroke-width: 2;
+    stroke-width: var(--hb-flow-w);
     stroke-linecap: round;
     stroke-dasharray: 7 93;
   }
-  .js .hb-flow {
-    animation: hbFlow 5s linear infinite;
-  }
-  @keyframes hbFlow {
-    from { stroke-dashoffset: 0; }
-    to { stroke-dashoffset: -100; }
-  }
+  .js .hb-flow { animation: hbFlow var(--hb-speed) linear infinite; }
+  @keyframes hbFlow { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -100; } }
+
   .hb-node {
     stroke: currentColor;
     stroke-width: 1.5;
     fill: var(--bg);
-    opacity: 0.9;
+    opacity: calc(0.55 + var(--hb-line-op) * 0.8);
   }
+  .hb-via-dot { fill: currentColor; opacity: var(--hb-line-op); }
   .hb-acc {
     stroke: var(--accent);
     fill: var(--accent-soft);
     opacity: 1;
     filter: drop-shadow(0 0 9px var(--ring));
   }
-  .hb-acc-dot {
-    fill: var(--accent);
+  .hb-acc-dot { fill: var(--accent); }
+
+  /* stream: continuous flowing dotted lines */
+  .hb-stream {
+    stroke: currentColor;
+    stroke-width: 1.4;
+    stroke-linecap: round;
+    stroke-dasharray: 2 12;
+    opacity: var(--hb-line-op);
   }
+  .hb-stream--acc {
+    stroke: var(--accent);
+    stroke-width: var(--hb-flow-w);
+    stroke-dasharray: 3 14;
+    opacity: 0.95;
+  }
+  .js .hb-stream { animation: hbFlow var(--hb-speed) linear infinite; }
+
   @media (prefers-reduced-motion: reduce) {
-    .hb-flow {
-      display: none;
-    }
+    .hb-flow { display: none; }
+    .hb-stream { animation: none; }
   }
 </style>
