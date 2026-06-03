@@ -1,8 +1,15 @@
 ---
 // Signature visual: AI is a multiplier, not a fix. Same AI, two processes, two outcomes.
+import { useTranslations, defaultLang, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = defaultLang } = Astro.props;
+const t = useTranslations(lang);
 const rows = [
-  { process: 'A broken process', op: 'multiplied by', result: 'Faster chaos', tone: 'bad' },
-  { process: 'A good process', op: 'multiplied by', result: 'Business impact', tone: 'good' },
+  { process: t('home.equation.broken'), result: t('home.equation.chaos'), tone: 'bad' },
+  { process: t('home.equation.good'), result: t('home.equation.impact'), tone: 'good' },
 ];
 ---
 

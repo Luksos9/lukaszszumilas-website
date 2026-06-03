@@ -68,6 +68,17 @@ export const en = {
       title: 'The Operations Improvement Loop',
       sub: 'A repeatable system, not a one-off project. Every engagement runs the loop.',
     },
+    loop: {
+      eyebrow: 'The loop',
+      title: 'Operations<br />Improvement',
+      step: 'Step',
+    },
+    equation: {
+      broken: 'A broken process',
+      chaos: 'Faster chaos',
+      good: 'A good process',
+      impact: 'Business impact',
+    },
     symptoms: {
       eyebrow: 'Symptoms → Outcomes',
       title: 'Does any of this look familiar?',

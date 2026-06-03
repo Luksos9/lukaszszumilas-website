@@ -5,6 +5,7 @@ import { primaryNav, footerNav } from '../data/nav';
 import { services as servicesEn } from '../data/services';
 import { problems as problemsEn } from '../data/problems';
 import { caseStudies as caseStudiesEn } from '../data/caseStudies';
+import { framework as frameworkEn } from '../data/framework';
 
 type Dict = Record<string, string>;
 const navPl = pl.nav as unknown as Dict;
@@ -17,6 +18,7 @@ const caseStudiesPl = pl.caseStudies as unknown as Record<
   string,
   { sector: string; title: string; situation: string; action: string; outcome: string }
 >;
+const frameworkPl = pl.framework as unknown as Record<string, { title: string; body: string }>;
 
 /** Primary nav with localized labels + localized internal hrefs. */
 export function getPrimaryNav(lang: Lang) {
@@ -65,6 +67,15 @@ export function getProblems(lang: Lang) {
       outcome: o.outcome ?? p.outcome,
       severityLabel: severityPl[p.severity] ?? p.severity,
     };
+  });
+}
+
+/** Operations Improvement Loop steps with localized title/body. */
+export function getFramework(lang: Lang) {
+  if (lang === defaultLang) return frameworkEn;
+  return frameworkEn.map((s) => {
+    const o = frameworkPl[String(s.n)] || {};
+    return { ...s, title: o.title ?? s.title, body: o.body ?? s.body };
   });
 }
 

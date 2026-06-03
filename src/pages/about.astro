@@ -36,6 +36,7 @@ const creds = ['10,000+ students taught', '4+ years on ServiceNow', 'Banking · 
   </PageHeader>
 
   <Section>
+   <div class="about-intro">
     <div class="page-body flow">
       <p>
         I'm a self-taught generalist who learned to build, automate, write, and teach by refusing
@@ -59,6 +60,10 @@ const creds = ['10,000+ students taught', '4+ years on ServiceNow', 'Banking · 
         value. Most "AI projects" skip that first step. I don't.
       </p>
     </div>
+    <div class="about-photo" data-reveal="scale" style="--reveal-delay:120ms">
+      <img src="/lukasz-cutout.webp" alt="Lukasz Szumilas" width="900" height="1349" loading="eager" />
+    </div>
+   </div>
   </Section>
 
   <Section tone="surface">
@@ -137,6 +142,36 @@ const creds = ['10,000+ students taught', '4+ years on ServiceNow', 'Banking · 
     color: var(--accent-text);
     text-decoration: underline;
     text-underline-offset: 2px;
+  }
+  .about-intro {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+    align-items: start;
+  }
+  .about-photo {
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background: radial-gradient(120% 70% at 50% 0%, var(--accent-soft), transparent 70%), var(--surface);
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    max-width: 20rem;
+    margin: 0 auto;
+  }
+  .about-photo img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  @media (min-width: 820px) {
+    .about-intro {
+      grid-template-columns: 1.5fr 1fr;
+    }
+    .about-photo {
+      margin: 0;
+    }
   }
   .section-h2 {
     font-size: var(--step-3);

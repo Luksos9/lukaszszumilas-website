@@ -1,5 +1,13 @@
 ---
-import { framework } from '../data/framework';
+import { getFramework } from '../i18n/data';
+import { useTranslations, defaultLang, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = defaultLang } = Astro.props;
+const t = useTranslations(lang);
+const framework = getFramework(lang);
 // 5 fixed positions on a circle (radius 40% of the box), starting at top, clockwise.
 const positions = [
   { x: 50, y: 9 },
@@ -17,12 +25,12 @@ const positions = [
   </svg>
   <div class="loop-center">
     <div class="lc-state lc-state--default is-shown">
-      <span class="lc-eyebrow">The loop</span>
-      <span class="lc-title">Operations<br />Improvement</span>
+      <span class="lc-eyebrow">{t('home.loop.eyebrow')}</span>
+      <span class="lc-title" set:html={t('home.loop.title')} />
     </div>
     {framework.map((s, i) => (
       <div class="lc-state" data-state={i}>
-        <span class="lc-eyebrow">Step {s.n}</span>
+        <span class="lc-eyebrow">{t('home.loop.step')} {s.n}</span>
         <span class="lc-title lc-title--sm">{s.title}</span>
         <span class="lc-body">{s.body}</span>
       </div>
@@ -33,7 +41,7 @@ const positions = [
       type="button"
       class="loop-node"
       data-state={i}
-      aria-label={`Step ${s.n}: ${s.title}. ${s.body}`}
+      aria-label={`${t('home.loop.step')} ${s.n}: ${s.title}. ${s.body}`}
       style={`left:${positions[i].x}%;top:${positions[i].y}%;--i:${i}`}
     >
       <span class="ln-num">{s.n}</span>

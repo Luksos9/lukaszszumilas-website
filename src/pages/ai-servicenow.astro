@@ -33,6 +33,7 @@ const personas = [
 const useCases = [
   {
     icon: 'agent',
+    flow: ['Incident', 'AI triage', 'Routed'],
     title: 'AI incident triage',
     what: 'Classifies, prioritizes and routes incidents the moment they arrive.',
     forWho: 'Service desk & ITSM',
@@ -41,6 +42,7 @@ const useCases = [
   },
   {
     icon: 'smile',
+    flow: ['Question', 'AI assistant', 'Answer'],
     title: 'Employee & HR assistant',
     what: 'Answers common employee questions from your own policies and catalog.',
     forWho: 'HR & shared services',
@@ -49,6 +51,7 @@ const useCases = [
   },
   {
     icon: 'gauge',
+    flow: ['Signals', 'AI', 'Early warning'],
     title: 'Predictive IT operations',
     what: 'Spots patterns in events and logs before they turn into outages.',
     forWho: 'IT operations (AIOps)',
@@ -57,6 +60,7 @@ const useCases = [
   },
   {
     icon: 'grid',
+    flow: ['Request', 'Auto-fulfil', 'Delivered'],
     title: 'Service catalog automation',
     what: 'Guides requests and auto-fulfils the routine, rule-based ones.',
     forWho: 'Service delivery',
@@ -65,6 +69,7 @@ const useCases = [
   },
   {
     icon: 'book',
+    flow: ['Question', 'AI', 'Sourced answer'],
     title: 'Knowledge recommendations',
     what: 'Surfaces the right article at the moment of need — with sources to check.',
     forWho: 'Agents & employees',
@@ -73,6 +78,7 @@ const useCases = [
   },
   {
     icon: 'shield',
+    flow: ['Alert', 'Enrich + triage', 'Response'],
     title: 'Security incident automation',
     what: 'Enriches and triages security incidents, with a human on the sign-off.',
     forWho: 'Security operations (SecOps)',
@@ -93,10 +99,6 @@ const capabilities = [
   {
     title: 'Knowledge assistants',
     body: 'Answers grounded in your own ServiceNow data, with sources a user can actually check.',
-  },
-  {
-    title: 'Governance and review',
-    body: 'AI that holds up to a security review: real scopes, ACLs that still apply, audit logs, and a blast radius you can name.',
   },
 ];
 
@@ -178,6 +180,14 @@ const governance = [
         <article class="uc-card shine" data-reveal="scale" style={`--reveal-delay:${i * 60}ms`}>
           <span class="uc-icon"><Icon name={u.icon} size={22} /></span>
           <h3 class="uc-title">{u.title}</h3>
+          <p class="uc-flow" aria-hidden="true">
+            {u.flow.map((step, idx) => (
+              <>
+                <span class="uc-flow-node">{step}</span>
+                {idx < u.flow.length - 1 && <span class="uc-flow-arrow">→</span>}
+              </>
+            ))}
+          </p>
           <p class="uc-what">{u.what}</p>
           <dl class="uc-meta">
             <div><dt>For</dt><dd>{u.forWho}</dd></div>
@@ -382,7 +392,37 @@ const governance = [
     font-family: var(--font-display);
     font-weight: 600;
     font-size: var(--step-1);
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.5rem;
+  }
+  /* signature mini-flow: the operational shape, one compact line */
+  .uc-flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.3rem;
+    margin-bottom: 0.8rem;
+  }
+  .uc-flow-node {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-pill);
+    padding: 0.12rem 0.45rem;
+  }
+  .uc-flow-node:last-child {
+    color: var(--accent-text);
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .uc-flow-arrow {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.7rem;
   }
   .uc-what {
     color: var(--text);

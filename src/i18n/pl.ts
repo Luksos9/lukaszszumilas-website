@@ -120,6 +120,15 @@ export const pl = {
     },
   },
 
+  // Operations Improvement Loop steps, keyed by step number.
+  framework: {
+    1: { title: 'Znajdź wąskie gardła', body: 'Wskaż, gdzie praca się zatrzymuje i gdzie tracony jest czas.' },
+    2: { title: 'Usprawnij proces', body: 'Uprość i przeprojektuj przepływ pracy — dla jasności i skali.' },
+    3: { title: 'Zautomatyzuj przepływ', body: 'Usuń powtarzalne zadania i przekazania dzięki automatyzacji.' },
+    4: { title: 'Zastosuj AI', body: 'Wprowadź AI tylko tam, gdzie tworzy realną wartość biznesową.' },
+    5: { title: 'Zmierz efekty', body: 'Śledź wyniki, a potem optymalizuj i skaluj to, co działa.' },
+  },
+
   home: {
     metaDescription:
       'Pomagam organizacjom ograniczać pracę ręczną i usprawniać operacje dzięki ServiceNow, AI i projektowaniu procesów: znajduję wąskie gardła, automatyzuję powtarzalną pracę i stosuję AI tam, gdzie tworzy mierzalną wartość biznesową.',
@@ -168,6 +177,17 @@ export const pl = {
       eyebrow: 'Moja metodyka',
       title: 'Pętla doskonalenia operacji',
       sub: 'Powtarzalny system, a nie jednorazowy projekt. Każda współpraca przechodzi przez tę pętlę.',
+    },
+    loop: {
+      eyebrow: 'Pętla',
+      title: 'Doskonalenie<br />operacji',
+      step: 'Krok',
+    },
+    equation: {
+      broken: 'Zepsuty proces',
+      chaos: 'Szybszy chaos',
+      good: 'Dobry proces',
+      impact: 'Wpływ na biznes',
     },
     symptoms: {
       eyebrow: 'Objawy → Efekty',
