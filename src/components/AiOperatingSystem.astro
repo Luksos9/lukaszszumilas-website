@@ -1,15 +1,24 @@
 ---
 import Icon from './Icon.astro';
+import { useTranslations, defaultLang, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = defaultLang } = Astro.props;
+const t = useTranslations(lang);
+const inLabels = t<string[]>('aios.inputs');
+const outLabels = t<string[]>('aios.outputs');
 const inputs = [
-  { icon: 'agent', label: 'People' },
-  { icon: 'cube', label: 'Systems' },
-  { icon: 'book', label: 'Knowledge' },
-  { icon: 'sitemap', label: 'Processes' },
+  { icon: 'agent', label: inLabels[0] },
+  { icon: 'cube', label: inLabels[1] },
+  { icon: 'book', label: inLabels[2] },
+  { icon: 'sitemap', label: inLabels[3] },
 ];
 const outputs = [
-  { icon: 'target', label: 'Decisions' },
-  { icon: 'gear', label: 'Automation' },
-  { icon: 'chart', label: 'Insights' },
+  { icon: 'target', label: outLabels[0] },
+  { icon: 'gear', label: outLabels[1] },
+  { icon: 'chart', label: outLabels[2] },
 ];
 ---
 
@@ -26,7 +35,7 @@ const outputs = [
 
   <div class="aios-layer" data-reveal>
     <span class="layer-pulse"></span>
-    AI Layer
+    {t('aios.aiLayer')}
   </div>
 
   <div class="aios-flow" aria-hidden="true" data-reveal style="--d:0.9s"><span class="aios-dot"></span></div>

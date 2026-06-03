@@ -1,0 +1,432 @@
+---
+import PageHeader from '../PageHeader.astro';
+import Section from '../Section.astro';
+import CtaButton from '../CtaButton.astro';
+import Icon from '../Icon.astro';
+import AiOperatingSystem from '../AiOperatingSystem.astro';
+import { useTranslations, localizeForNav, defaultLang, type Lang } from '../../i18n/ui';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = defaultLang } = Astro.props;
+const t = useTranslations(lang);
+const k = (s: string) => t(`pages.aiServiceNow.${s}`);
+
+const PERSONA_ICONS = ['shield', 'trend', 'flow'];
+const UC_ICONS = ['agent', 'smile', 'gauge', 'grid', 'book', 'shield'];
+const GOV_ICONS = ['shield', 'info', 'smile', 'gear'];
+const personas = t<{ role: string; pain: string; gets: string }[]>('pages.aiServiceNow.personas');
+const useCases = t<{ title: string; what: string; forWho: string; needs: string; outcome: string; flow: string[] }[]>('pages.aiServiceNow.useCases');
+const capabilities = t<{ title: string; body: string }[]>('pages.aiServiceNow.capabilities');
+const governance = t<{ title: string; body: string }[]>('pages.aiServiceNow.governance');
+
+const servicesHref = localizeForNav('/services/', lang);
+const contactHref = localizeForNav('/contact/', lang);
+const mcpHref = localizeForNav('/blog/mcp-vs-diy-servicenow-ai-integrations/', lang);
+const pwHref = localizeForNav('/blog/does-the-ai-have-my-servicenow-password/', lang);
+const reload = (href: string) => lang !== defaultLang && !href.startsWith(`/${lang}/`);
+---
+
+<Fragment>
+  <PageHeader eyebrow={k('eyebrow')} title={k('title')}>
+    {k('lead')}
+  </PageHeader>
+
+  <Section>
+    <div class="page-body flow">
+      <p>{k('introP1')}</p>
+      <p>{k('introP2')}</p>
+    </div>
+  </Section>
+
+  <!-- WHO IT'S FOR -->
+  <Section tone="surface">
+    <div class="ai-head" data-reveal>
+      <p class="eyebrow">{k('whoEyebrow')}</p>
+      <h2 class="section-h2 display">{k('whoTitle')}</h2>
+    </div>
+    <div class="persona-grid">
+      {personas.map((p, i) => (
+        <article class="persona" data-reveal="scale" style={`--reveal-delay:${i * 70}ms`}>
+          <span class="persona-icon"><Icon name={PERSONA_ICONS[i]} size={22} /></span>
+          <h3 class="persona-role">{p.role}</h3>
+          <p class="persona-pain">“{p.pain}”</p>
+          <p class="persona-gets"><span class="micro-tag">{k('getsLabel')}</span>{p.gets}</p>
+        </article>
+      ))}
+    </div>
+  </Section>
+
+  <!-- USE CASES -->
+  <Section>
+    <div class="ai-head" data-reveal>
+      <p class="eyebrow">{k('ucEyebrow')}</p>
+      <h2 class="section-h2 display">{k('ucTitle')}</h2>
+      <p class="ai-sub muted">{k('ucSub')}</p>
+    </div>
+    <div class="uc-grid">
+      {useCases.map((u, i) => (
+        <article class="uc-card shine" data-reveal="scale" style={`--reveal-delay:${i * 60}ms`}>
+          <span class="uc-icon"><Icon name={UC_ICONS[i]} size={22} /></span>
+          <h3 class="uc-title">{u.title}</h3>
+          <p class="uc-flow" aria-hidden="true">
+            {u.flow.map((step, idx) => (
+              <>
+                <span class="uc-flow-node">{step}</span>
+                {idx < u.flow.length - 1 && <span class="uc-flow-arrow">→</span>}
+              </>
+            ))}
+          </p>
+          <p class="uc-what">{u.what}</p>
+          <dl class="uc-meta">
+            <div><dt>{k('ucFor')}</dt><dd>{u.forWho}</dd></div>
+            <div><dt>{k('ucNeeds')}</dt><dd>{u.needs}</dd></div>
+            <div><dt>{k('ucOutcomeLabel')}</dt><dd>{u.outcome}</dd></div>
+          </dl>
+        </article>
+      ))}
+    </div>
+    <p class="uc-note muted" data-reveal>
+      {k('ucNotePre')}<a href={`${servicesHref}#assessment`} data-astro-reload={reload(servicesHref) ? '' : undefined}>{k('ucNoteLink')}</a>{k('ucNotePost')}
+    </p>
+  </Section>
+
+  <!-- CAPABILITIES -->
+  <Section tone="surface">
+    <div class="ai-head" data-reveal>
+      <p class="eyebrow">{k('buildEyebrow')}</p>
+      <h2 class="section-h2 display">{k('buildTitle')}</h2>
+    </div>
+    <div class="cap-grid">
+      {capabilities.map((c) => (
+        <article class="cap-card" data-reveal>
+          <h3 class="cap-title">{c.title}</h3>
+          <p class="muted">{c.body}</p>
+        </article>
+      ))}
+    </div>
+  </Section>
+
+  <!-- AI OPERATING SYSTEM -->
+  <Section>
+    <div class="ai-head" data-reveal>
+      <p class="eyebrow">{k('aiosEyebrow')}</p>
+      <h2 class="section-h2 display">{k('aiosTitle')}</h2>
+      <p class="ai-sub muted">{k('aiosSub')}</p>
+    </div>
+    <AiOperatingSystem lang={lang} />
+  </Section>
+
+  <!-- GOVERNANCE & COMPLIANCE -->
+  <Section tone="surface">
+    <div class="ai-head" data-reveal>
+      <p class="eyebrow">{k('govEyebrow')}</p>
+      <h2 class="section-h2 display">{k('govTitle')}</h2>
+      <p class="ai-sub muted">{k('govSub')}</p>
+    </div>
+    <div class="gov-grid">
+      {governance.map((g, i) => (
+        <article class="gov" data-reveal="left" style={`--reveal-delay:${i * 70}ms`}>
+          <span class="gov-icon"><Icon name={GOV_ICONS[i]} size={20} /></span>
+          <div>
+            <h3 class="gov-title">{g.title}</h3>
+            <p class="muted">{g.body}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </Section>
+
+  <!-- CLAUDE TILT -->
+  <Section tone="dark">
+    <div class="claude">
+      <p class="eyebrow">{k('claudeEyebrow')}</p>
+      <h2 class="section-h2 display">{k('claudeTitle')}</h2>
+      <p class="claude-lead">{k('claudeLead')}</p>
+      <div class="cluster">
+        <CtaButton href={mcpHref} reload={reload(mcpHref)}>{k('claudeRead1')}</CtaButton>
+        <CtaButton href={pwHref} variant="secondary" reload={reload(pwHref)}>{k('claudeRead2')}</CtaButton>
+      </div>
+    </div>
+  </Section>
+
+  <Section>
+    <div class="cta-band">
+      <h2 class="section-h2 display">{k('ctaTitle')}</h2>
+      <p class="lead">{k('ctaLead')}</p>
+      <div class="cluster">
+        <CtaButton href={contactHref} size="lg" reload={reload(contactHref)}>{k('ctaBook')}</CtaButton>
+        <CtaButton href={servicesHref} variant="secondary" size="lg" reload={reload(servicesHref)}>{k('ctaServices')}</CtaButton>
+      </div>
+    </div>
+  </Section>
+</Fragment>
+
+<style>
+  .page-body {
+    max-width: var(--maxw-prose);
+    font-size: var(--step-0);
+    line-height: 1.75;
+  }
+  .section-h2 {
+    font-size: var(--step-3);
+    margin-bottom: 1.5rem;
+  }
+  .ai-head {
+    max-width: 46rem;
+    margin-bottom: clamp(1.5rem, 1rem + 2vw, 2.25rem);
+  }
+  .ai-head .section-h2 {
+    margin-bottom: 0.5rem;
+  }
+  .ai-sub {
+    max-width: 56ch;
+    line-height: 1.55;
+  }
+
+  /* personas */
+  .persona-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .persona {
+    padding: clamp(1.3rem, 1rem + 1vw, 1.75rem);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
+  .persona-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 2.7rem;
+    height: 2.7rem;
+    border-radius: var(--radius);
+    background: var(--accent-soft);
+    color: var(--accent-text);
+    margin-bottom: 0.7rem;
+  }
+  .persona-role {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--step-1);
+    margin-bottom: 0.4rem;
+  }
+  .persona-pain {
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 0.7rem;
+  }
+  .persona-gets {
+    line-height: 1.5;
+  }
+  .micro-tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: var(--accent-text);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-pill);
+    padding: 0.1rem 0.45rem;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+  }
+
+  /* use-case catalog */
+  .uc-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(0.9rem, 0.6rem + 1vw, 1.25rem);
+  }
+  .uc-card {
+    padding: clamp(1.3rem, 1rem + 1vw, 1.6rem);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--dur-mid) var(--ease-out), box-shadow var(--dur-mid), border-color var(--dur-mid);
+  }
+  .uc-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent-text);
+    box-shadow: var(--shadow-lg);
+  }
+  .uc-card > * {
+    position: relative;
+    z-index: 2;
+  }
+  .uc-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: var(--radius);
+    background: var(--accent-soft);
+    color: var(--accent-text);
+    margin-bottom: 0.6rem;
+  }
+  .uc-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--step-1);
+    margin-bottom: 0.5rem;
+  }
+  /* signature mini-flow: the operational shape, one compact line */
+  .uc-flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.3rem;
+    margin-bottom: 0.8rem;
+  }
+  .uc-flow-node {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-pill);
+    padding: 0.12rem 0.45rem;
+  }
+  .uc-flow-node:last-child {
+    color: var(--accent-text);
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .uc-flow-arrow {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.7rem;
+  }
+  .uc-what {
+    color: var(--text);
+    line-height: 1.5;
+    margin-bottom: 0.9rem;
+  }
+  .uc-meta {
+    display: grid;
+    gap: 0.45rem;
+    border-top: 1px solid var(--border);
+    padding-top: 0.8rem;
+  }
+  .uc-meta > div {
+    display: grid;
+    grid-template-columns: 4.5rem 1fr;
+    gap: 0.5rem;
+    align-items: baseline;
+  }
+  .uc-meta dt {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: var(--text-subtle);
+  }
+  .uc-meta dd {
+    font-size: var(--step--1);
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+  .uc-note {
+    margin-top: 1.5rem;
+  }
+  .uc-note a {
+    color: var(--accent-text);
+    font-weight: 600;
+  }
+
+  /* capabilities */
+  .cap-grid {
+    display: grid;
+    gap: clamp(1rem, 0.5rem + 1.5vw, 1.5rem);
+    grid-template-columns: 1fr;
+  }
+  .cap-card {
+    padding: 1.5rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+  .cap-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--step-1);
+    margin-bottom: 0.4rem;
+  }
+
+  /* governance */
+  .gov-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .gov {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.9rem;
+    align-items: start;
+    padding: clamp(1.1rem, 0.9rem + 1vw, 1.5rem);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+  .gov-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--radius);
+    background: var(--accent-soft);
+    color: var(--accent-text);
+  }
+  .gov-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--step-0);
+    margin-bottom: 0.25rem;
+  }
+
+  .claude {
+    max-width: 60rem;
+  }
+  .claude-lead {
+    color: #cfc9be;
+    max-width: 60ch;
+    line-height: 1.6;
+    margin-bottom: 1.75rem;
+  }
+  .cta-band {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+    max-width: 46rem;
+  }
+
+  @media (min-width: 640px) {
+    .cap-grid,
+    .gov-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .uc-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (min-width: 920px) {
+    .persona-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .uc-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

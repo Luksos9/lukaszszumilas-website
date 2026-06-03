@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Teaching from '../../components/pages/Teaching.astro';
+import { useTranslations } from '../../i18n/ui';
+
+const lang = 'pl' as const;
+const t = useTranslations(lang);
+---
+
+<BaseLayout lang={lang} locales={['en', 'pl']} title="Kursy" description={t('pages.teaching.metaDescription')}>
+  <Teaching lang={lang} />
+</BaseLayout>

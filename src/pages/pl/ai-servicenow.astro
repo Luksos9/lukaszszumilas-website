@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AiServiceNow from '../../components/pages/AiServiceNow.astro';
+import { useTranslations } from '../../i18n/ui';
+
+const lang = 'pl' as const;
+const t = useTranslations(lang);
+---
+
+<BaseLayout
+  lang={lang}
+  locales={['en', 'pl']}
+  title="AI i ServiceNow"
+  description={t('pages.aiServiceNow.metaDescription')}
+>
+  <AiServiceNow lang={lang} />
+</BaseLayout>

@@ -55,7 +55,7 @@ export function getAltPath(currentPath: string, lang: Lang): string {
  * Grows as more pages are translated (Phase 2+). Keep entries trailing-slashed.
  */
 export const translatedPaths = new Set<string>([
-  '/', '/contact/', '/case-studies/', '/about/', '/services/',
+  '/', '/contact/', '/case-studies/', '/about/', '/services/', '/ai-servicenow/', '/teaching/',
 ]);
 
 /** Strip a leading locale segment, returning the canonical (default-locale) path. */

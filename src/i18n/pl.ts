@@ -154,6 +154,13 @@ export const pl = {
     },
   },
 
+  // Featured course blurbs, keyed by course code (titles/codes stay as-is).
+  courses: {
+    'CIS-DF': 'Flagowy kurs. Ponad 400 pytań z uźródłowionymi wyjaśnieniami do egzaminu Data Foundations.',
+    CAD: 'Skrypty, aplikacje w zakresach i API platformy, które naprawdę sprawdza egzamin CAD.',
+    'CIS-ITSM': 'Incident, Problem, Change i pytania konfiguracyjne, na których ludzie się potykają.',
+  },
+
   // Operations Improvement Loop steps, keyed by step number.
   framework: {
     1: { title: 'Znajdź wąskie gardła', body: 'Wskaż, gdzie praca się zatrzymuje i gdzie tracony jest czas.' },
@@ -284,6 +291,11 @@ export const pl = {
     courseNoteLink: 'kursie na Udemy',
     courseNotePost: ', aby odpowiedź pomogła wszystkim.',
   },
+  aios: {
+    aiLayer: 'Warstwa AI',
+    inputs: ['Ludzie', 'Systemy', 'Wiedza', 'Procesy'],
+    outputs: ['Decyzje', 'Automatyzacja', 'Wnioski'],
+  },
   pages: {
     caseStudies: {
       metaDescription:
@@ -379,6 +391,90 @@ export const pl = {
       ctaLead: 'Powiedz, nad czym pracujesz. Szczerze powiem, czy jestem właściwą osobą do tego.',
       ctaBook: 'Umów konsultację',
       ctaLinkedin: 'Połącz się na LinkedIn',
+    },
+    aiServiceNow: {
+      metaDescription:
+        'Nadzorowane AI na ServiceNow: konkretne zastosowania (triage zgłoszeń, asystent HR, AIOps, automatyzacja katalogu, wiedza, SecOps), zgodne z GDPR i unijną Ustawą o AI, które przechodzą przegląd bezpieczeństwa.',
+      eyebrow: 'AI i ServiceNow',
+      title: 'Nadzorowane AI na ServiceNow',
+      lead: 'Każdy podepnie chatbota do instancji. Trudna część to AI, które zaakceptuje zespół bezpieczeństwa banku. To jest moja praca.',
+      introP1:
+        'Większość AI na ServiceNow kończy się na demie. Podłączenie modelu do instancji jest łatwe. Prawdziwa praca to uczynić je bezpiecznym na produkcji: dane zostają tam, gdzie ich miejsce, a agenci robią tylko to, na co im pozwolono. To wymaga znajomości ServiceNow, nie tylko klucza API.',
+      introP2:
+        'Traktuję model jako część łatwą, a nadzór jako właściwą pracę — konkretne zastosowania, zawężone do Twoich danych i platformy, które postawisz przed audytorem.',
+      whoEyebrow: 'Dla kogo',
+      whoTitle: 'Zwykle przychodzą do mnie trzy osoby',
+      getsLabel: 'Zyskuje',
+      ucFor: 'Dla',
+      ucNeeds: 'Potrzebuje',
+      ucOutcomeLabel: 'Efekt',
+      personas: [
+        { role: 'CIO / Dyrektor IT', pain: 'AI to oczekiwanie na poziomie zarządu, ale platformy nie można narazić.', gets: 'Nadzorowana droga do wartości — AI, które przejdzie przegląd bezpieczeństwa.' },
+        { role: 'Kierownik usług IT', pain: 'Liczba zgłoszeń rośnie, zespół nie, a SLA zaczynają się sypać.', gets: 'Triage i automatyzacja z AI, które zdejmują pracę ręczną, nie kontrolę.' },
+        { role: 'Właściciel procesu', pain: 'Ręczne kroki i przekazania spowalniają każdy wniosek.', gets: 'Przeprojektowane, zautomatyzowane przepływy z AI tam, gdzie naprawdę pomaga.' },
+      ],
+      ucEyebrow: 'Gdzie się opłaca',
+      ucTitle: 'Zastosowania ServiceNow + AI, które zasługują na miejsce',
+      ucSub: 'Konkretne punkty startu — każdy zawężony do Twoich danych, platformy i jasnego efektu.',
+      useCases: [
+        { title: 'Triage zgłoszeń z AI', what: 'Klasyfikuje, priorytetyzuje i kieruje zgłoszenia w momencie ich napływu.', forWho: 'Service desk i ITSM', needs: 'Historyczne zgłoszenia, grupy przypisań', outcome: 'Mniej ręcznej selekcji, spójniejsze kierowanie', flow: ['Zgłoszenie', 'Triage AI', 'Skierowane'] },
+        { title: 'Asystent pracownika i HR', what: 'Odpowiada na typowe pytania pracowników na podstawie Twoich zasad i katalogu.', forWho: 'HR i usługi wspólne', needs: 'Baza wiedzy HR, pozycje katalogu', outcome: 'Mniej powtarzalnych pytań trafia do zespołu', flow: ['Pytanie', 'Asystent AI', 'Odpowiedź'] },
+        { title: 'Predykcyjne operacje IT', what: 'Wychwytuje wzorce w zdarzeniach i logach, zanim zamienią się w awarie.', forWho: 'Operacje IT (AIOps)', needs: 'Zdarzenia monitoringu, logi operacyjne', outcome: 'Wcześniejsze ostrzeżenie, mniej niespodzianek', flow: ['Sygnały', 'AI', 'Wczesne ostrzeżenie'] },
+        { title: 'Automatyzacja katalogu usług', what: 'Prowadzi przez wnioski i automatycznie realizuje te rutynowe.', forWho: 'Realizacja usług', needs: 'Pozycje katalogu, przepływy realizacji', outcome: 'Szybsza realizacja, mniej korespondencji', flow: ['Wniosek', 'Auto-realizacja', 'Dostarczone'] },
+        { title: 'Rekomendacje wiedzy', what: 'Podsuwa właściwy artykuł w momencie potrzeby — ze źródłami do sprawdzenia.', forWho: 'Agenci i pracownicy', needs: 'Baza wiedzy, kontekst zgłoszenia', outcome: 'Odpowiedzi na żądanie, mniej szukania', flow: ['Pytanie', 'AI', 'Odpowiedź ze źródłem'] },
+        { title: 'Automatyzacja incydentów bezpieczeństwa', what: 'Wzbogaca i klasyfikuje incydenty bezpieczeństwa, z człowiekiem zatwierdzającym.', forWho: 'Operacje bezpieczeństwa (SecOps)', needs: 'Incydenty bezpieczeństwa, kontekst zagrożeń', outcome: 'Szybsza, spójna reakcja — pod kontrolą', flow: ['Alert', 'Wzbogacenie + triage', 'Reakcja'] },
+      ],
+      ucNotePre: 'Nie wiesz, które pasuje? Po to właśnie jest ',
+      ucNoteLink: 'Ocena możliwości AI',
+      ucNotePost: '.',
+      buildEyebrow: 'Co buduję',
+      buildTitle: 'Elementy, które czynią AI bezpiecznym na platformie',
+      capabilities: [
+        { title: 'Integracja MCP', body: 'Jedna nadzorowana powierzchnia, przez którą działa AI, zamiast tuzina kruchych skryptów, z których każdy na nowo wymyśla autoryzację i obsługę błędów.' },
+        { title: 'Now Assist i AI Agent Studio', body: 'Natywne AI ServiceNow skonfigurowane z zakresami i audytem, a nie zostawione na oścież, „bo tak przyszło”.' },
+        { title: 'Asystenci wiedzy', body: 'Odpowiedzi oparte na Twoich danych ServiceNow, ze źródłami, które użytkownik może sprawdzić.' },
+      ],
+      aiosEyebrow: 'Jak AI się wpisuje',
+      aiosTitle: 'System operacyjny AI',
+      aiosSub:
+        'AI nie powinno działać w izolacji. Działa na Twoich ludziach, systemach, wiedzy i procesach — zamieniając je w decyzje, automatyzację i wnioski.',
+      govEyebrow: 'Nadzór',
+      govTitle: 'AI, które zaakceptuje Twój zespół bezpieczeństwa',
+      govSub: 'Powód, dla którego większość AI kończy na demie, to nadzór. Dla europejskich zespołów nie jest opcjonalny — więc od niego zaczynam.',
+      governance: [
+        { title: 'GDPR od projektu', body: 'Dane osobowe zostają tam, gdzie ich miejsce — zgoda lub anonimizacja, a nie po cichu wysyłane do modelu.' },
+        { title: 'Gotowe na unijną Ustawę o AI', body: 'AI w HR lub bezpieczeństwie może być „wysokiego ryzyka”. Wbudowuję udokumentowane oceny ryzyka, przejrzystość i nadzór człowieka.' },
+        { title: 'Człowiek w pętli', body: 'AI proponuje; ludzie zatwierdzają tam, gdzie to ważne. Jasne ścieżki eskalacji, a nie czarna skrzynka.' },
+        { title: 'Realne kontrole platformy', body: 'Zakresy, ACL-e, które nadal obowiązują, logi audytu i zasięg skutków, który potrafisz nazwać, zanim cokolwiek trafi na produkcję.' },
+      ],
+      claudeEyebrow: 'Dlaczego Claude',
+      claudeTitle: 'Dlaczego skłaniam się ku Claude',
+      claudeLead:
+        'Trwały zakład to zdolność: MCP i kontrolowana powierzchnia, która utrzyma się niezależnie od tego, który model wygra. Bliższy zakład to Claude — odkąd ServiceNow uczynił go domyślnym modelem dla Build Agent i udostępnił wspierany serwer MCP. Jestem w Anthropic Claude Partner Network na ścieżce konsultingowej, z publicznym repozytorium referencyjnym MCP na potwierdzenie podejścia.',
+      claudeRead1: 'Przeczytaj: MCP kontra DIY',
+      claudeRead2: 'Przeczytaj: czy AI ma moje hasło?',
+      ctaTitle: 'Myślisz o AI na swojej instancji ServiceNow?',
+      ctaLead: 'Zacznij od oceny. Wskażemy, gdzie AI naprawdę się opłaca, zanim ktokolwiek napisze kod.',
+      ctaBook: 'Umów konsultację',
+      ctaServices: 'Zobacz usługi',
+    },
+    teaching: {
+      metaDescription:
+        'Lucky X to marka kursów certyfikacyjnych ServiceNow Lukasza Szumilasa na Udemy: testy próbne do 18 certyfikacji, każda odpowiedź uźródłowiona w oficjalnej dokumentacji, używane przez ponad 10 000 kursantów.',
+      eyebrow: 'Kursy',
+      lead: 'Moja marka kursów certyfikacyjnych ServiceNow na Udemy. Testy próbne, które dają poczucie „wiem, że zdam”, a nie tylko „nauczyłem się pojęć”.',
+      p1: 'Przepaść między nauczeniem się pojęć a pewnością, że zdasz, to miejsce, w którym kariery utykają. Lucky X ją zasypuje.',
+      p2: 'Każdy kurs trzyma się jednej zasady: każda odpowiedź jest poparta oficjalną dokumentacją ServiceNow, więc poznajesz tok rozumowania, a nie tylko literę. Każde twierdzenie możesz sam zweryfikować.',
+      p3: 'I tyle. Żadnych „dumpów” egzaminacyjnych. Ponad 400 pytań z uźródłowionymi wyjaśnieniami za cenę obiadu i dożywotni dostęp. Oficjalna alternatywa kosztuje znacznie więcej za znacznie mniej.',
+      statStudents: 'kursantów',
+      statRating: 'średnia ocena',
+      statCourses: 'kursy',
+      statQuestions: 'pytań próbnych',
+      popularEyebrow: 'Popularne kursy',
+      popularTitle: 'Zacznij tutaj',
+      catalogNote: 'To kilka z 18 omówionych certyfikacji. Pełny katalog znajdziesz na Lucky X.',
+      ctaLuckyx: 'Przejdź do Lucky X',
+      ctaUdemy: 'Mój profil na Udemy',
     },
   },
 } as const;

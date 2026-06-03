@@ -6,6 +6,7 @@ import { services as servicesEn } from '../data/services';
 import { problems as problemsEn } from '../data/problems';
 import { caseStudies as caseStudiesEn } from '../data/caseStudies';
 import { framework as frameworkEn } from '../data/framework';
+import { featuredCourses as coursesEn } from '../data/courses';
 
 type Dict = Record<string, string>;
 const navPl = pl.nav as unknown as Dict;
@@ -29,6 +30,7 @@ const caseStudiesPl = pl.caseStudies as unknown as Record<
   }
 >;
 const frameworkPl = pl.framework as unknown as Record<string, { title: string; body: string }>;
+const coursesPl = pl.courses as unknown as Record<string, string>;
 
 /** Primary nav with localized labels + localized internal hrefs. */
 export function getPrimaryNav(lang: Lang) {
@@ -93,6 +95,12 @@ export function getFramework(lang: Lang) {
     const o = frameworkPl[String(s.n)] || {};
     return { ...s, title: o.title ?? s.title, body: o.body ?? s.body };
   });
+}
+
+/** Featured courses with localized blurbs (codes + titles stay as-is). */
+export function getFeaturedCourses(lang: Lang) {
+  if (lang === defaultLang) return coursesEn;
+  return coursesEn.map((c) => ({ ...c, blurb: coursesPl[c.code] ?? c.blurb }));
 }
 
 /** Case studies with localized copy. */

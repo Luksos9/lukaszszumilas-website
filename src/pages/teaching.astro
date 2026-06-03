@@ -1,94 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageHeader from '../components/PageHeader.astro';
-import Section from '../components/Section.astro';
-import StatBadge from '../components/StatBadge.astro';
-import CourseCard from '../components/CourseCard.astro';
-import CtaButton from '../components/CtaButton.astro';
-import { site } from '../data/site';
-import { featuredCourses, teachingStats } from '../data/courses';
+import Teaching from '../components/pages/Teaching.astro';
+import { useTranslations } from '../i18n/ui';
+
+const lang = 'en' as const;
+const t = useTranslations(lang);
 ---
 
-<BaseLayout title="Teaching" description="Lucky X is Lukasz Szumilas's ServiceNow certification course brand on Udemy: practice tests for 18 certifications, every answer sourced to official documentation, used by 10,000+ students.">
-  <PageHeader eyebrow="Teaching" title="Lucky X">
-    My ServiceNow certification course brand on Udemy. Practice tests built to get you to
-    "I know I'll pass," not just "I learned the concepts."
-  </PageHeader>
-
-  <Section>
-    <div class="page-body flow">
-      <p>
-        The gap between learning the concepts and knowing you'll pass is where careers stall.
-        Lucky X closes it.
-      </p>
-      <p>
-        Every course follows one rule: every answer is backed by official ServiceNow
-        documentation, so you learn the reasoning behind it, not just the letter. You can verify
-        every claim yourself.
-      </p>
-      <p>
-        That's it. No exam dumps. 400+ questions with sourced explanations for the price of a
-        lunch, and lifetime access. The official alternative charges far more for far less.
-      </p>
-    </div>
-
-    <div class="teaching-stats">
-      <StatBadge value={teachingStats.students} label="students" />
-      <StatBadge value={`${teachingStats.rating}★`} label="average rating" />
-      <StatBadge value={teachingStats.courses} label="courses" />
-      <StatBadge value={teachingStats.questions} label="practice questions" />
-    </div>
-  </Section>
-
-  <Section tone="surface">
-    <p class="eyebrow">Popular courses</p>
-    <h2 class="section-h2 display">Start here</h2>
-    <div class="grid-courses">
-      {featuredCourses.map((c) => (
-        <CourseCard code={c.code} title={c.title} url={c.url}>{c.blurb}</CourseCard>
-      ))}
-    </div>
-    <p class="muted catalog-note">
-      These are a few of the 18 certifications covered. The full catalog lives on Lucky X.
-    </p>
-    <div class="cluster teaching-cta">
-      <CtaButton href={site.socials.luckyx} size="lg" external>Go to Lucky X</CtaButton>
-      <CtaButton href={site.socials.udemy} variant="secondary" size="lg" external>My Udemy profile</CtaButton>
-    </div>
-  </Section>
+<BaseLayout lang={lang} locales={['en', 'pl']} title="Teaching" description={t('pages.teaching.metaDescription')}>
+  <Teaching lang={lang} />
 </BaseLayout>
-
-<style>
-  .page-body {
-    max-width: var(--maxw-prose);
-    font-size: var(--step-0);
-    line-height: 1.75;
-    margin-bottom: 2.5rem;
-  }
-  .section-h2 {
-    font-size: var(--step-3);
-    margin-bottom: 1.5rem;
-  }
-  .teaching-stats {
-    display: flex;
-    flex-wrap: wrap;
-    gap: clamp(1.25rem, 0.5rem + 3vw, 3rem);
-  }
-  .grid-courses {
-    display: grid;
-    gap: clamp(1rem, 0.5rem + 1.5vw, 1.5rem);
-    grid-template-columns: 1fr;
-  }
-  .catalog-note {
-    margin-top: 1.25rem;
-    font-size: var(--step--1);
-  }
-  .teaching-cta {
-    margin-top: 1.75rem;
-  }
-  @media (min-width: 640px) {
-    .grid-courses {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-</style>
