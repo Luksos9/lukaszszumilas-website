@@ -54,7 +54,7 @@ export function getAltPath(currentPath: string, lang: Lang): string {
  * Locale-stripped paths that have a non-default-locale version built.
  * Grows as more pages are translated (Phase 2+). Keep entries trailing-slashed.
  */
-export const translatedPaths = new Set<string>(['/']);
+export const translatedPaths = new Set<string>(['/', '/contact/']);
 
 /** Strip a leading locale segment, returning the canonical (default-locale) path. */
 export function stripLocale(path: string): string {

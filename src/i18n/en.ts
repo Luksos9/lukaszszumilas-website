@@ -123,4 +123,21 @@ export const en = {
       cta: 'See the assessment',
     },
   },
+  contact: {
+    metaDescription:
+      'Book a ServiceNow or AI consultation with Lukasz Szumilas, or reach out about a project, workshop, or review.',
+    eyebrow: 'Contact',
+    title: 'Book a consultation',
+    lead: 'Consulting, a second opinion on a ServiceNow or AI plan, a workshop, or a quick question. Pick whichever is easiest.',
+    bookingNote:
+      "Direct online booking is being set up. For now, email me or message me on LinkedIn and we'll find a time that works.",
+    emailLabel: 'Email',
+    emailHint: 'Best for project enquiries and detailed questions.',
+    linkedinLabel: 'LinkedIn',
+    linkedinValue: 'Connect or message',
+    linkedinHint: "Where I'm most active. Good for a quick hello.",
+    courseNotePre: 'For course support and student questions, use the Q&A on the relevant ',
+    courseNoteLink: 'Udemy course',
+    courseNotePost: ' so the answer helps everyone.',
+  },
 } as const;

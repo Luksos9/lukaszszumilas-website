@@ -242,4 +242,21 @@ export const pl = {
       cta: 'Zobacz ocenę',
     },
   },
+  contact: {
+    metaDescription:
+      'Umów konsultację z zakresu ServiceNow lub AI z Lukaszem Szumilasem albo napisz w sprawie projektu, warsztatu lub przeglądu.',
+    eyebrow: 'Kontakt',
+    title: 'Umów konsultację',
+    lead: 'Konsulting, druga opinia o planie ServiceNow lub AI, warsztat albo szybkie pytanie. Wybierz, co najwygodniejsze.',
+    bookingNote:
+      'Bezpośrednia rezerwacja online jest w przygotowaniu. Na razie napisz do mnie e-mailem lub na LinkedIn, a znajdziemy dogodny termin.',
+    emailLabel: 'E-mail',
+    emailHint: 'Najlepsze do zapytań projektowych i szczegółowych pytań.',
+    linkedinLabel: 'LinkedIn',
+    linkedinValue: 'Połącz się lub napisz',
+    linkedinHint: 'Tu jestem najbardziej aktywny. Dobre na szybkie „cześć”.',
+    courseNotePre: 'W sprawie wsparcia do kursów i pytań kursantów korzystaj z sekcji Q&A przy danym ',
+    courseNoteLink: 'kursie na Udemy',
+    courseNotePost: ', aby odpowiedź pomogła wszystkim.',
+  },
 } as const;

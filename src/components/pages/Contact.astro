@@ -1,0 +1,108 @@
+---
+import PageHeader from '../PageHeader.astro';
+import Section from '../Section.astro';
+import { site } from '../../data/site';
+import { useTranslations, defaultLang, type Lang } from '../../i18n/ui';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = defaultLang } = Astro.props;
+const t = useTranslations(lang);
+const calendly = site.booking.calendly;
+---
+
+<PageHeader eyebrow={t('contact.eyebrow')} title={t('contact.title')}>
+  {t('contact.lead')}
+</PageHeader>
+
+<Section>
+  {calendly ? (
+    <div class="booking">
+      <div class="calendly-inline-widget" data-url={calendly} style="min-width:320px;height:680px;"></div>
+      <script is:inline async src="https://assets.calendly.com/assets/external/widget.js"></script>
+    </div>
+  ) : (
+    <p class="muted booking-note">{t('contact.bookingNote')}</p>
+  )}
+
+  <div class="contact-grid">
+    <a class="contact-card" href={`mailto:${site.email}`}>
+      <span class="contact-eyebrow">{t('contact.emailLabel')}</span>
+      <span class="contact-value">{site.email}</span>
+      <span class="contact-hint muted">{t('contact.emailHint')}</span>
+    </a>
+    <a class="contact-card" href={site.socials.linkedin} target="_blank" rel="noopener noreferrer">
+      <span class="contact-eyebrow">{t('contact.linkedinLabel')}</span>
+      <span class="contact-value">{t('contact.linkedinValue')} <span aria-hidden="true">↗</span></span>
+      <span class="contact-hint muted">{t('contact.linkedinHint')}</span>
+    </a>
+  </div>
+
+  <p class="muted contact-note">
+    {t('contact.courseNotePre')}<a href={site.socials.udemy} target="_blank" rel="noopener noreferrer">{t('contact.courseNoteLink')}</a>{t('contact.courseNotePost')}
+  </p>
+</Section>
+
+<style>
+  .booking {
+    margin-bottom: 2.5rem;
+  }
+  .booking-note {
+    margin-bottom: 2rem;
+    max-width: 60ch;
+  }
+  .contact-grid {
+    display: grid;
+    gap: clamp(1rem, 0.5rem + 1.5vw, 1.5rem);
+    grid-template-columns: 1fr;
+    max-width: 48rem;
+  }
+  .contact-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 1.75rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--dur) var(--ease), border-color var(--dur), box-shadow var(--dur);
+  }
+  .contact-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent-text);
+    box-shadow: var(--shadow);
+  }
+  .contact-eyebrow {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: var(--step--1);
+    color: var(--accent-text);
+    font-weight: 700;
+  }
+  .contact-value {
+    font-size: var(--step-1);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .contact-hint {
+    font-size: var(--step--1);
+  }
+  .contact-note {
+    margin-top: 1.75rem;
+    font-size: var(--step--1);
+    max-width: 60ch;
+  }
+  .contact-note a {
+    color: var(--accent-text);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  @media (min-width: 600px) {
+    .contact-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>
