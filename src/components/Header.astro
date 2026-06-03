@@ -1,7 +1,21 @@
 ---
-import { primaryNav } from '../data/nav';
 import { site } from '../data/site';
 import ThemeToggle from './ThemeToggle.astro';
+import { getPrimaryNav } from '../i18n/data';
+import {
+  useTranslations, localizeForNav, defaultLang, languages, translatedPaths, type Lang,
+} from '../i18n/ui';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = defaultLang } = Astro.props;
+const t = useTranslations(lang);
+
+const nav = getPrimaryNav(lang);
+const links = nav.filter((i) => !i.cta);
+const cta = nav.find((i) => i.cta);
+const homeHref = localizeForNav('/', lang);
 
 const path = Astro.url.pathname;
 const norm = (p: string) => (p !== '/' && p.endsWith('/') ? p.slice(0, -1) : p);
@@ -10,23 +24,62 @@ const isActive = (href: string) => {
   const h = norm(href);
   return h === '/' ? here === '/' : here === h || here.startsWith(h + '/');
 };
-const links = primaryNav.filter((i) => !i.cta);
-const cta = primaryNav.find((i) => i.cta);
-const homeActive = here === '/';
+const homeActive = here === norm(homeHref);
+// On a non-default-locale page, links that fall back to English cross the locale
+// boundary; force a full reload so the persisted header re-renders in the right locale.
+const crossLocale = (href: string) =>
+  lang !== defaultLang && !/^(https?:|mailto:|tel:|#)/.test(href) && !href.startsWith(`/${lang}/`);
+
+// Client-side picker config (kept in sync with the i18n module as locales/pages grow).
+const langEntries = Object.entries(languages) as [Lang, string][];
+const i18nConfig = {
+  langs: Object.keys(languages),
+  def: defaultLang as string,
+  translated: Array.from(translatedPaths),
+};
 ---
 
 <div class="chrome" transition:persist>
-  <a href="/" class="brand" aria-label={`${site.name}, home`}>
+  <a href={homeHref} class="brand" aria-label={`${site.name}, ${t('common.homeAria')}`}>
     <img class="brand-logo" src="/logo-mark.webp" alt="" width="340" height="172" fetchpriority="high" />
   </a>
 
   <div class="topbar-right">
+    <div class="lang" data-lang-picker>
+      <button
+        class="lang-btn"
+        type="button"
+        data-lang-btn
+        aria-haspopup="true"
+        aria-expanded="false"
+        aria-label={t('common.chooseLanguage')}
+      >
+        <svg class="lang-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+          <circle cx="12" cy="12" r="9" />
+          <path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18" />
+        </svg>
+        <span class="lang-current" data-lang-current>{lang.toUpperCase()}</span>
+      </button>
+      <div class="lang-menu" data-lang-menu hidden>
+        {langEntries.map(([code, name]) => (
+          <a
+            class:list={['lang-opt', { 'is-active': code === lang }]}
+            data-lang-opt={code}
+            hreflang={code}
+            href={code === defaultLang ? '/' : `/${code}/`}
+            data-astro-reload
+          >
+            {name}
+          </a>
+        ))}
+      </div>
+    </div>
     <ThemeToggle />
     <button
       class="burger"
       type="button"
       data-burger
-      aria-label="Open menu"
+      aria-label={t('common.openMenu')}
       aria-expanded="false"
       aria-controls="site-menu"
     >
@@ -36,18 +89,28 @@ const homeActive = here === '/';
 
   <div class="menu" id="site-menu" data-menu hidden>
     <nav class="menu-inner" aria-label="Primary">
-      <a href="/" class:list={['menu-link', { 'is-active': homeActive }]}>Home</a>
+      <a
+        href={homeHref}
+        class:list={['menu-link', { 'is-active': homeActive }]}
+        data-astro-reload={crossLocale(homeHref) ? '' : undefined}
+      >{t('common.home')}</a>
       {links.map((i) => (
         <a
           href={i.href}
           class:list={['menu-link', { 'is-active': isActive(i.href) }]}
           aria-current={isActive(i.href) ? 'page' : undefined}
+          data-astro-reload={crossLocale(i.href) ? '' : undefined}
         >
           {i.label}
         </a>
       ))}
       {cta && (
-        <a href={cta.href} class="menu-cta" data-analytics="book_menu">
+        <a
+          href={cta.href}
+          class="menu-cta"
+          data-analytics="book_menu"
+          data-astro-reload={crossLocale(cta.href) ? '' : undefined}
+        >
           {cta.label} <span aria-hidden="true">→</span>
         </a>
       )}
@@ -56,6 +119,68 @@ const homeActive = here === '/';
 
   <nav class="rail" data-rail aria-label="Page sections"></nav>
 </div>
+
+<script define:vars={{ i18nConfig }}>
+  // Language picker. The chrome is transition:persist'd, so compute hrefs from the
+  // live URL on every page-load (like the rail), and bind the toggle only once.
+  (() => {
+    const setup = () => {
+      const root = document.querySelector('[data-lang-picker]');
+      if (!root) return;
+      const btn = root.querySelector('[data-lang-btn]');
+      const menu = root.querySelector('[data-lang-menu]');
+      const curLabel = root.querySelector('[data-lang-current]');
+      const close = () => {
+        menu.setAttribute('hidden', '');
+        btn.setAttribute('aria-expanded', 'false');
+      };
+      if (!root.dataset.bound) {
+        root.dataset.bound = '1';
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (menu.hasAttribute('hidden')) {
+            menu.removeAttribute('hidden');
+            btn.setAttribute('aria-expanded', 'true');
+          } else {
+            close();
+          }
+        });
+        document.addEventListener('click', (e) => {
+          if (!root.contains(e.target)) close();
+        });
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') close();
+        });
+        menu.addEventListener('click', () => close());
+      }
+      // per-page hrefs + active state
+      const segs = location.pathname.split('/').filter(Boolean);
+      const first = segs[0];
+      const isLoc = i18nConfig.langs.includes(first) && first !== i18nConfig.def;
+      const curLang = isLoc ? first : i18nConfig.def;
+      const rest = isLoc ? segs.slice(1) : segs;
+      let stripped = '/' + rest.join('/');
+      if (stripped !== '/' && !stripped.endsWith('/')) stripped += '/';
+      if (curLabel) curLabel.textContent = curLang.toUpperCase();
+      root.querySelectorAll('[data-lang-opt]').forEach((a) => {
+        const code = a.getAttribute('data-lang-opt');
+        let href;
+        if (code === i18nConfig.def) {
+          href = stripped;
+        } else if (i18nConfig.translated.includes(stripped)) {
+          href = '/' + code + (stripped === '/' ? '/' : stripped);
+        } else {
+          href = '/' + code + '/';
+        }
+        a.setAttribute('href', href);
+        const active = code === curLang;
+        a.setAttribute('aria-current', active ? 'true' : 'false');
+        a.classList.toggle('is-active', active);
+      });
+    };
+    document.addEventListener('astro:page-load', setup);
+  })();
+</script>
 
 <script>
   // ---- Hamburger menu (chrome is transition:persist'd, so bind once) ----
@@ -182,6 +307,72 @@ const homeActive = here === '/';
     width: auto;
     border-radius: var(--radius-sm);
     box-shadow: var(--shadow);
+  }
+
+  /* language picker */
+  .lang {
+    position: relative;
+  }
+  .lang-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    height: 2.9rem;
+    padding: 0 0.7rem;
+    border-radius: var(--radius-pill);
+    background: color-mix(in srgb, var(--surface) 82%, transparent);
+    border: 1px solid var(--border-strong);
+    box-shadow: var(--shadow);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    transition: transform var(--dur) var(--ease), border-color var(--dur) var(--ease);
+  }
+  .lang-btn:hover {
+    transform: translateY(-1px);
+    border-color: var(--accent);
+  }
+  .lang-globe {
+    width: 17px;
+    height: 17px;
+    color: var(--text-muted);
+  }
+  .lang-menu {
+    position: absolute;
+    top: calc(100% + 0.4rem);
+    right: 0;
+    min-width: 8.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    padding: 0.35rem;
+    border-radius: var(--radius);
+    background: color-mix(in srgb, var(--surface) 94%, transparent);
+    border: 1px solid var(--border-strong);
+    box-shadow: var(--shadow-lg);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+  }
+  .lang-menu[hidden] {
+    display: none;
+  }
+  .lang-opt {
+    padding: 0.45rem 0.6rem;
+    border-radius: var(--radius-sm);
+    font-size: var(--step--1);
+    color: var(--text);
+    transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+  }
+  .lang-opt:hover {
+    background: var(--accent-soft);
+  }
+  .lang-opt.is-active {
+    color: var(--accent-text);
+    font-weight: 700;
   }
 
   /* top-right control group: theme toggle + hamburger (always visible) */

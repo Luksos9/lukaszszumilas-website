@@ -1,22 +1,29 @@
 ---
-import { footerNav } from '../data/nav';
 import { site } from '../data/site';
 import SocialLinks from './SocialLinks.astro';
+import { getFooterNav } from '../i18n/data';
+import { useTranslations, localizeForNav, defaultLang, type Lang } from '../i18n/ui';
 
+interface Props {
+  lang?: Lang;
+}
+const { lang = defaultLang } = Astro.props;
+const t = useTranslations(lang);
+const footerNav = getFooterNav(lang);
+const homeHref = localizeForNav('/', lang);
 const year = new Date().getFullYear();
+const crossLocale = (href: string) =>
+  lang !== defaultLang && !/^(https?:|mailto:|tel:|#)/.test(href) && !href.startsWith(`/${lang}/`);
 ---
 
 <footer class="site-footer">
   <div class="container footer-grid">
     <div class="footer-brand">
-      <a href="/" class="brand" aria-label={`${site.name}, home`}>
+      <a href={homeHref} class="brand" aria-label={`${site.name}, ${t('common.homeAria')}`}>
         <img class="footer-logo footer-logo--dark" src="/footer-logo-dark.webp" alt="" width="480" height="311" loading="lazy" />
         <img class="footer-logo footer-logo--light" src="/footer-logo-light.webp" alt="" width="480" height="311" loading="lazy" />
       </a>
-      <p class="footer-blurb muted">
-        Operational Efficiency Advisor. I help organizations reduce manual work and improve
-        operations with ServiceNow, AI, and process design.
-      </p>
+      <p class="footer-blurb muted">{t('footer.blurb')}</p>
       <SocialLinks />
     </div>
 
@@ -30,6 +37,7 @@ const year = new Date().getFullYear();
                 href={i.href}
                 target={i.external ? '_blank' : undefined}
                 rel={i.external ? 'noopener noreferrer' : undefined}
+                data-astro-reload={crossLocale(i.href) ? '' : undefined}
               >
                 {i.label}
               </a>
@@ -41,10 +49,9 @@ const year = new Date().getFullYear();
   </div>
 
   <div class="container footer-bottom">
-    <p class="muted">© {year} {site.name}. All rights reserved.</p>
+    <p class="muted">© {year} {site.name}. {t('footer.rights')}</p>
     <p class="muted">
-      Built with <a href="https://astro.build" target="_blank" rel="noopener noreferrer">Astro</a>,
-      hosted on GitHub Pages.
+      {t('footer.builtPre')} <a href="https://astro.build" target="_blank" rel="noopener noreferrer">Astro</a>{t('footer.builtPost')}
     </p>
   </div>
 </footer>

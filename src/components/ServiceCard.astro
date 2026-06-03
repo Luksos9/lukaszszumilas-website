@@ -1,6 +1,7 @@
 ---
 import Icon from './Icon.astro';
 import ServiceFlow from './ServiceFlow.astro';
+import { useTranslations, localizeForNav, defaultLang, type Lang } from '../i18n/ui';
 
 interface Props {
   title: string;
@@ -8,11 +9,16 @@ interface Props {
   anchor: string;
   icon?: string;
   flow?: string[];
+  lang?: Lang;
 }
-const { title, tagline, anchor, icon, flow } = Astro.props;
+const { title, tagline, anchor, icon, flow, lang = defaultLang } = Astro.props;
+const t = useTranslations(lang);
+const base = localizeForNav('/services/', lang);
+const href = `${base}#${anchor}`;
+const reload = lang !== defaultLang && !href.startsWith(`/${lang}/`);
 ---
 
-<a href={`/services/#${anchor}`} class="service-card shine">
+<a href={href} class="service-card shine" data-astro-reload={reload ? '' : undefined}>
   {flow ? (
     <ServiceFlow steps={flow} />
   ) : icon ? (
@@ -20,7 +26,7 @@ const { title, tagline, anchor, icon, flow } = Astro.props;
   ) : null}
   <h3 class="service-card-title">{title}</h3>
   <p class="service-card-tag">{tagline}</p>
-  <span class="service-card-cta">Learn more <span aria-hidden="true">→</span></span>
+  <span class="service-card-cta">{t('home.services.learnMore')} <span aria-hidden="true">→</span></span>
 </a>
 
 <style>

@@ -24,11 +24,21 @@ export default defineConfig({
   site: 'https://lukaszszumilas.com',
   // Custom domain served at the root => NO `base`.
   trailingSlash: 'always',
+  // English at the root (no /en/ prefix); Polish under /pl/.
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'pl'],
+    routing: { prefixDefaultLocale: false },
+  },
   markdown: { rehypePlugins: [rehypeContentImgAttrs] },
   build: { format: 'directory' },
   integrations: [
     mdx(),
     sitemap({
+      i18n: {
+        defaultLocale: 'en',
+        locales: { en: 'en', pl: 'pl' },
+      },
       // Keep redirect stubs and the 404 page out of the sitemap.
       filter: (page) => {
         const pathname = new URL(page).pathname;

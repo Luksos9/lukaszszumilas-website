@@ -1,0 +1,837 @@
+---
+import { getCollection } from 'astro:content';
+import Section from '../Section.astro';
+import CtaButton from '../CtaButton.astro';
+import PostCard from '../PostCard.astro';
+import ServiceCard from '../ServiceCard.astro';
+import Icon from '../Icon.astro';
+import OperationsLoop from '../OperationsLoop.astro';
+import ProcessEquation from '../ProcessEquation.astro';
+import BgDecor from '../BgDecor.astro';
+import { useTranslations, localizeForNav, defaultLang, type Lang } from '../../i18n/ui';
+import { getServices, getProblems, getCaseStudies } from '../../i18n/data';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = defaultLang } = Astro.props;
+const t = useTranslations(lang);
+const services = getServices(lang);
+const problems = getProblems(lang);
+const caseStudies = getCaseStudies(lang);
+const order = t<string[]>('home.contrarian.order');
+const HAS_CUTOUT = true;
+
+const posts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const url = {
+  contact: localizeForNav('/contact/', lang),
+  services: localizeForNav('/services/', lang),
+  caseStudies: localizeForNav('/case-studies/', lang),
+  blog: localizeForNav('/blog/', lang),
+};
+---
+
+<Fragment>
+  <!-- HERO -->
+  <section class="hero" id="start" data-nav={t('home.rail.start')} data-nav-icon="home">
+    <div class="container hero-grid">
+      <div class="hero-text">
+        <p class="eyebrow" data-reveal>{t('home.hero.eyebrow')}</p>
+        <h1 class="hero-title display">
+          <span data-reveal style="--reveal-delay:80ms">{t('home.hero.title1')}</span>
+          <span data-reveal style="--reveal-delay:200ms">{t('home.hero.title2')}</span>
+          <span data-reveal style="--reveal-delay:320ms" set:html={t('home.hero.title3')} />
+        </h1>
+        <p class="hero-lead lead" data-reveal style="--reveal-delay:440ms" set:html={t('home.hero.lead')} />
+        <div class="hero-cta cluster" data-reveal style="--reveal-delay:560ms">
+          <CtaButton href={url.contact} size="lg" analytics="book_hero">{t('home.hero.ctaPrimary')}</CtaButton>
+          <CtaButton href={url.services} variant="secondary" size="lg" analytics="explore_approach">{t('home.hero.ctaSecondary')}</CtaButton>
+        </div>
+        <p class="cred" data-reveal style="--reveal-delay:680ms">{t('home.hero.cred')}</p>
+      </div>
+      <div class="hero-photo" data-reveal style="--reveal-delay:240ms">
+        <img class="hero-vector" src="/hero-vector.svg" alt="" aria-hidden="true" />
+        {HAS_CUTOUT ? (
+          <img class="hero-cutout" src="/lukasz-cutout.webp" alt="Lukasz Szumilas" width="900" height="1349" fetchpriority="high" />
+        ) : (
+          <div class="hero-frame">
+            <img src="/lukasz.webp" alt="Lukasz Szumilas" width="900" height="1349" fetchpriority="high" />
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- 1. WHY DIFFERENT — THE AI REALITY CHECK -->
+  <Section tone="surface" navLabel={t('home.rail.aiReality')} navIcon="sparkle" decor>
+    <BgDecor slot="decor" variant="corner-br" />
+    <div class="contrarian">
+      <div>
+        <p class="eyebrow" data-reveal>{t('home.contrarian.eyebrow')}</p>
+        <h2 class="contrarian-title display">
+          <span data-reveal>{t('home.contrarian.title1')}</span>
+          <span data-reveal style="--reveal-delay:140ms">{t('home.contrarian.title2')}</span>
+        </h2>
+        <p class="contrarian-sub" data-reveal style="--reveal-delay:300ms" set:html={t('home.contrarian.sub')} />
+      </div>
+      <div class="contrarian-body" data-reveal style="--reveal-delay:200ms">
+        <p>{t('home.contrarian.bodyLead')}</p>
+        <ol class="why-order">
+          {order.map((o) => <li>{o}</li>)}
+        </ol>
+        <p>{t('home.contrarian.bodyEnd')}</p>
+      </div>
+    </div>
+  </Section>
+
+  <!-- 2. THE MULTIPLIER — PROCESS + AI EQUATION -->
+  <Section navLabel={t('home.rail.multiplier')} navIcon="trend">
+    <div class="sig-head" data-reveal>
+      <p class="eyebrow">{t('home.multiplier.eyebrow')}</p>
+      <h2 class="section-h2 display">{t('home.multiplier.title')}</h2>
+      <p class="sig-sub muted">{t('home.multiplier.sub')}</p>
+    </div>
+    <ProcessEquation />
+  </Section>
+
+  <!-- 3. HOW I THINK — THE FRAMEWORK -->
+  <Section tone="surface" navLabel={t('home.rail.framework')} navIcon="flow">
+    <div class="sig-head" data-reveal>
+      <p class="eyebrow">{t('home.framework.eyebrow')}</p>
+      <h2 class="section-h2 display">{t('home.framework.title')}</h2>
+      <p class="sig-sub muted">{t('home.framework.sub')}</p>
+    </div>
+    <OperationsLoop />
+  </Section>
+
+  <!-- 4. DO YOU UNDERSTAND MY WORLD — DIAGNOSTIC LEDGER -->
+  <Section navLabel={t('home.rail.symptoms')} navIcon="target">
+    <div class="sig-head" data-reveal>
+      <p class="eyebrow">{t('home.symptoms.eyebrow')}</p>
+      <h2 class="section-h2 display">{t('home.symptoms.title')}</h2>
+      <p class="sig-sub muted">{t('home.symptoms.sub')}</p>
+    </div>
+    <div class="dx-ledger">
+      <div class="dx-head" aria-hidden="true">
+        <span>{t('home.symptoms.colProblem')}</span>
+        <span>{t('home.symptoms.colMethod')}</span>
+        <span>{t('home.symptoms.colOutcome')}</span>
+      </div>
+      {problems.map((p, i) => {
+        const weight = p.severity === 'Very Common' ? 'lead' : p.severity === 'Emerging' ? 'trail' : 'mid';
+        return (
+          <div class="dx-row" data-weight={weight} data-reveal="left" style={`--reveal-delay:${i * 70}ms`}>
+            <div class="dx-now">
+              <span class="dx-icon"><Icon name={p.icon} size={18} /></span>
+              <span class="dx-copy">
+                <span class="dx-label">{p.title}</span>
+                <span class="dx-body muted">{p.body}</span>
+              </span>
+              <span class="dx-sev" data-weight={weight}>{p.severityLabel}</span>
+            </div>
+            <span class="dx-hex" aria-hidden="true">
+              <svg class="dx-hex-svg" viewBox="0 0 32 32" fill="none">
+                <path class="dx-hex-shape" d="M16 2.6 27 9v14l-11 6.4L5 23V9z" />
+                <g class="dx-hex-glyph">
+                  <circle cx="11.5" cy="13" r="1.5" /><circle cx="20.5" cy="13" r="1.5" /><circle cx="16" cy="21" r="1.5" />
+                  <path d="M13 13h6M12.2 14.3 15 19.2M19.8 14.3 17 19.2" />
+                </g>
+              </svg>
+            </span>
+            <div class="dx-next">
+              <span class="dx-icon dx-icon--out"><Icon name={p.outIcon} size={18} /></span>
+              <span class="dx-outcome">{p.outcome}</span>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+    <p class="dx-pattern" data-reveal set:html={t('home.symptoms.pattern')} />
+    <div class="dx-bridge" data-reveal>
+      <span class="dx-bridge-rule" aria-hidden="true"></span>
+      <a class="dx-bridge-link" href={url.services}>{t('home.symptoms.bridge')} <span class="dx-bridge-arrow" aria-hidden="true">→</span></a>
+    </div>
+  </Section>
+
+  <!-- 5. CAN YOU HELP ME — SERVICES -->
+  <Section tone="surface" navLabel={t('home.rail.services')} navIcon="grid" decor>
+    <BgDecor slot="decor" variant="pipeline-edge" />
+    <div class="section-head" data-reveal>
+      <div>
+        <p class="eyebrow">{t('home.services.eyebrow')}</p>
+        <h2 class="section-h2 display">{t('home.services.title')}</h2>
+      </div>
+      <a href={url.services} class="see-all">{t('home.services.seeAll')}</a>
+    </div>
+    <div class="grid-3">
+      {services.map((s, i) => (
+        <div data-reveal="scale" style={`--reveal-delay:${i * 70}ms`}>
+          <ServiceCard title={s.title} tagline={s.tagline} anchor={s.anchor} icon={s.icon} flow={s.flow} lang={lang} />
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <!-- 6. HAVE YOU DONE IT BEFORE — CASE STUDIES (TRANSFORMATION) -->
+  <Section navLabel={t('home.rail.work')} navIcon="trophy" decor>
+    <BgDecor slot="decor" variant="diamond-corner" />
+    <div class="section-head" data-reveal>
+      <div>
+        <p class="eyebrow">{t('home.work.eyebrow')}</p>
+        <h2 class="section-h2 display">{t('home.work.title')}</h2>
+      </div>
+      <a href={url.caseStudies} class="see-all">{t('home.work.seeAll')}</a>
+    </div>
+    <div class="cs-list">
+      {caseStudies.map((c, i) => (
+        <article class="cs" data-reveal style={`--reveal-delay:${i * 90}ms`}>
+          <header class="cs-head">
+            <span class="cs-sector">{c.sector}</span>
+            <h3 class="cs-title">{c.title}</h3>
+          </header>
+          <div class="cs-flow">
+            <div class="cs-stage">
+              <span class="cs-stage-label">{t('home.work.stageProblem')}</span>
+              <p>{c.situation}</p>
+            </div>
+            <span class="cs-arrow" aria-hidden="true">→</span>
+            <div class="cs-stage">
+              <span class="cs-stage-label">{t('home.work.stageApproach')}</span>
+              <p>{c.action}</p>
+            </div>
+            <span class="cs-arrow" aria-hidden="true">→</span>
+            <div class="cs-stage cs-stage--out">
+              <span class="cs-stage-label">{t('home.work.stageResult')}</span>
+              <p>{c.outcome}</p>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </Section>
+
+  <!-- 7. INSIGHTS -->
+  <Section tone="surface" navLabel={t('home.rail.insights')} navIcon="book">
+    <div class="section-head" data-reveal>
+      <div>
+        <p class="eyebrow">{t('home.insights.eyebrow')}</p>
+        <h2 class="section-h2 display">{t('home.insights.title')}</h2>
+      </div>
+      <a href={url.blog} class="see-all">{t('home.insights.seeAll')}</a>
+    </div>
+    {posts.length > 0 ? (
+      <div class="grid-3">
+        {posts.map((post, i) => (
+          <div data-reveal="scale" style={`--reveal-delay:${i * 90}ms`}>
+            <PostCard post={post} />
+          </div>
+        ))}
+      </div>
+    ) : (
+      <p class="muted">{t('home.insights.empty')}</p>
+    )}
+  </Section>
+
+  <!-- 8. FINAL CTA -->
+  <section class="final-cta" id="book" data-nav={t('home.rail.book')} data-nav-icon="arrow">
+    <BgDecor variant="grid" />
+    <div class="container final-cta-inner" data-reveal>
+      <p class="final-cta-eyebrow">{t('home.finalCta.eyebrow')}</p>
+      <h2 class="final-cta-title display">{t('home.finalCta.title')}</h2>
+      <p class="final-cta-sub">{t('home.finalCta.sub')}</p>
+      <CtaButton href={url.contact} size="lg" analytics="book_final">{t('home.finalCta.cta')}</CtaButton>
+    </div>
+  </section>
+</Fragment>
+
+<style>
+  /* HERO */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    /* extra top space clears the top-docked nav before it slides to the bottom */
+    padding-block: clamp(5rem, 3.5rem + 4vw, 6.5rem) clamp(1.5rem, 1rem + 2vw, 3rem);
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(2rem, 1rem + 3vw, 3.5rem);
+    align-items: center;
+  }
+  .hero-title {
+    font-size: clamp(2.3rem, 1.5rem + 2.6vw, 3.15rem);
+    margin-bottom: 1.35rem;
+    line-height: 1.08;
+  }
+  .hero-title span {
+    display: block;
+  }
+  .hero-title .accent {
+    display: inline;
+    color: var(--accent-text);
+  }
+  .hero-lead {
+    max-width: 50ch;
+    margin-bottom: 1.9rem;
+  }
+  /* keep the two hero CTAs side by side; stack only on very small screens */
+  .hero-cta {
+    flex-wrap: nowrap;
+  }
+  @media (max-width: 559px) {
+    .hero-cta {
+      flex-wrap: wrap;
+    }
+  }
+  .cred {
+    margin-top: 1.9rem;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--text-subtle);
+  }
+  .hero-photo {
+    position: relative;
+    justify-self: center;
+    width: 100%;
+    max-width: 26rem;
+  }
+  .hero-vector {
+    position: absolute;
+    inset: -6% auto -2% 2%;
+    width: 124%;
+    height: auto;
+    z-index: 0;
+    opacity: 0.28;
+    pointer-events: none;
+  }
+  .hero-frame {
+    position: relative;
+    z-index: 1;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--border-strong);
+    box-shadow: var(--shadow-lg);
+  }
+  .hero-frame img,
+  .hero-cutout {
+    width: 100%;
+    display: block;
+  }
+  .hero-frame::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 34%;
+    background: linear-gradient(transparent, color-mix(in srgb, var(--bg) 88%, transparent));
+  }
+  .hero-cutout {
+    position: relative;
+    z-index: 1;
+    filter: drop-shadow(var(--cutout-shadow));
+    -webkit-mask-image: linear-gradient(to bottom, #000 64%, rgba(0, 0, 0, 0.5) 85%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 64%, rgba(0, 0, 0, 0.5) 85%, transparent 100%);
+  }
+  /* SHARED HEADS */
+  .section-h2 {
+    font-size: var(--step-3);
+    margin-bottom: 1.5rem;
+  }
+  .sig-head {
+    text-align: center;
+    max-width: 46rem;
+    margin: 0 auto 2rem;
+  }
+  .sig-head .section-h2 {
+    margin-bottom: 0.6rem;
+  }
+  .sig-sub {
+    max-width: 54ch;
+    margin-inline: auto;
+  }
+  .section-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.75rem;
+  }
+  .section-head .section-h2 {
+    margin-bottom: 0;
+  }
+  .see-all {
+    font-weight: 600;
+    color: var(--accent-text);
+    white-space: nowrap;
+  }
+  .see-all:hover {
+    color: var(--accent-hover);
+  }
+  /* CONTRARIAN */
+  .contrarian {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .contrarian-title {
+    /* sized so each line fits its column on one line → exactly two lines,
+       from 320px through desktop (verified against the longest line's width). */
+    font-size: clamp(1.65rem, 1.1rem + 2.2vw, 2.4rem);
+    line-height: 1.1;
+  }
+  .contrarian-title span {
+    display: block;
+  }
+  .contrarian-sub {
+    margin-top: 1rem;
+    font-size: var(--step-1);
+    font-weight: 600;
+    max-width: 30ch;
+  }
+  .contrarian-body p {
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+  .why-order {
+    margin: 1rem 0;
+    padding-left: 1.3rem;
+    display: grid;
+    gap: 0.4rem;
+    color: var(--text);
+  }
+  .why-order li::marker {
+    color: var(--accent-text);
+    font-family: var(--font-mono);
+  }
+  /* GRID (services, insights) */
+  .grid-3 {
+    display: grid;
+    gap: clamp(1rem, 0.5rem + 1.5vw, 1.5rem);
+    grid-template-columns: 1fr;
+  }
+  /* DIAGNOSTIC LEDGER (problems) */
+  .dx-ledger {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    max-width: 54rem;
+    margin: 2.25rem auto 0;
+  }
+  .dx-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    align-items: center;
+    padding: clamp(0.85rem, 2vw, 1.1rem) clamp(1rem, 2.5vw, 1.35rem);
+    border-radius: var(--radius);
+    border: 1px solid transparent;
+    transition: transform 0.25s var(--ease), border-color 0.25s var(--ease), box-shadow 0.25s var(--ease), opacity 0.5s var(--ease);
+  }
+  .dx-row[data-weight='lead'] {
+    background: var(--card);
+    border-color: var(--border);
+    box-shadow: var(--shadow-sm);
+  }
+  .dx-row[data-weight='trail'] {
+    border: 1px dashed var(--border);
+    opacity: 0.86;
+  }
+  .dx-row[data-weight='trail'].is-visible {
+    opacity: 1;
+  }
+  .dx-now {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+  }
+  .dx-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    min-width: 0;
+  }
+  .dx-label {
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.2;
+  }
+  .dx-body {
+    font-size: var(--step--1);
+    line-height: 1.35;
+  }
+  .dx-icon {
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    flex: 0 0 auto;
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    transition: color 0.25s var(--ease), border-color 0.25s var(--ease);
+  }
+  .dx-icon--out {
+    color: var(--accent-text);
+    background: var(--accent-soft);
+    border-color: transparent;
+  }
+  .js .dx-icon--out {
+    transform: scale(0.6);
+    opacity: 0.4;
+  }
+  .dx-row.is-visible .dx-icon--out {
+    animation: dxPop 0.5s var(--ease-spring) 0.18s forwards;
+  }
+  @keyframes dxPop {
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .js .dx-icon--out {
+      transform: none;
+      opacity: 1;
+    }
+    .dx-row.is-visible .dx-icon--out {
+      animation: none;
+    }
+  }
+  /* column headers above the ledger (desktop only) */
+  .dx-head {
+    display: none;
+  }
+  /* transformation node: an orange hexagon (the method) on an orange flow line.
+     mobile/stacked default = vertical connector; horizontal on desktop. */
+  .dx-hex {
+    position: relative;
+    display: grid;
+    place-items: center;
+    justify-self: center;
+    width: 2.6rem;
+    height: 3rem;
+  }
+  .dx-hex::before {
+    content: '';
+    position: absolute;
+    top: 0.15rem;
+    bottom: 0.15rem;
+    left: 50%;
+    width: 8px;
+    transform: translateX(-50%);
+    background:
+      radial-gradient(circle at center, var(--accent) 0 3px, transparent 3.5px) top center / 8px 8px no-repeat,
+      radial-gradient(circle at center, var(--accent) 0 3px, transparent 3.5px) bottom center / 8px 8px no-repeat,
+      linear-gradient(var(--accent), var(--accent)) center / 2px 100% no-repeat;
+    opacity: 0.7;
+    z-index: 0;
+  }
+  .dx-hex-svg {
+    position: relative;
+    z-index: 1;
+    width: 2.3rem;
+    height: 2.3rem;
+    transition: transform 0.25s var(--ease);
+  }
+  .dx-hex-shape {
+    fill: var(--accent-soft);
+    stroke: var(--accent);
+    stroke-width: 1.6;
+  }
+  .dx-hex-glyph {
+    fill: var(--accent-text);
+    stroke: var(--accent-text);
+    stroke-width: 1.3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .dx-next {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .dx-outcome {
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.2;
+  }
+  .dx-sev {
+    margin-left: auto;
+    flex: 0 0 auto;
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    padding: 0.18rem 0.5rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--border);
+    color: var(--text-subtle);
+    white-space: nowrap;
+  }
+  .dx-sev[data-weight='lead'] {
+    color: var(--accent-text);
+    border-color: var(--accent-text);
+    background: var(--accent-soft);
+  }
+  .dx-sev[data-weight='trail'] {
+    color: var(--accent-text);
+    border: 1px dashed var(--accent);
+    background: transparent;
+  }
+  .dx-row:hover .dx-hex-svg {
+    transform: scale(1.08);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .dx-hex-svg {
+      transition: none;
+    }
+  }
+  .dx-row[data-weight='lead']:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-text);
+    box-shadow: var(--shadow);
+  }
+  .dx-row[data-weight='mid']:hover .dx-icon,
+  .dx-row[data-weight='trail']:hover .dx-icon {
+    border-color: var(--accent-text);
+    color: var(--accent-text);
+  }
+  .dx-pattern {
+    max-width: 46rem;
+    margin: 2.25rem auto 0;
+    text-align: center;
+    color: var(--text-muted);
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    line-height: 1.45;
+  }
+  .dx-pattern .accent {
+    color: var(--accent-text);
+  }
+  .dx-bridge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+  .dx-bridge-rule {
+    width: 1px;
+    height: 2.5rem;
+    background: linear-gradient(var(--border-strong), var(--accent));
+  }
+  .dx-bridge-link {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    font-size: var(--step--1);
+    font-weight: 700;
+    color: var(--accent-text);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .dx-bridge-arrow {
+    transition: transform 0.2s var(--ease);
+  }
+  .dx-bridge-link:hover .dx-bridge-arrow {
+    transform: translateX(4px);
+  }
+  /* CASE TRANSFORMATION */
+  .cs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .cs {
+    padding: clamp(1.25rem, 2vw, 1.75rem);
+    background: var(--card);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-lg);
+    transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+  }
+  .cs:hover {
+    border-color: var(--accent-text);
+    box-shadow: var(--shadow);
+  }
+  .cs-head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    margin-bottom: 1.1rem;
+  }
+  .cs-sector {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: var(--step--1);
+    color: var(--accent-text);
+    font-weight: 700;
+  }
+  .cs-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--step-2);
+  }
+  .cs-flow {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  .cs-stage {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .cs-stage-label {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: var(--text-subtle);
+  }
+  .cs-stage p {
+    color: var(--text-muted);
+    font-size: var(--step--1);
+    line-height: 1.5;
+  }
+  .cs-stage--out .cs-stage-label {
+    color: var(--accent-text);
+  }
+  .cs-stage--out p {
+    color: var(--text);
+  }
+  .cs-arrow {
+    color: var(--border-strong);
+    font-weight: 700;
+    justify-self: start;
+    transform: rotate(90deg);
+  }
+  /* FINAL CTA */
+  .final-cta {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    overflow: clip;
+    background: var(--lx-dark);
+    color: var(--lx-cream);
+    padding-block: clamp(3.5rem, 2rem + 6vw, 6.5rem);
+    margin-top: var(--section-y);
+    border-top: 1px solid var(--border);
+  }
+  .final-cta-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    align-items: center;
+    text-align: center;
+    max-width: 40rem;
+    margin-inline: auto;
+  }
+  .final-cta-eyebrow {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: var(--step--1);
+    color: var(--accent-text);
+    font-weight: 700;
+  }
+  .final-cta-title {
+    font-size: var(--step-4);
+    max-width: 18ch;
+    line-height: 1.08;
+  }
+  .final-cta-sub {
+    max-width: 54ch;
+    color: #cfc9be;
+    line-height: 1.6;
+  }
+  @media (min-width: 560px) {
+    .grid-3 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 720px) {
+    .dx-head {
+      display: grid;
+      grid-template-columns: 1fr clamp(4.5rem, 8vw, 7rem) 1fr;
+      padding: 0 clamp(1rem, 2.5vw, 1.35rem);
+      margin-bottom: 0.3rem;
+    }
+    .dx-head span {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: var(--text-subtle);
+    }
+    .dx-head span:nth-child(2) {
+      text-align: center;
+    }
+    .dx-row {
+      grid-template-columns: 1fr clamp(4.5rem, 8vw, 7rem) 1fr;
+      column-gap: 0;
+      row-gap: 0.5rem;
+    }
+    .dx-row[data-weight='lead'] .dx-label {
+      font-size: var(--step-1);
+    }
+    /* flow line turns horizontal on desktop */
+    .dx-hex {
+      width: auto;
+      height: auto;
+    }
+    .dx-hex::before {
+      top: 50%;
+      bottom: auto;
+      left: 0.2rem;
+      right: 0.2rem;
+      width: auto;
+      height: 8px;
+      transform: translateY(-50%);
+      background:
+        radial-gradient(circle at center, var(--accent) 0 3px, transparent 3.5px) left center / 8px 8px no-repeat,
+        radial-gradient(circle at center, var(--accent) 0 3px, transparent 3.5px) right center / 8px 8px no-repeat,
+        linear-gradient(var(--accent), var(--accent)) center / 100% 2px no-repeat;
+    }
+  }
+  @media (min-width: 760px) {
+    .cs-flow {
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      align-items: start;
+      gap: 1.25rem;
+    }
+    .cs-arrow {
+      transform: none;
+      align-self: center;
+    }
+  }
+  @media (min-width: 900px) {
+    .hero-grid {
+      grid-template-columns: 1.4fr 1fr;
+    }
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  /* split the contrarian block into two columns only once each column is wide
+     enough (~419px) to keep the headline on two lines; below this it stacks
+     full-width (where the headline easily stays two lines). */
+  @media (min-width: 960px) {
+    .contrarian {
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem 3.5rem;
+      align-items: center;
+    }
+  }
+</style>
