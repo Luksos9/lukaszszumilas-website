@@ -1,0 +1,97 @@
+---
+// Signature hero backdrop: an abstract ServiceNow/AI workflow mesh — nodes
+// (systems, people, process) wired into a central AI node, with orange "data"
+// pulses flowing along the connectors. Sits behind the cutout, low-opacity,
+// edge-faded. Dual-theme (currentColor lines + accent pulses), reduced-motion safe.
+const CONNECTORS = [
+  'M64 96 C 150 120, 175 250, 220 292',
+  'M362 64 C 300 130, 270 235, 240 290',
+  'M214 46 C 218 150, 224 240, 228 286',
+  'M72 300 C 130 300, 172 300, 216 300',
+  'M244 298 C 300 292, 348 292, 378 294',
+  'M224 312 C 182 382, 132 452, 98 492',
+  'M240 310 C 300 382, 360 432, 398 466',
+];
+---
+
+<div class="hero-bg" aria-hidden="true">
+  <svg viewBox="0 0 440 560" fill="none" preserveAspectRatio="xMidYMid slice">
+    <g class="hb-lines">
+      {CONNECTORS.map((d) => <path d={d} />)}
+    </g>
+    <g class="hb-flows">
+      {CONNECTORS.map((d, i) => (
+        <path class="hb-flow" d={d} pathLength="100" style={`animation-delay:${-i * 0.55}s`} />
+      ))}
+    </g>
+    <g class="hb-nodes">
+      <rect class="hb-node" x="50" y="82" width="28" height="28" rx="5" />
+      <circle class="hb-node" cx="362" cy="58" r="8" />
+      <circle class="hb-node" cx="214" cy="40" r="5" />
+      <path class="hb-node" d="M40 300 L52 293 L64 300 L64 314 L52 321 L40 314 Z" />
+      <rect class="hb-node" x="380" y="282" width="26" height="26" rx="5" />
+      <circle class="hb-node" cx="96" cy="500" r="7" />
+      <circle class="hb-node" cx="400" cy="468" r="6" />
+      <!-- central AI node -->
+      <path class="hb-node hb-acc" d="M230 282 L246 291 L246 309 L230 318 L214 309 L214 291 Z" />
+      <circle class="hb-node hb-acc" cx="230" cy="300" r="3.5" />
+    </g>
+  </svg>
+</div>
+
+<style>
+  .hero-bg {
+    position: absolute;
+    inset: -8% -6% -2% -6%;
+    z-index: 0;
+    pointer-events: none;
+    color: var(--text-muted);
+    opacity: 0.72;
+    -webkit-mask-image: radial-gradient(125% 105% at 62% 38%, #000 52%, transparent 88%);
+    mask-image: radial-gradient(125% 105% at 62% 38%, #000 52%, transparent 88%);
+  }
+  .hero-bg svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .hb-lines path {
+    stroke: currentColor;
+    stroke-width: 1;
+    opacity: 0.6;
+  }
+  .hb-flow {
+    stroke: var(--accent);
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-dasharray: 7 93;
+  }
+  .js .hb-flow {
+    animation: hbFlow 3.4s linear infinite;
+  }
+  @keyframes hbFlow {
+    from { stroke-dashoffset: 0; }
+    to { stroke-dashoffset: -100; }
+  }
+  .hb-node {
+    stroke: currentColor;
+    stroke-width: 1.5;
+    fill: var(--bg);
+  }
+  .hb-acc {
+    stroke: var(--accent);
+  }
+  path.hb-acc {
+    fill: var(--accent-soft);
+    filter: drop-shadow(0 0 7px var(--ring));
+  }
+  circle.hb-acc {
+    fill: var(--accent);
+    stroke: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hb-flow {
+      display: none;
+    }
+  }
+</style>

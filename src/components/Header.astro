@@ -1,6 +1,7 @@
 ---
 import { site } from '../data/site';
 import ThemeToggle from './ThemeToggle.astro';
+import Flag from './Flag.astro';
 import { getPrimaryNav } from '../i18n/data';
 import {
   useTranslations, localizeForNav, defaultLang, languages, translatedPaths, type Lang,
@@ -69,7 +70,8 @@ const i18nConfig = {
             href={code === defaultLang ? '/' : `/${code}/`}
             data-astro-reload
           >
-            {name}
+            <Flag code={code} />
+            <span>{name}</span>
           </a>
         ))}
       </div>
@@ -361,6 +363,9 @@ const i18nConfig = {
     display: none;
   }
   .lang-opt {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
     padding: 0.45rem 0.6rem;
     border-radius: var(--radius-sm);
     font-size: var(--step--1);

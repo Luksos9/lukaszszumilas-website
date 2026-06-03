@@ -8,6 +8,7 @@ import Icon from '../Icon.astro';
 import OperationsLoop from '../OperationsLoop.astro';
 import ProcessEquation from '../ProcessEquation.astro';
 import BgDecor from '../BgDecor.astro';
+import HeroBg from '../HeroBg.astro';
 import PilotBand from '../PilotBand.astro';
 import { useTranslations, localizeForNav, defaultLang, type Lang } from '../../i18n/ui';
 import { getServices, getProblems, getCaseStudies } from '../../i18n/data';
@@ -55,7 +56,7 @@ const url = {
         <p class="cred" data-reveal style="--reveal-delay:680ms">{t('home.hero.cred')}</p>
       </div>
       <div class="hero-photo" data-reveal style="--reveal-delay:240ms">
-        <img class="hero-vector" src="/hero-vector.svg" alt="" aria-hidden="true" />
+        <HeroBg />
         {HAS_CUTOUT ? (
           <img class="hero-cutout" src="/lukasz-cutout.webp" alt="Lukasz Szumilas" width="900" height="1349" fetchpriority="high" />
         ) : (
@@ -307,15 +308,6 @@ const url = {
     justify-self: center;
     width: 100%;
     max-width: 26rem;
-  }
-  .hero-vector {
-    position: absolute;
-    inset: -6% auto -2% 2%;
-    width: 124%;
-    height: auto;
-    z-index: 0;
-    opacity: 0.28;
-    pointer-events: none;
   }
   .hero-frame {
     position: relative;
