@@ -11,7 +11,14 @@ type Dict = Record<string, string>;
 const navPl = pl.nav as unknown as Dict;
 const titlesPl = pl.footerTitles as unknown as Dict;
 const itemsPl = pl.footerItems as unknown as Dict;
-const servicesPl = pl.services as unknown as Record<string, { title?: string; tagline?: string; flow?: string[] }>;
+const servicesPl = pl.services as unknown as Record<
+  string,
+  {
+    title?: string; tagline?: string; flow?: string[];
+    forWho?: string; journey?: string[]; deliverables?: string[]; examples?: string[];
+    outcome?: string; categories?: { title: string; illo: string; blurb: string }[];
+  }
+>;
 const problemsPl = pl.problems as unknown as Record<string, { title: string; body: string; outcome: string }>;
 const severityPl = pl.severity as unknown as Dict;
 const caseStudiesPl = pl.caseStudies as unknown as Record<
@@ -54,6 +61,12 @@ export function getServices(lang: Lang) {
       title: o.title ?? s.title,
       tagline: o.tagline ?? s.tagline,
       flow: (o.flow as typeof s.flow) ?? s.flow,
+      forWho: o.forWho ?? s.forWho,
+      journey: (o.journey as typeof s.journey) ?? s.journey,
+      deliverables: (o.deliverables as typeof s.deliverables) ?? s.deliverables,
+      examples: (o.examples as typeof s.examples) ?? s.examples,
+      outcome: o.outcome ?? s.outcome,
+      categories: (o.categories as typeof s.categories) ?? s.categories,
     };
   });
 }
