@@ -1,0 +1,65 @@
+---
+// Surfaces the fixed-scope pilot (the AI Opportunity Assessment) across pages.
+import CtaButton from './CtaButton.astro';
+import Icon from './Icon.astro';
+import { useTranslations, localizeForNav, defaultLang, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = defaultLang } = Astro.props;
+const t = useTranslations(lang);
+const href = localizeForNav('/ai-opportunity-assessment/', lang);
+const reload = lang !== defaultLang && !href.startsWith(`/${lang}/`);
+---
+
+<aside class="pilot" data-reveal>
+  <span class="pilot-icon" aria-hidden="true"><Icon name="target" size={26} /></span>
+  <div class="pilot-copy">
+    <p class="eyebrow">{t('home.pilot.eyebrow')}</p>
+    <h2 class="pilot-title display">{t('home.pilot.title')}</h2>
+    <p class="pilot-body muted">{t('home.pilot.body')}</p>
+  </div>
+  <div class="pilot-cta">
+    <CtaButton href={href} reload={reload}>{t('home.pilot.cta')}</CtaButton>
+  </div>
+</aside>
+
+<style>
+  .pilot {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem 1.5rem;
+    align-items: center;
+    padding: clamp(1.5rem, 1rem + 2vw, 2.25rem);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-lg);
+    background: radial-gradient(130% 150% at 0% 0%, var(--accent-soft), transparent 55%), var(--card);
+  }
+  .pilot-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: var(--radius);
+    background: var(--accent-soft);
+    color: var(--accent-text);
+  }
+  .pilot-title {
+    font-size: var(--step-2);
+    line-height: 1.15;
+    margin: 0.3rem 0;
+  }
+  .pilot-body {
+    max-width: 60ch;
+    line-height: 1.55;
+  }
+  .pilot-cta {
+    display: flex;
+  }
+  @media (min-width: 760px) {
+    .pilot {
+      grid-template-columns: auto 1fr auto;
+    }
+  }
+</style>

@@ -16,7 +16,10 @@ const problemsPl = pl.problems as unknown as Record<string, { title: string; bod
 const severityPl = pl.severity as unknown as Dict;
 const caseStudiesPl = pl.caseStudies as unknown as Record<
   string,
-  { sector: string; title: string; situation: string; action: string; outcome: string }
+  {
+    sector: string; title: string; situation: string; action: string; outcome: string;
+    persona?: string; sectorNote?: string; target?: string;
+  }
 >;
 const frameworkPl = pl.framework as unknown as Record<string, { title: string; body: string }>;
 
@@ -91,6 +94,9 @@ export function getCaseStudies(lang: Lang) {
       situation: o.situation ?? c.situation,
       action: o.action ?? c.action,
       outcome: o.outcome ?? c.outcome,
+      persona: o.persona ?? c.persona,
+      sectorNote: o.sectorNote ?? c.sectorNote,
+      target: o.target ?? c.target,
     };
   });
 }

@@ -8,10 +8,12 @@ interface Props {
   arrow?: boolean;
   /** Optional analytics event name (fires via the global tracker on click). */
   analytics?: string;
+  /** Force a full page load (e.g. crossing the locale boundary with a persisted header). */
+  reload?: boolean;
   class?: string;
 }
 
-const { href, variant = 'primary', size = 'md', external = false, arrow, analytics, class: cls = '' } =
+const { href, variant = 'primary', size = 'md', external = false, arrow, analytics, reload = false, class: cls = '' } =
   Astro.props;
 const showArrow = arrow ?? variant !== 'secondary';
 const target = external ? '_blank' : undefined;
@@ -24,6 +26,7 @@ const rel = external ? 'noopener noreferrer' : undefined;
   target={target}
   rel={rel}
   data-analytics={analytics}
+  data-astro-reload={reload ? '' : undefined}
 >
   <span class="btn-label"><slot /></span>
   {showArrow && <span class="btn-arrow" aria-hidden="true">→</span>}

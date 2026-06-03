@@ -103,6 +103,9 @@ export const pl = {
       situation: 'Liczba zgłoszeń rosła, a ręczna selekcja pochłaniała czas zespołu.',
       action: 'Przeprojektowałem przyjmowanie zgłoszeń, dodałem automatyzację oraz wspomagane przez AI kierowanie i klasyfikację.',
       outcome: 'Mniej pracy ręcznej, spójniejsze kierowanie i szybsza obsługa.',
+      persona: 'Kierownik usług IT',
+      sectorNote: 'Duża liczba zgłoszeń przy rygorystycznym audycie, bezpieczeństwie i kontroli dostępu.',
+      target: 'Mniej ręcznej selekcji i szybsza pierwsza reakcja.',
     },
     'Streamlined request management': {
       sector: 'Ubezpieczenia',
@@ -110,6 +113,9 @@ export const pl = {
       situation: 'Proces obsługi wniosków przez lata się rozjechał, a przekazania stały się wolne.',
       action: 'Ustandaryzowałem przepływ pracy i zautomatyzowałem powtarzalne kroki.',
       outcome: 'Mniej przekazań i realne do osiągnięcia cele SLA.',
+      persona: 'Właściciel procesu',
+      sectorNote: 'Stare procesy obsługi wniosków, które po cichu rozjechały się wraz ze zmianami w firmie.',
+      target: 'Mniej przekazań i cele SLA realne do osiągnięcia przez zespół.',
     },
     'Automated employee onboarding': {
       sector: 'Produkcja',
@@ -117,6 +123,9 @@ export const pl = {
       situation: 'Wdrożenie nowych osób oznaczało dopominanie się o dostępy i sprzęt mailami.',
       action: 'Zautomatyzowałem proces onboardingu od początku do końca w ServiceNow.',
       outcome: 'Nowi pracownicy dostają dostęp i sprzęt bez ręcznego dopominania się.',
+      persona: 'HR i operacje IT',
+      sectorNote: 'Onboarding w wielu lokalizacjach, na zmianach i w systemach, które ze sobą nie rozmawiają.',
+      target: 'Nowi pracownicy produktywni od pierwszego dnia, bez ręcznego dopominania się.',
     },
   },
 
@@ -225,6 +234,12 @@ export const pl = {
       title: 'Gotowy, by znaleźć szanse na AI w swoim środowisku ServiceNow?',
       sub: 'Umów bezpłatną konsultację. Wyjdziesz z jasnym obrazem, gdzie lepszy proces i właściwe AI robią różnicę — niezależnie od tego, czy zbudujemy to razem.',
       cta: 'Umów konsultację',
+    },
+    pilot: {
+      eyebrow: 'Zacznij od małego',
+      title: 'Zacznij od 2–4-tygodniowej oceny możliwości AI',
+      body: 'Pilotaż o ustalonym zakresie: wskazujemy, gdzie AI realnie się opłaca — z jasnym, uporządkowanym planem, zanim ktokolwiek napisze kod.',
+      cta: 'Zobacz ocenę',
     },
   },
 } as const;

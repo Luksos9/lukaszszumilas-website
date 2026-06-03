@@ -116,5 +116,11 @@ export const en = {
       sub: "Book a free consultation. You'll leave with a clear view of where a better process and the right AI move the needle — whether or not we build it together.",
       cta: 'Book a consultation',
     },
+    pilot: {
+      eyebrow: 'Start small',
+      title: 'Begin with a 2–4 week AI Opportunity Assessment',
+      body: 'A fixed-scope pilot: we map where AI actually pays off — with a clear, prioritized plan before anyone writes code.',
+      cta: 'See the assessment',
+    },
   },
 } as const;

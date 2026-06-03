@@ -8,6 +8,7 @@ import Icon from '../Icon.astro';
 import OperationsLoop from '../OperationsLoop.astro';
 import ProcessEquation from '../ProcessEquation.astro';
 import BgDecor from '../BgDecor.astro';
+import PilotBand from '../PilotBand.astro';
 import { useTranslations, localizeForNav, defaultLang, type Lang } from '../../i18n/ui';
 import { getServices, getProblems, getCaseStudies } from '../../i18n/data';
 
@@ -190,7 +191,10 @@ const url = {
       {caseStudies.map((c, i) => (
         <article class="cs" data-reveal style={`--reveal-delay:${i * 90}ms`}>
           <header class="cs-head">
-            <span class="cs-sector">{c.sector}</span>
+            <div class="cs-tags">
+              <span class="cs-sector">{c.sector}</span>
+              <span class="cs-persona">{c.persona}</span>
+            </div>
             <h3 class="cs-title">{c.title}</h3>
           </header>
           <div class="cs-flow">
@@ -234,6 +238,11 @@ const url = {
     ) : (
       <p class="muted">{t('home.insights.empty')}</p>
     )}
+  </Section>
+
+  <!-- PILOT BAND — surface the fixed-scope assessment -->
+  <Section>
+    <PilotBand lang={lang} />
   </Section>
 
   <!-- 8. FINAL CTA -->
@@ -666,13 +675,34 @@ const url = {
     gap: 0.2rem;
     margin-bottom: 1.1rem;
   }
+  .cs-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.5rem;
+  }
   .cs-sector {
     font-family: var(--font-mono);
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    font-size: var(--step--1);
-    color: var(--accent-text);
+    font-size: 0.62rem;
     font-weight: 700;
+    color: var(--accent-text);
+    background: var(--accent-soft);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-pill);
+    padding: 0.16rem 0.5rem;
+  }
+  .cs-persona {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: var(--text-subtle);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-pill);
+    padding: 0.16rem 0.5rem;
   }
   .cs-title {
     font-family: var(--font-display);
