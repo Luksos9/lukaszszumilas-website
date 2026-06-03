@@ -3,7 +3,83 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Section from '../components/Section.astro';
 import CtaButton from '../components/CtaButton.astro';
+import Icon from '../components/Icon.astro';
 import AiOperatingSystem from '../components/AiOperatingSystem.astro';
+
+// Who typically brings me in — and what they walk away with.
+const personas = [
+  {
+    icon: 'shield',
+    role: 'CIO / IT Director',
+    pain: 'AI is a board-level expectation, but the platform can’t be put at risk.',
+    gets: 'A governed path to value — AI that survives a security review.',
+  },
+  {
+    icon: 'trend',
+    role: 'IT Service Manager',
+    pain: 'Ticket volumes climb, the team doesn’t, and SLAs start to slip.',
+    gets: 'AI triage and automation that cut the manual load, not the control.',
+  },
+  {
+    icon: 'flow',
+    role: 'Process Owner',
+    pain: 'Manual steps and handoffs slow down every request.',
+    gets: 'Redesigned, automated workflows with AI where it genuinely helps.',
+  },
+];
+
+// Concrete ServiceNow + AI starting points. Qualitative on purpose — figures get
+// added per engagement once they're real and cleared.
+const useCases = [
+  {
+    icon: 'agent',
+    title: 'AI incident triage',
+    what: 'Classifies, prioritizes and routes incidents the moment they arrive.',
+    forWho: 'Service desk & ITSM',
+    needs: 'Historical incidents, assignment groups',
+    outcome: 'Less manual triage, more consistent routing',
+  },
+  {
+    icon: 'smile',
+    title: 'Employee & HR assistant',
+    what: 'Answers common employee questions from your own policies and catalog.',
+    forWho: 'HR & shared services',
+    needs: 'HR knowledge base, catalog items',
+    outcome: 'Fewer repetitive questions reaching the team',
+  },
+  {
+    icon: 'gauge',
+    title: 'Predictive IT operations',
+    what: 'Spots patterns in events and logs before they turn into outages.',
+    forWho: 'IT operations (AIOps)',
+    needs: 'Monitoring events, operational logs',
+    outcome: 'Earlier warning, fewer surprises',
+  },
+  {
+    icon: 'grid',
+    title: 'Service catalog automation',
+    what: 'Guides requests and auto-fulfils the routine, rule-based ones.',
+    forWho: 'Service delivery',
+    needs: 'Catalog items, fulfilment flows',
+    outcome: 'Faster fulfilment, less back-and-forth',
+  },
+  {
+    icon: 'book',
+    title: 'Knowledge recommendations',
+    what: 'Surfaces the right article at the moment of need — with sources to check.',
+    forWho: 'Agents & employees',
+    needs: 'Knowledge base, ticket context',
+    outcome: 'Answers on demand, less searching',
+  },
+  {
+    icon: 'shield',
+    title: 'Security incident automation',
+    what: 'Enriches and triages security incidents, with a human on the sign-off.',
+    forWho: 'Security operations (SecOps)',
+    needs: 'Security incidents, threat context',
+    outcome: 'Faster, consistent response — with control',
+  },
+];
 
 const capabilities = [
   {
@@ -23,11 +99,35 @@ const capabilities = [
     body: 'AI that holds up to a security review: real scopes, ACLs that still apply, audit logs, and a blast radius you can name.',
   },
 ];
+
+// The EU/regulatory angle — the real reason most AI stops at the demo.
+const governance = [
+  {
+    icon: 'shield',
+    title: 'GDPR by design',
+    body: 'Personal data stays where it belongs — consent or anonymization, never quietly shipped off to a model.',
+  },
+  {
+    icon: 'info',
+    title: 'EU AI Act ready',
+    body: 'AI in HR or security can count as “high-risk.” I build in documented risk assessments, transparency, and human oversight.',
+  },
+  {
+    icon: 'smile',
+    title: 'Human in the loop',
+    body: 'AI proposes; people approve where it matters. Clear escalation paths, not a black box.',
+  },
+  {
+    icon: 'gear',
+    title: 'Real platform controls',
+    body: 'Scopes, ACLs that still apply, audit logs, and a blast radius you can name before anything goes live.',
+  },
+];
 ---
 
 <BaseLayout
   title="AI & ServiceNow"
-  description="Governed AI on ServiceNow: MCP integration, Now Assist and AI Agent Studio set up with real governance, and knowledge assistants that pass a security review."
+  description="Governed AI on ServiceNow: concrete use cases (incident triage, HR assistant, AIOps, catalog automation, knowledge, SecOps), built GDPR- and EU AI Act-ready, that pass a security review."
 >
   <PageHeader eyebrow="AI & ServiceNow" title="Governed AI on ServiceNow">
     Anyone can bolt a chatbot onto an instance. The hard part is AI a bank's security team will
@@ -42,18 +142,65 @@ const capabilities = [
         that do only what they're allowed to. That takes ServiceNow knowledge, not just an API key.
       </p>
       <p>
-        I treat the model as the easy part and the governance as the work. The result is AI you can
-        put in front of an auditor, not just a slide.
+        I treat the model as the easy part and the governance as the work — concrete use cases,
+        scoped to your data and your platform, that you can put in front of an auditor.
       </p>
     </div>
   </Section>
 
+  <!-- WHO IT'S FOR -->
   <Section tone="surface">
-    <p class="eyebrow">What I work on</p>
-    <h2 class="section-h2 display">The pieces that make AI safe on the platform</h2>
+    <div class="ai-head" data-reveal>
+      <p class="eyebrow">Who it's for</p>
+      <h2 class="section-h2 display">Three people usually bring me in</h2>
+    </div>
+    <div class="persona-grid">
+      {personas.map((p, i) => (
+        <article class="persona" data-reveal="scale" style={`--reveal-delay:${i * 70}ms`}>
+          <span class="persona-icon"><Icon name={p.icon} size={22} /></span>
+          <h3 class="persona-role">{p.role}</h3>
+          <p class="persona-pain">“{p.pain}”</p>
+          <p class="persona-gets"><span class="micro-tag">Gets</span>{p.gets}</p>
+        </article>
+      ))}
+    </div>
+  </Section>
+
+  <!-- USE CASES -->
+  <Section>
+    <div class="ai-head" data-reveal>
+      <p class="eyebrow">Where it pays off</p>
+      <h2 class="section-h2 display">ServiceNow + AI use cases that earn their place</h2>
+      <p class="ai-sub muted">Concrete starting points — each scoped to your data, your platform, and a clear outcome.</p>
+    </div>
+    <div class="uc-grid">
+      {useCases.map((u, i) => (
+        <article class="uc-card shine" data-reveal="scale" style={`--reveal-delay:${i * 60}ms`}>
+          <span class="uc-icon"><Icon name={u.icon} size={22} /></span>
+          <h3 class="uc-title">{u.title}</h3>
+          <p class="uc-what">{u.what}</p>
+          <dl class="uc-meta">
+            <div><dt>For</dt><dd>{u.forWho}</dd></div>
+            <div><dt>Needs</dt><dd>{u.needs}</dd></div>
+            <div><dt>Outcome</dt><dd>{u.outcome}</dd></div>
+          </dl>
+        </article>
+      ))}
+    </div>
+    <p class="uc-note muted" data-reveal>
+      Not sure which fits? That's exactly what an <a href="/services/#assessment">AI Opportunity Assessment</a> is for.
+    </p>
+  </Section>
+
+  <!-- CAPABILITIES -->
+  <Section tone="surface">
+    <div class="ai-head" data-reveal>
+      <p class="eyebrow">What I build</p>
+      <h2 class="section-h2 display">The pieces that make AI safe on the platform</h2>
+    </div>
     <div class="cap-grid">
       {capabilities.map((c) => (
-        <article class="cap-card">
+        <article class="cap-card" data-reveal>
           <h3 class="cap-title">{c.title}</h3>
           <p class="muted">{c.body}</p>
         </article>
@@ -61,16 +208,40 @@ const capabilities = [
     </div>
   </Section>
 
+  <!-- AI OPERATING SYSTEM -->
   <Section>
-    <p class="eyebrow">How AI fits</p>
-    <h2 class="section-h2 display">The AI Operating System</h2>
-    <p class="muted aios-sub">
-      AI shouldn't sit in isolation. It works on top of your people, systems, knowledge, and
-      processes — turning them into decisions, automation, and insight.
-    </p>
+    <div class="ai-head" data-reveal>
+      <p class="eyebrow">How AI fits</p>
+      <h2 class="section-h2 display">The AI Operating System</h2>
+      <p class="ai-sub muted">
+        AI shouldn't sit in isolation. It works on top of your people, systems, knowledge, and
+        processes — turning them into decisions, automation, and insight.
+      </p>
+    </div>
     <AiOperatingSystem />
   </Section>
 
+  <!-- GOVERNANCE & COMPLIANCE -->
+  <Section tone="surface">
+    <div class="ai-head" data-reveal>
+      <p class="eyebrow">Governance</p>
+      <h2 class="section-h2 display">AI your security team will sign off on</h2>
+      <p class="ai-sub muted">The reason most AI stops at the demo is governance. For European teams it's not optional — so it's where I start.</p>
+    </div>
+    <div class="gov-grid">
+      {governance.map((g, i) => (
+        <article class="gov" data-reveal="left" style={`--reveal-delay:${i * 70}ms`}>
+          <span class="gov-icon"><Icon name={g.icon} size={20} /></span>
+          <div>
+            <h3 class="gov-title">{g.title}</h3>
+            <p class="muted">{g.body}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </Section>
+
+  <!-- CLAUDE TILT -->
   <Section tone="dark">
     <div class="claude">
       <p class="eyebrow">The Claude tilt</p>
@@ -110,6 +281,148 @@ const capabilities = [
     font-size: var(--step-3);
     margin-bottom: 1.5rem;
   }
+  .ai-head {
+    max-width: 46rem;
+    margin-bottom: clamp(1.5rem, 1rem + 2vw, 2.25rem);
+  }
+  .ai-head .section-h2 {
+    margin-bottom: 0.5rem;
+  }
+  .ai-sub {
+    max-width: 56ch;
+    line-height: 1.55;
+  }
+
+  /* personas */
+  .persona-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .persona {
+    padding: clamp(1.3rem, 1rem + 1vw, 1.75rem);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
+  .persona-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 2.7rem;
+    height: 2.7rem;
+    border-radius: var(--radius);
+    background: var(--accent-soft);
+    color: var(--accent-text);
+    margin-bottom: 0.7rem;
+  }
+  .persona-role {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--step-1);
+    margin-bottom: 0.4rem;
+  }
+  .persona-pain {
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 0.7rem;
+  }
+  .persona-gets {
+    line-height: 1.5;
+  }
+  .micro-tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: var(--accent-text);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-pill);
+    padding: 0.1rem 0.45rem;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+  }
+
+  /* use-case catalog */
+  .uc-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(0.9rem, 0.6rem + 1vw, 1.25rem);
+  }
+  .uc-card {
+    padding: clamp(1.3rem, 1rem + 1vw, 1.6rem);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--dur-mid) var(--ease-out), box-shadow var(--dur-mid), border-color var(--dur-mid);
+  }
+  .uc-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent-text);
+    box-shadow: var(--shadow-lg);
+  }
+  .uc-card > * {
+    position: relative;
+    z-index: 2;
+  }
+  .uc-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: var(--radius);
+    background: var(--accent-soft);
+    color: var(--accent-text);
+    margin-bottom: 0.6rem;
+  }
+  .uc-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--step-1);
+    margin-bottom: 0.3rem;
+  }
+  .uc-what {
+    color: var(--text);
+    line-height: 1.5;
+    margin-bottom: 0.9rem;
+  }
+  .uc-meta {
+    display: grid;
+    gap: 0.45rem;
+    border-top: 1px solid var(--border);
+    padding-top: 0.8rem;
+  }
+  .uc-meta > div {
+    display: grid;
+    grid-template-columns: 4.5rem 1fr;
+    gap: 0.5rem;
+    align-items: baseline;
+  }
+  .uc-meta dt {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: var(--text-subtle);
+  }
+  .uc-meta dd {
+    font-size: var(--step--1);
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+  .uc-note {
+    margin-top: 1.5rem;
+  }
+  .uc-note a {
+    color: var(--accent-text);
+    font-weight: 600;
+  }
+
+  /* capabilities */
   .cap-grid {
     display: grid;
     gap: clamp(1rem, 0.5rem + 1.5vw, 1.5rem);
@@ -127,10 +440,39 @@ const capabilities = [
     font-size: var(--step-1);
     margin-bottom: 0.4rem;
   }
-  .aios-sub {
-    max-width: 60ch;
-    margin-bottom: 1.75rem;
+
+  /* governance */
+  .gov-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
+  .gov {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.9rem;
+    align-items: start;
+    padding: clamp(1.1rem, 0.9rem + 1vw, 1.5rem);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+  .gov-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--radius);
+    background: var(--accent-soft);
+    color: var(--accent-text);
+  }
+  .gov-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--step-0);
+    margin-bottom: 0.25rem;
+  }
+
   .claude {
     max-width: 60rem;
   }
@@ -147,9 +489,22 @@ const capabilities = [
     align-items: flex-start;
     max-width: 46rem;
   }
+
   @media (min-width: 640px) {
-    .cap-grid {
+    .cap-grid,
+    .gov-grid {
       grid-template-columns: 1fr 1fr;
+    }
+    .uc-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (min-width: 920px) {
+    .persona-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .uc-grid {
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 </style>

@@ -163,6 +163,13 @@ const outputs = [
       display: none;
     }
   }
+  /* very narrow phones: nodes need a min content width, so stack to one column
+     instead of forcing two and overflowing the viewport. */
+  @media (max-width: 400px) {
+    .aios-row {
+      grid-template-columns: 1fr;
+    }
+  }
   @media (min-width: 720px) {
     .aios-row.inputs {
       grid-template-columns: repeat(4, 1fr);
