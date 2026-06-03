@@ -40,6 +40,7 @@ const url = {
 <Fragment>
   <!-- HERO -->
   <section class="hero" id="start" data-nav={t('home.rail.start')} data-nav-icon="home">
+    <HeroBg />
     <div class="container hero-grid">
       <div class="hero-text">
         <p class="eyebrow" data-reveal>{t('home.hero.eyebrow')}</p>
@@ -56,7 +57,6 @@ const url = {
         <p class="cred" data-reveal style="--reveal-delay:680ms">{t('home.hero.cred')}</p>
       </div>
       <div class="hero-photo" data-reveal style="--reveal-delay:240ms">
-        <HeroBg />
         {HAS_CUTOUT ? (
           <img class="hero-cutout" src="/lukasz-cutout.webp" alt="Lukasz Szumilas" width="900" height="1349" fetchpriority="high" />
         ) : (
@@ -267,6 +267,8 @@ const url = {
     padding-block: clamp(5rem, 3.5rem + 4vw, 6.5rem) clamp(1.5rem, 1rem + 2vw, 3rem);
   }
   .hero-grid {
+    position: relative;
+    z-index: 1;
     display: grid;
     grid-template-columns: 1fr;
     gap: clamp(2rem, 1rem + 3vw, 3.5rem);

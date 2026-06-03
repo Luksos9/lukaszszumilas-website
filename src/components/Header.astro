@@ -42,7 +42,8 @@ const i18nConfig = {
 
 <div class="chrome" transition:persist>
   <a href={homeHref} class="brand" aria-label={`${site.name}, ${t('common.homeAria')}`}>
-    <img class="brand-logo" src="/logo-mark.webp" alt="" width="340" height="172" fetchpriority="high" />
+    <img class="brand-logo brand-logo--dark" src="/logo-mark-dark.webp" alt="" width="440" height="160" fetchpriority="high" />
+    <img class="brand-logo brand-logo--light" src="/logo-mark-light.webp" alt="" width="440" height="160" fetchpriority="high" />
   </a>
 
   <div class="topbar-right">
@@ -305,10 +306,18 @@ const i18nConfig = {
   }
   .brand-logo {
     display: block;
-    height: clamp(2rem, 1.6rem + 1vw, 2.5rem);
+    height: clamp(1.9rem, 1.5rem + 1vw, 2.4rem);
     width: auto;
-    border-radius: var(--radius-sm);
-    box-shadow: var(--shadow);
+  }
+  /* theme-aware transparent monogram: white on dark (default), ink on light */
+  .brand-logo--light {
+    display: none;
+  }
+  :root[data-theme='light'] .brand-logo--dark {
+    display: none;
+  }
+  :root[data-theme='light'] .brand-logo--light {
+    display: block;
   }
 
   /* language picker */

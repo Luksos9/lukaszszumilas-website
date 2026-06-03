@@ -1,40 +1,67 @@
 ---
-// Signature hero backdrop: an abstract ServiceNow/AI workflow mesh — nodes
-// (systems, people, process) wired into a central AI node, with orange "data"
-// pulses flowing along the connectors. Sits behind the cutout, low-opacity,
-// edge-faded. Dual-theme (currentColor lines + accent pulses), reduced-motion safe.
+// Full-hero technical backdrop: a faint blueprint dot-grid across the whole
+// section + a ServiceNow/AI workflow mesh — a glowing AI hub on the right wired
+// to nodes, with orange "data" pulses flowing along connectors that sweep across
+// the section (above/below the headline, so text stays readable). Behind the
+// hero content; dual-theme; reduced-motion safe.
+const hex = (cx: number, cy: number, r: number) => {
+  const a = 0.866 * r;
+  const b = 0.5 * r;
+  return `M${cx} ${cy - r} L${cx + a} ${cy - b} L${cx + a} ${cy + b} L${cx} ${cy + r} L${cx - a} ${cy + b} L${cx - a} ${cy - b} Z`;
+};
+
+// connectors — `flow` ones carry an animated pulse.
 const CONNECTORS = [
-  'M64 96 C 150 120, 175 250, 220 292',
-  'M362 64 C 300 130, 270 235, 240 290',
-  'M214 46 C 218 150, 224 240, 228 286',
-  'M72 300 C 130 300, 172 300, 216 300',
-  'M244 298 C 300 292, 348 292, 378 294',
-  'M224 312 C 182 382, 132 452, 98 492',
-  'M240 310 C 300 382, 360 432, 398 466',
+  { d: 'M1200 300 C 1260 230, 1300 195, 1320 172', flow: false },
+  { d: 'M1200 300 C 1320 300, 1380 300, 1410 300', flow: true },
+  { d: 'M1200 300 C 1270 370, 1300 410, 1320 440', flow: false },
+  { d: 'M1200 300 C 1210 220, 1190 165, 1180 132', flow: true },
+  { d: 'M1200 300 C 1190 400, 1170 470, 1150 500', flow: false },
+  { d: 'M1180 132 C 880 80, 620 80, 360 120', flow: true },
+  { d: 'M1150 500 C 860 560, 560 560, 280 520', flow: true },
+  { d: 'M360 120 C 250 150, 170 200, 120 250', flow: false },
+  { d: 'M280 520 C 200 510, 130 495, 90 470', flow: false },
+];
+
+type Node = { t: 'rect' | 'circle' | 'hex'; x: number; y: number; r?: number; s?: number };
+const NODES: Node[] = [
+  { t: 'circle', x: 1320, y: 172, r: 7 },
+  { t: 'rect', x: 1398, y: 288, s: 24 },
+  { t: 'circle', x: 1320, y: 440, r: 6 },
+  { t: 'hex', x: 1180, y: 132, r: 12 },
+  { t: 'circle', x: 1150, y: 500, r: 6 },
+  { t: 'circle', x: 700, y: 92, r: 5 },
+  { t: 'rect', x: 626, y: 532, s: 18 },
+  { t: 'circle', x: 360, y: 120, r: 6 },
+  { t: 'rect', x: 268, y: 508, s: 22 },
+  { t: 'hex', x: 120, y: 250, r: 11 },
+  { t: 'circle', x: 90, y: 470, r: 5 },
 ];
 ---
 
 <div class="hero-bg" aria-hidden="true">
-  <svg viewBox="0 0 440 560" fill="none" preserveAspectRatio="xMidYMid slice">
+  <svg viewBox="0 0 1600 620" fill="none" preserveAspectRatio="xMidYMid slice">
     <g class="hb-lines">
-      {CONNECTORS.map((d) => <path d={d} />)}
+      {CONNECTORS.map((c) => <path d={c.d} />)}
     </g>
     <g class="hb-flows">
-      {CONNECTORS.map((d, i) => (
-        <path class="hb-flow" d={d} pathLength="100" style={`animation-delay:${-i * 0.55}s`} />
+      {CONNECTORS.filter((c) => c.flow).map((c, i) => (
+        <path class="hb-flow" d={c.d} pathLength="100" style={`animation-delay:${-i * 0.7}s`} />
       ))}
     </g>
     <g class="hb-nodes">
-      <rect class="hb-node" x="50" y="82" width="28" height="28" rx="5" />
-      <circle class="hb-node" cx="362" cy="58" r="8" />
-      <circle class="hb-node" cx="214" cy="40" r="5" />
-      <path class="hb-node" d="M40 300 L52 293 L64 300 L64 314 L52 321 L40 314 Z" />
-      <rect class="hb-node" x="380" y="282" width="26" height="26" rx="5" />
-      <circle class="hb-node" cx="96" cy="500" r="7" />
-      <circle class="hb-node" cx="400" cy="468" r="6" />
-      <!-- central AI node -->
-      <path class="hb-node hb-acc" d="M230 282 L246 291 L246 309 L230 318 L214 309 L214 291 Z" />
-      <circle class="hb-node hb-acc" cx="230" cy="300" r="3.5" />
+      {NODES.map((n) =>
+        n.t === 'rect' ? (
+          <rect class="hb-node" x={n.x} y={n.y} width={n.s} height={n.s} rx="5" />
+        ) : n.t === 'hex' ? (
+          <path class="hb-node" d={hex(n.x, n.y, n.r!)} />
+        ) : (
+          <circle class="hb-node" cx={n.x} cy={n.y} r={n.r} />
+        )
+      )}
+      <!-- central AI hub -->
+      <path class="hb-node hb-acc" d={hex(1200, 300, 20)} />
+      <circle class="hb-acc-dot" cx="1200" cy="300" r="5" />
     </g>
   </svg>
 </div>
@@ -42,32 +69,45 @@ const CONNECTORS = [
 <style>
   .hero-bg {
     position: absolute;
-    inset: -8% -6% -2% -6%;
+    inset: 0;
     z-index: 0;
     pointer-events: none;
+    overflow: hidden;
     color: var(--text-muted);
-    opacity: 0.72;
-    -webkit-mask-image: radial-gradient(125% 105% at 62% 38%, #000 52%, transparent 88%);
-    mask-image: radial-gradient(125% 105% at 62% 38%, #000 52%, transparent 88%);
+  }
+  /* blueprint dot-grid across the whole hero */
+  .hero-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, currentColor 1.1px, transparent 1.3px);
+    background-size: 30px 30px;
+    opacity: 0.08;
+    -webkit-mask-image: linear-gradient(to bottom, #000 76%, transparent);
+    mask-image: linear-gradient(to bottom, #000 76%, transparent);
   }
   .hero-bg svg {
-    display: block;
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
+    opacity: 0.66;
+    -webkit-mask-image: radial-gradient(135% 130% at 58% 45%, #000 72%, transparent 100%);
+    mask-image: radial-gradient(135% 130% at 58% 45%, #000 72%, transparent 100%);
   }
   .hb-lines path {
     stroke: currentColor;
-    stroke-width: 1;
-    opacity: 0.6;
+    stroke-width: 1.1;
+    opacity: 0.5;
   }
   .hb-flow {
     stroke: var(--accent);
-    stroke-width: 1.7;
+    stroke-width: 1.8;
     stroke-linecap: round;
-    stroke-dasharray: 7 93;
+    stroke-dasharray: 6 94;
   }
   .js .hb-flow {
-    animation: hbFlow 3.4s linear infinite;
+    animation: hbFlow 3.6s linear infinite;
   }
   @keyframes hbFlow {
     from { stroke-dashoffset: 0; }
@@ -75,19 +115,16 @@ const CONNECTORS = [
   }
   .hb-node {
     stroke: currentColor;
-    stroke-width: 1.5;
+    stroke-width: 1.6;
     fill: var(--bg);
   }
   .hb-acc {
     stroke: var(--accent);
-  }
-  path.hb-acc {
     fill: var(--accent-soft);
-    filter: drop-shadow(0 0 7px var(--ring));
+    filter: drop-shadow(0 0 9px var(--ring));
   }
-  circle.hb-acc {
+  .hb-acc-dot {
     fill: var(--accent);
-    stroke: none;
   }
   @media (prefers-reduced-motion: reduce) {
     .hb-flow {
