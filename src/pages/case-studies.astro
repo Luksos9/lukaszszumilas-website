@@ -10,28 +10,38 @@ import { caseStudies } from '../data/caseStudies';
   title="Case Studies"
   description="Anonymized ServiceNow and AI engagements across banking, insurance, and manufacturing, in situation / action / outcome form."
 >
-  <PageHeader eyebrow="Case studies" title="Real impact in the enterprise">
-    Anonymized examples of the work I do, in situation, action, and outcome. The specifics, and any
-    numbers, I'll walk you through on a call.
+  <PageHeader eyebrow="Proof of value" title="Selected work, in detail">
+    Anonymized engagements, told the way I run them: a symptom, the method that fixes it, and the
+    outcome. Same loop every time — find the bottleneck, improve the process, automate it, apply AI,
+    measure. Names and exact figures, I'll walk you through on a call.
   </PageHeader>
 
   <Section>
-    <div class="cs-grid">
-      {caseStudies.map((c) => (
-        <article class="cs-card">
-          <span class="cs-sector">{c.sector}</span>
-          <h2 class="cs-title display">{c.title}</h2>
-          <dl class="sao">
-            <div><dt>Situation</dt><dd>{c.situation}</dd></div>
-            <div><dt>Action</dt><dd>{c.action}</dd></div>
-            <div><dt>Outcome</dt><dd>{c.outcome}</dd></div>
-          </dl>
+    <div class="pov-list">
+      {caseStudies.map((c, i) => (
+        <article class="pov-card" data-reveal style={`--reveal-delay:${i * 80}ms`}>
+          <header class="pov-head">
+            <div class="pov-tags">
+              <span class="pov-sector">{c.sector}</span>
+              <span class="pov-persona">{c.persona}</span>
+            </div>
+            <h2 class="pov-title display">{c.title}</h2>
+            <p class="pov-context muted">{c.sectorNote}</p>
+          </header>
+          <div class="pov-body">
+            <dl class="sao">
+              <div><dt>Symptom</dt><dd>{c.situation}</dd></div>
+              <div><dt>Method</dt><dd>{c.action}</dd></div>
+              <div><dt>Outcome</dt><dd>{c.outcome}</dd></div>
+            </dl>
+            <p class="pov-target"><span class="micro-tag">Typical target</span>{c.target}</p>
+          </div>
         </article>
       ))}
     </div>
     <p class="muted cs-note">
-      Client names and exact figures are kept private. <a href="/contact/">Book a call</a> and I'll
-      walk you through the detail.
+      Client names and exact figures are kept private — the targets above are what this kind of work
+      aims at. <a href="/contact/">Book a call</a> and I'll walk you through the real numbers.
     </p>
   </Section>
 
@@ -51,29 +61,80 @@ import { caseStudies } from '../data/caseStudies';
 </BaseLayout>
 
 <style>
-  .cs-grid {
-    display: grid;
-    gap: clamp(1rem, 0.5rem + 1.5vw, 1.5rem);
-    grid-template-columns: 1fr;
+  .pov-list {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1rem, 0.6rem + 1.5vw, 1.75rem);
   }
-  .cs-card {
-    padding: 1.75rem;
+  .pov-card {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem 2rem;
+    padding: clamp(1.4rem, 1rem + 1.5vw, 2rem);
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-sm);
   }
-  .cs-sector {
+  .pov-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.6rem;
+  }
+  .pov-sector {
     font-family: var(--font-mono);
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    font-size: var(--step--1);
-    color: var(--accent-text);
+    font-size: 0.62rem;
     font-weight: 700;
+    color: var(--accent-text);
+    background: var(--accent-soft);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-pill);
+    padding: 0.18rem 0.55rem;
   }
-  .cs-title {
+  .pov-persona {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: var(--text-subtle);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-pill);
+    padding: 0.18rem 0.55rem;
+  }
+  .pov-title {
     font-size: var(--step-2);
-    margin: 0.4rem 0 1rem;
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+  }
+  .pov-context {
+    font-size: var(--step--1);
+    line-height: 1.5;
+  }
+  .pov-target {
+    margin-top: 1rem;
+    padding: 0.8rem 1rem;
+    background: var(--accent-soft);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    line-height: 1.5;
+  }
+  .micro-tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: var(--accent-text);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-pill);
+    padding: 0.1rem 0.45rem;
+    margin-right: 0.5rem;
+    vertical-align: middle;
   }
   .sao {
     display: grid;
@@ -120,8 +181,10 @@ import { caseStudies } from '../data/caseStudies';
     line-height: 1.6;
   }
   @media (min-width: 760px) {
-    .cs-grid {
-      grid-template-columns: repeat(3, 1fr);
+    /* story layout: header column + body column */
+    .pov-card {
+      grid-template-columns: 0.85fr 1.15fr;
+      align-items: start;
     }
   }
 </style>

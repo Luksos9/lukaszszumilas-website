@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import FormattedDate from './FormattedDate.astro';
+import Icon from './Icon.astro';
 
 interface Props {
   post: CollectionEntry<'blog'>;
@@ -9,11 +10,38 @@ const { post } = Astro.props;
 const { title, description, pubDate, tags } = post.data;
 const href = `/blog/${post.id}/`;
 const primaryTag = tags[0];
+
+// Per-tag visual identity for the card (falls back to a book glyph).
+const TAG_ICON: Record<string, string> = {
+  servicenow: 'cube',
+  ai: 'sparkle',
+  'ai agents': 'agent',
+  agents: 'agent',
+  mcp: 'sitemap',
+  claude: 'sparkle',
+  integration: 'sitemap',
+  integrations: 'sitemap',
+  governance: 'shield',
+  security: 'shield',
+  automation: 'gear',
+  workflow: 'flow',
+  process: 'flow',
+  certification: 'cap',
+  certifications: 'cap',
+  career: 'trophy',
+  careers: 'trophy',
+  development: 'code',
+  scripting: 'code',
+};
+const icon = TAG_ICON[(primaryTag || '').toLowerCase()] || 'book';
 ---
 
 <article class="post-card">
   <a href={href} class="post-card-link shine">
-    {primaryTag && <span class="post-card-tag">{primaryTag}</span>}
+    <div class="post-card-top">
+      <span class="post-card-icon"><Icon name={icon} size={16} /></span>
+      {primaryTag && <span class="post-card-tag">{primaryTag}</span>}
+    </div>
     <h3 class="post-card-title">{title}</h3>
     <p class="post-card-desc">{description}</p>
     <div class="post-card-meta">
@@ -47,8 +75,22 @@ const primaryTag = tags[0];
     position: relative;
     z-index: 2;
   }
+  .post-card-top {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .post-card-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 1.9rem;
+    height: 1.9rem;
+    border-radius: var(--radius-sm);
+    background: var(--accent-soft);
+    color: var(--accent-text);
+    flex: 0 0 auto;
+  }
   .post-card-tag {
-    align-self: flex-start;
     font-family: var(--font-mono);
     font-size: var(--step--1);
     font-weight: 700;
