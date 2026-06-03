@@ -140,4 +140,63 @@ export const en = {
     courseNoteLink: 'Udemy course',
     courseNotePost: ' so the answer helps everyone.',
   },
+  pages: {
+    caseStudies: {
+      metaDescription:
+        'Anonymized ServiceNow and AI engagements across banking, insurance, and manufacturing, told as symptom, method, and outcome.',
+      eyebrow: 'Proof of value',
+      title: 'Selected work, in detail',
+      lead: "Anonymized engagements, told the way I run them: a symptom, the method that fixes it, and the outcome. Same loop every time — find the bottleneck, improve the process, automate it, apply AI, measure. Names and exact figures, I'll walk you through on a call.",
+      symptom: 'Symptom',
+      method: 'Method',
+      outcome: 'Outcome',
+      typicalTarget: 'Typical target',
+      notePre: 'Client names and exact figures are kept private — the targets above are what this kind of work aims at. ',
+      noteLink: 'Book a call',
+      notePost: " and I'll walk you through the real numbers.",
+      ctaTitle: 'Have a similar problem?',
+      ctaLead:
+        "Tell me what's slowing your team down. We'll find where a better process and the right AI actually help.",
+      ctaBook: 'Book a consultation',
+      ctaServices: 'See the services',
+    },
+    about: {
+      metaDescription:
+        'Lukasz Szumilas helps organizations reduce manual work and improve operations with ServiceNow, AI, and process design.',
+      eyebrow: 'About',
+      title: 'Lukasz Szumilas',
+      lead: 'Operational Efficiency Advisor. I help organizations reduce manual work and improve how they run, using ServiceNow, AI, and process design.',
+      p1: "I'm a self-taught generalist who learned to build, automate, write, and teach by refusing to outsource my own education. ServiceNow is where that curiosity turned into a career.",
+      p2: "For 4+ years I've worked on ServiceNow in banking, insurance, and manufacturing: ITSM, Service Portal and Employee Center, workflow automation, and integrations. Demanding environments where a build has to hold up to a security review. That shaped how I think about operations, and about AI.",
+      p3Pre: "The thing I'm actually good at is making complicated things simple. It's what made my courses work, with more than 10,000 students on Udemy through ",
+      p3Link: 'Lucky X',
+      p3Post:
+        ', and it’s what enterprises pay for: someone who can look at a tangle of process and tools and explain the path to less manual work.',
+      p4: 'My bias is process first, AI second. The biggest wins usually come from fixing the workflow and automating the repetitive parts, then applying AI where it creates measurable value. Most "AI projects" skip that first step. I don’t.',
+      diffEyebrow: 'What makes me different',
+      diffTitle: 'ServiceNow depth × AI × governance',
+      pillars: [
+        { title: 'ServiceNow depth', body: '4+ years across banking, insurance and manufacturing — ITSM, Service Portal and Employee Center, workflow automation and integrations built to survive a security review.' },
+        { title: 'AI that ships', body: 'Process first, AI second. MCP and Now Assist done with real governance — and I’m in the Anthropic Claude Partner Network on the consulting track.' },
+        { title: 'Governance built in', body: 'GDPR- and EU AI Act-aware by default. AI you can put in front of an auditor, not just a slide — the part most “AI projects” skip.' },
+      ],
+      creds: ['10,000+ students taught', '4+ years on ServiceNow', 'Banking · Insurance · Manufacturing'],
+      thinkEyebrow: 'How I think',
+      thinkTitle: 'I work in diagrams, not walls of text',
+      thinkBody:
+        'Process maps, value streams, and AI opportunity maps. When I explain where work gets stuck or where AI actually helps, I draw it. That clarity is the same thing that makes a project land: everyone can see the plan before we build it.',
+      doEyebrow: 'What I do',
+      doItems: [
+        { label: 'Consulting.', text: 'Operational improvement with ServiceNow, AI, and process design.' },
+        { label: 'Teaching.', text: 'Lucky X certification courses on Udemy, 10,000+ students.' },
+        { label: 'Writing.', text: 'ServiceNow and AI on the platform, here and on LinkedIn.' },
+      ],
+      langEyebrow: 'Languages',
+      langs: ['Polish, native', 'English, C2', 'German, B1'],
+      cvCta: 'Full background on LinkedIn',
+      ctaTitle: 'Want to work together?',
+      ctaBook: 'Book a consultation',
+      ctaServices: 'See the services',
+    },
+  },
 } as const;

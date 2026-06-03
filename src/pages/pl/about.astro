@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import About from '../../components/pages/About.astro';
+import { useTranslations } from '../../i18n/ui';
+
+const lang = 'pl' as const;
+const t = useTranslations(lang);
+---
+
+<BaseLayout lang={lang} locales={['en', 'pl']} title="O mnie" description={t('pages.about.metaDescription')}>
+  <About lang={lang} />
+</BaseLayout>

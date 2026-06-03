@@ -259,4 +259,63 @@ export const pl = {
     courseNoteLink: 'kursie na Udemy',
     courseNotePost: ', aby odpowiedź pomogła wszystkim.',
   },
+  pages: {
+    caseStudies: {
+      metaDescription:
+        'Anonimizowane wdrożenia ServiceNow i AI w bankowości, ubezpieczeniach i produkcji — w ujęciu: objaw, metoda, efekt.',
+      eyebrow: 'Dowód wartości',
+      title: 'Wybrane realizacje, w szczegółach',
+      lead: 'Anonimizowane projekty opisane tak, jak je prowadzę: objaw, metoda, która go usuwa, i efekt. Za każdym razem ta sama pętla — znajdź wąskie gardło, usprawnij proces, zautomatyzuj, zastosuj AI, zmierz. Nazwy i dokładne liczby omówię na rozmowie.',
+      symptom: 'Objaw',
+      method: 'Metoda',
+      outcome: 'Efekt',
+      typicalTarget: 'Typowy cel',
+      notePre: 'Nazwy klientów i dokładne liczby pozostają poufne — cele powyżej to to, do czego dąży tego typu praca. ',
+      noteLink: 'Umów rozmowę',
+      notePost: ', a przeprowadzę Cię przez realne liczby.',
+      ctaTitle: 'Masz podobny problem?',
+      ctaLead:
+        'Powiedz, co spowalnia Twój zespół. Znajdziemy, gdzie lepszy proces i właściwe AI naprawdę pomagają.',
+      ctaBook: 'Umów konsultację',
+      ctaServices: 'Zobacz usługi',
+    },
+    about: {
+      metaDescription:
+        'Lukasz Szumilas pomaga organizacjom ograniczać pracę ręczną i usprawniać operacje dzięki ServiceNow, AI i projektowaniu procesów.',
+      eyebrow: 'O mnie',
+      title: 'Lukasz Szumilas',
+      lead: 'Doradca ds. efektywności operacyjnej. Pomagam organizacjom ograniczać pracę ręczną i usprawniać sposób działania — dzięki ServiceNow, AI i projektowaniu procesów.',
+      p1: 'Jestem samoukiem-generalistą, który nauczył się budować, automatyzować, pisać i uczyć, nie oddając własnej edukacji w cudze ręce. To na ServiceNow ta ciekawość zamieniła się w karierę.',
+      p2: 'Od ponad 4 lat pracuję na ServiceNow w bankowości, ubezpieczeniach i produkcji: ITSM, Service Portal i Employee Center, automatyzacja przepływów i integracje. Wymagające środowiska, w których wdrożenie musi przejść przegląd bezpieczeństwa. To ukształtowało moje myślenie o operacjach i o AI.',
+      p3Pre: 'To, w czym jestem naprawdę dobry, to upraszczanie rzeczy skomplikowanych. Dzięki temu działają moje kursy — ponad 10 000 kursantów na Udemy przez ',
+      p3Link: 'Lucky X',
+      p3Post:
+        ', i za to płacą firmy: ktoś, kto spojrzy na plątaninę procesów i narzędzi i wskaże drogę do mniejszej ilości pracy ręcznej.',
+      p4: 'Moja zasada: najpierw proces, potem AI. Największe korzyści zwykle biorą się z naprawienia przepływu i zautomatyzowania powtarzalnych części, a dopiero potem zastosowania AI tam, gdzie tworzy mierzalną wartość. Większość „projektów AI” pomija ten pierwszy krok. Ja nie.',
+      diffEyebrow: 'Co mnie wyróżnia',
+      diffTitle: 'Głębia ServiceNow × AI × nadzór',
+      pillars: [
+        { title: 'Głęboka znajomość ServiceNow', body: 'Ponad 4 lata w bankowości, ubezpieczeniach i produkcji — ITSM, Service Portal i Employee Center, automatyzacja przepływów i integracje, które przechodzą przegląd bezpieczeństwa.' },
+        { title: 'AI, które trafia na produkcję', body: 'Najpierw proces, potem AI. MCP i Now Assist z realnym nadzorem — jestem w Anthropic Claude Partner Network na ścieżce konsultingowej.' },
+        { title: 'Wbudowany nadzór', body: 'Domyślnie zgodne z GDPR i unijną Ustawą o AI. AI, które postawisz przed audytorem, a nie tylko na slajdzie — część, którą większość „projektów AI” pomija.' },
+      ],
+      creds: ['Ponad 10 000 przeszkolonych osób', 'Ponad 4 lata na ServiceNow', 'Bankowość · Ubezpieczenia · Produkcja'],
+      thinkEyebrow: 'Jak myślę',
+      thinkTitle: 'Pracuję na diagramach, nie na ścianach tekstu',
+      thinkBody:
+        'Mapy procesów, strumienie wartości i mapy szans na AI. Kiedy tłumaczę, gdzie praca się zacina albo gdzie AI naprawdę pomaga — rysuję to. Ta sama jasność sprawia, że projekt się udaje: każdy widzi plan, zanim zaczniemy budować.',
+      doEyebrow: 'Czym się zajmuję',
+      doItems: [
+        { label: 'Konsulting.', text: 'Doskonalenie operacji z ServiceNow, AI i projektowaniem procesów.' },
+        { label: 'Nauczanie.', text: 'Kursy certyfikacyjne Lucky X na Udemy, ponad 10 000 kursantów.' },
+        { label: 'Pisanie.', text: 'ServiceNow i AI na platformie — tutaj i na LinkedIn.' },
+      ],
+      langEyebrow: 'Języki',
+      langs: ['Polski, ojczysty', 'Angielski, C2', 'Niemiecki, B1'],
+      cvCta: 'Pełne CV na LinkedIn',
+      ctaTitle: 'Chcesz współpracować?',
+      ctaBook: 'Umów konsultację',
+      ctaServices: 'Zobacz usługi',
+    },
+  },
 } as const;

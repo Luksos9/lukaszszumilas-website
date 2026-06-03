@@ -1,0 +1,189 @@
+---
+import PageHeader from '../PageHeader.astro';
+import Section from '../Section.astro';
+import CtaButton from '../CtaButton.astro';
+import { getCaseStudies } from '../../i18n/data';
+import { useTranslations, localizeForNav, defaultLang, type Lang } from '../../i18n/ui';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = defaultLang } = Astro.props;
+const t = useTranslations(lang);
+const caseStudies = getCaseStudies(lang);
+const contactHref = localizeForNav('/contact/', lang);
+const servicesHref = localizeForNav('/services/', lang);
+const reload = (href: string) => lang !== defaultLang && !href.startsWith(`/${lang}/`);
+---
+
+<PageHeader eyebrow={t('pages.caseStudies.eyebrow')} title={t('pages.caseStudies.title')}>
+  {t('pages.caseStudies.lead')}
+</PageHeader>
+
+<Section>
+  <div class="pov-list">
+    {caseStudies.map((c, i) => (
+      <article class="pov-card" data-reveal style={`--reveal-delay:${i * 80}ms`}>
+        <header class="pov-head">
+          <div class="pov-tags">
+            <span class="pov-sector">{c.sector}</span>
+            <span class="pov-persona">{c.persona}</span>
+          </div>
+          <h2 class="pov-title display">{c.title}</h2>
+          <p class="pov-context muted">{c.sectorNote}</p>
+        </header>
+        <div class="pov-body">
+          <dl class="sao">
+            <div><dt>{t('pages.caseStudies.symptom')}</dt><dd>{c.situation}</dd></div>
+            <div><dt>{t('pages.caseStudies.method')}</dt><dd>{c.action}</dd></div>
+            <div><dt>{t('pages.caseStudies.outcome')}</dt><dd>{c.outcome}</dd></div>
+          </dl>
+          <p class="pov-target"><span class="micro-tag">{t('pages.caseStudies.typicalTarget')}</span>{c.target}</p>
+        </div>
+      </article>
+    ))}
+  </div>
+  <p class="muted cs-note">
+    {t('pages.caseStudies.notePre')}<a href={contactHref} data-astro-reload={reload(contactHref) ? '' : undefined}>{t('pages.caseStudies.noteLink')}</a>{t('pages.caseStudies.notePost')}
+  </p>
+</Section>
+
+<Section tone="dark">
+  <div class="cta-band">
+    <h2 class="cta-h2 display">{t('pages.caseStudies.ctaTitle')}</h2>
+    <p class="cta-lead">{t('pages.caseStudies.ctaLead')}</p>
+    <div class="cluster">
+      <CtaButton href={contactHref} size="lg" reload={reload(contactHref)}>{t('pages.caseStudies.ctaBook')}</CtaButton>
+      <CtaButton href={servicesHref} variant="secondary" size="lg" reload={reload(servicesHref)}>{t('pages.caseStudies.ctaServices')}</CtaButton>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .pov-list {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1rem, 0.6rem + 1.5vw, 1.75rem);
+  }
+  .pov-card {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem 2rem;
+    padding: clamp(1.4rem, 1rem + 1.5vw, 2rem);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
+  .pov-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.6rem;
+  }
+  .pov-sector {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: var(--accent-text);
+    background: var(--accent-soft);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-pill);
+    padding: 0.18rem 0.55rem;
+  }
+  .pov-persona {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: var(--text-subtle);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-pill);
+    padding: 0.18rem 0.55rem;
+  }
+  .pov-title {
+    font-size: var(--step-2);
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+  }
+  .pov-context {
+    font-size: var(--step--1);
+    line-height: 1.5;
+  }
+  .pov-target {
+    margin-top: 1rem;
+    padding: 0.8rem 1rem;
+    background: var(--accent-soft);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    line-height: 1.5;
+  }
+  .micro-tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: var(--accent-text);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-pill);
+    padding: 0.1rem 0.45rem;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+  }
+  .sao {
+    display: grid;
+    gap: 0.85rem;
+    margin: 0;
+  }
+  .sao dt {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.72rem;
+    color: var(--text-subtle);
+    font-weight: 700;
+    margin-bottom: 0.15rem;
+  }
+  .sao dd {
+    margin: 0;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+  .cs-note {
+    margin-top: 1.75rem;
+    max-width: 60ch;
+    font-size: var(--step--1);
+  }
+  .cs-note a {
+    color: var(--accent-text);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .cta-band {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+    max-width: 46rem;
+  }
+  .cta-h2 {
+    font-size: var(--step-3);
+  }
+  .cta-lead {
+    color: #cfc9be;
+    max-width: 52ch;
+    line-height: 1.6;
+  }
+  @media (min-width: 760px) {
+    /* story layout: header column + body column */
+    .pov-card {
+      grid-template-columns: 0.85fr 1.15fr;
+      align-items: start;
+    }
+  }
+</style>

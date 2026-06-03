@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CaseStudies from '../../components/pages/CaseStudies.astro';
+import { useTranslations } from '../../i18n/ui';
+
+const lang = 'pl' as const;
+const t = useTranslations(lang);
+---
+
+<BaseLayout
+  lang={lang}
+  locales={['en', 'pl']}
+  title="Realizacje"
+  description={t('pages.caseStudies.metaDescription')}
+>
+  <CaseStudies lang={lang} />
+</BaseLayout>
