@@ -18,7 +18,8 @@ interface Props {
 const { href, variant = 'primary', size = 'md', external = false, arrow, analytics, reload = false, spin, class: cls = '' } =
   Astro.props;
 const showArrow = arrow ?? variant !== 'secondary';
-const doSpin = spin ?? variant === 'primary';
+// solid buttons (primary + secondary) get the spinning ring; text/ghost links don't.
+const doSpin = spin ?? variant !== 'ghost';
 const target = external ? '_blank' : undefined;
 const rel = external ? 'noopener noreferrer' : undefined;
 ---
@@ -126,7 +127,7 @@ const rel = external ? 'noopener noreferrer' : undefined;
   .cta--spin:hover {
     transform: translateY(-2px);
   }
-  .cta--spin:hover > .btn--primary {
+  .cta--spin:hover > .btn {
     transform: none;
   }
   .cta--spin > .btn {
