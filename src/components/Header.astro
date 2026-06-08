@@ -234,6 +234,8 @@ const i18nConfig = {
       const a = document.createElement('a');
       a.href = '#' + sec.id;
       a.className = 'rail-dot';
+      // a section flagged data-nav-cta is the conversion target — highlight it.
+      if (sec.hasAttribute('data-nav-cta')) a.classList.add('is-cta');
       const label = sec.getAttribute('data-nav') || '';
       a.setAttribute('aria-label', label);
       const icon = sec.getAttribute('data-nav-icon') || 'target';
@@ -624,6 +626,46 @@ const i18nConfig = {
   :global(.rail-dot.is-active) {
     color: var(--accent-text);
     background: transparent;
+  }
+  /* the booking CTA dot: persistently filled so it reads as the click target,
+     with a gentle attention pulse. Stays accent even when it's the active
+     section (declared after .is-active so it wins). */
+  :global(.rail-dot.is-cta) {
+    color: var(--accent-contrast);
+    background: var(--accent);
+    box-shadow: 0 2px 12px -3px var(--ring);
+  }
+  :global(.rail-dot.is-cta.is-active) {
+    color: var(--accent-contrast);
+    background: var(--accent);
+  }
+  :global(.rail-dot.is-cta:hover) {
+    color: var(--accent-contrast);
+    background: var(--accent-hover);
+  }
+  :global(.rail-dot.is-cta)::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    animation: railCtaPulse 2.6s var(--ease) infinite;
+  }
+  @keyframes railCtaPulse {
+    0% {
+      box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent);
+    }
+    70% {
+      box-shadow: 0 0 0 9px transparent;
+    }
+    100% {
+      box-shadow: 0 0 0 0 transparent;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global(.rail-dot.is-cta)::after {
+      animation: none;
+    }
   }
   /* label tooltip to the left, on hover */
   :global(.rail-tip) {
