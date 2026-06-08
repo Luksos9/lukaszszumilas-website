@@ -10,27 +10,32 @@ interface Props {
   analytics?: string;
   /** Force a full page load (e.g. crossing the locale boundary with a persisted header). */
   reload?: boolean;
+  /** Wrap with a constantly-spinning conic-gradient ring. Defaults on for primary. */
+  spin?: boolean;
   class?: string;
 }
 
-const { href, variant = 'primary', size = 'md', external = false, arrow, analytics, reload = false, class: cls = '' } =
+const { href, variant = 'primary', size = 'md', external = false, arrow, analytics, reload = false, spin, class: cls = '' } =
   Astro.props;
 const showArrow = arrow ?? variant !== 'secondary';
+const doSpin = spin ?? variant === 'primary';
 const target = external ? '_blank' : undefined;
 const rel = external ? 'noopener noreferrer' : undefined;
 ---
 
-<a
-  href={href}
-  class:list={['btn', `btn--${variant}`, `btn--${size}`, cls]}
-  target={target}
-  rel={rel}
-  data-analytics={analytics}
-  data-astro-reload={reload ? '' : undefined}
->
-  <span class="btn-label"><slot /></span>
-  {showArrow && <span class="btn-arrow" aria-hidden="true">→</span>}
-</a>
+<span class:list={['cta', { 'cta--spin': doSpin }]}>
+  <a
+    href={href}
+    class:list={['btn', `btn--${variant}`, `btn--${size}`, cls]}
+    target={target}
+    rel={rel}
+    data-analytics={analytics}
+    data-astro-reload={reload ? '' : undefined}
+  >
+    <span class="btn-label"><slot /></span>
+    {showArrow && <span class="btn-arrow" aria-hidden="true">→</span>}
+  </a>
+</span>
 
 <style>
   .btn {
@@ -68,6 +73,65 @@ const rel = external ? 'noopener noreferrer' : undefined;
   }
   .btn:hover .btn-arrow {
     transform: translateX(4px);
+  }
+
+  /* ---- spinning conic-gradient ring (matches the nav indicator) ---- */
+  /* default wrapper is layout-transparent so non-spinning buttons are unchanged */
+  .cta {
+    display: contents;
+  }
+  @property --cta-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+  .cta--spin {
+    display: inline-flex;
+    position: relative;
+    border-radius: var(--radius-pill);
+    isolation: isolate;
+    box-shadow: 0 0 16px -6px color-mix(in srgb, var(--accent) 75%, transparent);
+    transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+  }
+  .cta--spin:hover {
+    box-shadow: 0 0 22px -4px color-mix(in srgb, var(--accent) 85%, transparent);
+  }
+  .cta--spin::before {
+    content: '';
+    position: absolute;
+    inset: -2.5px;
+    z-index: 0;
+    border-radius: inherit;
+    padding: 3px; /* ring thickness */
+    background: conic-gradient(
+      from var(--cta-angle),
+      #a8481b 0deg, #e8733a 30deg, #ffc9a3 58deg, #ffffff 80deg, #ffffff 90deg, #ffcaa0 102deg,
+      #e8733a 138deg, #8f4117 192deg, #e8733a 236deg, #fff0e4 262deg, #ffffff 276deg,
+      #ffffff 286deg, #ffb888 304deg, #e8733a 332deg, #a8481b 360deg
+    );
+    /* show only the padding band -> a ring/border */
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    animation: ctaSpin 4.5s linear infinite;
+    pointer-events: none;
+  }
+  @keyframes ctaSpin {
+    to {
+      --cta-angle: 360deg;
+    }
+  }
+  /* lift the whole wrapper (ring + button together) on hover */
+  .cta--spin:hover {
+    transform: translateY(-2px);
+  }
+  .cta--spin:hover > .btn--primary {
+    transform: none;
+  }
+  .cta--spin > .btn {
+    position: relative;
+    z-index: 1;
   }
 
   /* PRIMARY — "fill from the corner" morph (frosted panel sweeps in) */
@@ -193,6 +257,12 @@ const rel = external ? 'noopener noreferrer' : undefined;
     }
     .btn:hover .btn-arrow {
       transform: none;
+    }
+    .cta--spin::before {
+      animation: none;
+    }
+    .cta--spin {
+      transition: none;
     }
   }
 </style>
