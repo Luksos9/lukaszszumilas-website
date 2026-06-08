@@ -249,9 +249,15 @@ const i18nConfig = {
       rail.appendChild(a);
       return a;
     });
-    // single ring that glides to whichever dot is active (Lucky X-style)
+    // single ring that glides to whichever dot is active (Lucky X-style):
+    // a soft glow + a spinning conic-gradient ring + a glass inner disc, so the
+    // active icon is framed by a slowly-rotating orange halo.
     const indicator = document.createElement('span');
     indicator.className = 'rail-indicator';
+    indicator.innerHTML =
+      '<span class="ri-glow"></span>' +
+      '<span class="ri-clip"><span class="ri-spin"></span></span>' +
+      '<span class="ri-inner"></span>';
     rail.appendChild(indicator);
     const moveInd = (dot: HTMLElement) => {
       indicator.style.width = dot.offsetWidth + 'px';
@@ -538,17 +544,72 @@ const i18nConfig = {
     transition: color var(--dur) var(--ease), background var(--dur) var(--ease),
       box-shadow var(--dur) var(--ease);
   }
-  /* single indicator that glides between dots as the active section changes */
+  /* single indicator that glides between dots as the active section changes.
+     It slides with a gentle overshoot (Lucky X feel) and frames the active icon
+     with a slowly-spinning orange conic-gradient ring + soft glow. */
   :global(.rail-indicator) {
     position: absolute;
     top: 0;
     left: 0;
     z-index: 0;
     border-radius: var(--radius-pill);
-    background: var(--accent-soft);
-    box-shadow: 0 0 0 1.5px var(--accent), 0 0 16px -3px var(--ring);
     pointer-events: none;
-    transition: transform 0.42s var(--ease-out), width 0.3s var(--ease), height 0.3s var(--ease);
+    transition: transform 0.5s var(--ease-bounce), width 0.3s var(--ease),
+      height 0.3s var(--ease);
+  }
+  :global(.rail-indicator .ri-glow) {
+    position: absolute;
+    inset: -5px;
+    border-radius: inherit;
+    background: var(--accent);
+    opacity: 0.18;
+    filter: blur(11px);
+  }
+  :global(.rail-indicator .ri-clip) {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    overflow: hidden;
+  }
+  :global(.rail-indicator .ri-spin) {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    animation: railSpin 4.5s linear infinite;
+    background: conic-gradient(
+      from 0deg,
+      #5c2506 0deg, #8a3a08 18deg, #e8733a 38deg, #ffb079 52deg,
+      #e8733a 62deg, #ffd2b4 66deg, #ffffff 68deg, #ffffff 72deg,
+      #ffd2b4 74deg, #e8733a 82deg, #a04a0a 110deg, #5c2506 138deg,
+      #8a3a08 164deg, #e8733a 184deg, #5c2506 196deg, #8a3a08 216deg,
+      #e8733a 238deg, #ffb079 252deg, #e8733a 262deg, #ffd2b4 266deg,
+      #ffffff 268deg, #ffffff 272deg, #ffd2b4 274deg, #e8733a 286deg,
+      #a04a0a 312deg, #5c2506 340deg, #8a3a08 356deg, #5c2506 360deg
+    );
+  }
+  @keyframes railSpin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  :global(.rail-indicator .ri-inner) {
+    position: absolute;
+    inset: 2px;
+    border-radius: inherit;
+    background: color-mix(in srgb, var(--surface) 90%, transparent);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+    backdrop-filter: blur(14px) saturate(1.2);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global(.rail-indicator .ri-spin) {
+      animation: none;
+    }
+    :global(.rail-indicator) {
+      transition: transform var(--dur-mid) var(--ease), width var(--dur) var(--ease),
+        height var(--dur) var(--ease);
+    }
   }
   :global(.rail-dot svg) {
     width: 18px;
